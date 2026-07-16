@@ -9,7 +9,7 @@
   "service_category",
   "ngo_org",
   "title",
-  "escription",
+  "description",
   "conditions",
   "cost_model",
   "cost_details",
@@ -24,13 +24,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
-   "reqd": 1
-  },
-  {
-   "fieldname": "escription",
-   "fieldtype": "Long Text",
-   "in_list_view": 1,
-   "label": "Description",
    "reqd": 1
   },
   {
@@ -52,16 +45,16 @@
   },
   {
    "fieldname": "service_channel",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "label": "Service Channel",
-   "options": "Channel",
+   "options": "Remote\nHybrid\nOn-site",
    "reqd": 1
   },
   {
    "fieldname": "service_status",
-   "fieldtype": "Link",
+   "fieldtype": "Select",
    "label": "Service Status",
-   "options": "Status",
+   "options": "Approved\nPending\nRejected",
    "reqd": 1
   },
   {
@@ -91,12 +84,19 @@
    "label": "Service Category",
    "options": "Service Category",
    "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-15 13:39:56.114098",
+ "modified": "2026-07-16 11:04:42.187530",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

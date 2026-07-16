@@ -1,29 +1,68 @@
+import frappe
+from samaaja.utils.result import Result
+from citizen_connect_app.utils.error_logger import ErrorLogger
+
+
 class ServiceManager:
 
     @staticmethod
-    def get(limit=10, offset=0) -> Result:
+    def get_list(limit=10, offset=0) -> Result:
         try:
-            # 1. Validate and convert pagination values
+            # Validate pagination
+            limit = max(1, min(int(limit), 100))
+            offset = max(0, int(offset))
 
-            # 2. Define reusable filters
-            #    - Service Status = Approved
-            #    - Availability Status = Active
+            services = frappe.db.sql("""
+                SELECT
+                    s.name,
+                    s.name AS id,
+                    s.title,
+                    s.description,
+                    s.conditions,
+                    s.cost_model,
+                    s.cost_details,
+                    s.sponsorship_information,
+                    s.availability_status,
+                    s.service_channel,
+                    s.service_status,
+                    s.creation,
 
-            # 3. Define the list of required fields
+                    s.service_category,
+                    sc.catalogue_name AS service_category_name,
 
-            # 4. Fetch records using the common database API
-            #    - Apply filters
-            #    - Apply selected fields
-            #    - Order by creation DESC
-            #    - Apply limit and offset
+                    s.ngo_org,
+                    org.org_name AS ngo_name
 
-            # 5. Return success response
-            #    - services
-            #    - limit
-            #    - offset
-            #    - has_more
+                FROM `tabService` s
+
+                LEFT JOIN `tabService Category` sc
+                    ON sc.name = s.service_category
+
+                LEFT JOIN `tabOrganisation` org
+                    ON org.name = s.ngo_org
+
+                ORDER BY s.creation DESC
+                LIMIT %s OFFSET %s
+            """, (limit, offset), as_dict=True)
+
+            return Result.success(
+                message="Services fetched successfully",
+                data={
+                    "services": services,
+                    "limit": limit,
+                    "offset": offset,
+                    "has_more": len(services) == limit
+                }
+            )
 
         except Exception as e:
-            # Log the error
+            ErrorLogger.log(
+                message="Failed to fetch services",
+                details=str(e),
+                stacktrace=frappe.get_traceback()
+            )
 
-            # Return failure response
+            return Result.failure(
+                message="Failed to fetch services",
+                error_data=str(e)
+            )
