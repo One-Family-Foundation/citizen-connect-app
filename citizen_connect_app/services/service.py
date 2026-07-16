@@ -14,7 +14,6 @@ class ServiceManager:
 
             services = frappe.db.sql("""
                 SELECT
-                    s.name,
                     s.name AS id,
                     s.title,
                     s.description,
@@ -27,19 +26,24 @@ class ServiceManager:
                     s.service_status,
                     s.creation,
 
-                    s.service_category,
-                    sc.catalogue_name AS service_category_name,
-
                     s.ngo_org,
-                    org.org_name AS ngo_name
+                    org.org_name AS ngo_name,
+
+                    l4.name AS service_category,
+                    l4.catalogue_name AS service_category_name,
+                    l4.category_level
 
                 FROM `tabService` s
 
-                LEFT JOIN `tabService Category` sc
-                    ON sc.name = s.service_category
-
                 LEFT JOIN `tabOrganisation` org
                     ON org.name = s.ngo_org
+
+                LEFT JOIN `tabService Category` root
+                    ON root.name = s.service_category
+
+                LEFT JOIN `tabService Category` l4
+                    ON l4.lft BETWEEN root.lft AND root.rgt
+                    AND l4.category_level = 'L4'
 
                 ORDER BY s.creation DESC
                 LIMIT %s OFFSET %s
