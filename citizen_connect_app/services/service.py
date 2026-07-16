@@ -26,10 +26,10 @@ class ServiceManager:
                     s.service_status,
                     s.creation,
 
-                    s.ngo_org,
+                    s.ngo_org AS ngo_id,
                     org.org_name AS ngo_name,
 
-                    l4.name AS service_category,
+                    l4.name AS service_category_id,
                     l4.catalogue_name AS service_category_name,
                     l4.category_level
 
@@ -49,24 +49,18 @@ class ServiceManager:
                 LIMIT %s OFFSET %s
             """, (limit, offset), as_dict=True)
 
-            return Result.success(
-                message="Services fetched successfully",
-                data={
+            return {
                     "services": services,
                     "limit": limit,
                     "offset": offset,
                     "has_more": len(services) == limit
                 }
-            )
+            
 
-        except Exception as e:
+        except Exception :
             ErrorLogger.log(
                 message="Failed to fetch services",
                 details=str(e),
                 stacktrace=frappe.get_traceback()
             )
-
-            return Result.failure(
-                message="Failed to fetch services",
-                error_data=str(e)
-            )
+            raise
