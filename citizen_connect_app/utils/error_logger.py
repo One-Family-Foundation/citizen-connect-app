@@ -1,7 +1,7 @@
-import logging
 import frappe
+from frappe.utils.logger import get_logger
 
-logger = logging.getLogger(__name__)
+logger = get_logger("citizen_connect")
 
 
 class ErrorLogger:

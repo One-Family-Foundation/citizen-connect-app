@@ -125,13 +125,13 @@ class ServiceManager:
                     "l2": {"name": service.pop("l2_name")},
                 }
 
-            return {
+            return Result.success( {
                 "services": services,
                 "limit": limit,
                 "offset": offset,
                 "has_more": len(services) == limit,
-            }
-
+               }
+            )
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch services",
@@ -176,8 +176,8 @@ class ServiceManager:
                         {"id": row.l2_id, "name": row.l2_name}
                     )
 
-            return {"success": True, "categories": list(categories.values())}
-
+            return Result.success({"categories": list(categories.values())})
+            
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch categories",

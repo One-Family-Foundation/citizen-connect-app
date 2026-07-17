@@ -6,18 +6,20 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "basic_details_section",
   "service_category",
-  "ngo_org",
   "title",
   "description",
-  "eligibility_condition",
+  "sponsorship_information",
+  "column_break_maqh",
+  "ngo_org",
   "cost_model",
   "cost_details",
   "rating",
-  "sponsorship_information",
   "availability_status",
-  "service_channel",
   "service_status",
+  "service_channel",
+  "eligibility_condition",
   "location_details_section",
   "service_country",
   "service_geo1",
@@ -125,12 +127,21 @@
    "fieldname": "rating",
    "fieldtype": "Float",
    "label": "Rating"
+  },
+  {
+   "fieldname": "basic_details_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Details"
+  },
+  {
+   "fieldname": "column_break_maqh",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-16 17:30:32.103457",
+ "modified": "2026-07-17 19:51:12.649132",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",
