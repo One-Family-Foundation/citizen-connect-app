@@ -10,13 +10,18 @@
   "ngo_org",
   "title",
   "description",
-  "conditions",
+  "eligibility_condition",
   "cost_model",
   "cost_details",
+  "rating",
   "sponsorship_information",
   "availability_status",
   "service_channel",
-  "service_status"
+  "service_status",
+  "location_details_section",
+  "service_country",
+  "service_geo1",
+  "service_geo2"
  ],
  "fields": [
   {
@@ -25,11 +30,6 @@
    "in_list_view": 1,
    "label": "Title",
    "reqd": 1
-  },
-  {
-   "fieldname": "conditions",
-   "fieldtype": "Long Text",
-   "label": "Eligibility Conditions"
   },
   {
    "fieldname": "sponsorship_information",
@@ -91,12 +91,46 @@
    "in_list_view": 1,
    "label": "Description",
    "reqd": 1
+  },
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "Location Details"
+  },
+  {
+   "fieldname": "service_country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_geo1",
+   "fieldtype": "Link",
+   "label": "Geography L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "service_geo2",
+   "fieldtype": "Link",
+   "label": "Geography L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "eligibility_condition",
+   "fieldtype": "Text",
+   "label": "Eligibility Condition"
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Float",
+   "label": "Rating"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-16 11:04:42.187530",
+ "modified": "2026-07-16 17:30:32.103457",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",
