@@ -1,5 +1,5 @@
 import frappe
-from samaaja.utils.result import Result
+from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.location import LocationManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
@@ -7,8 +7,6 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 @frappe.whitelist(allow_guest=True)
 def get_locations():
     try:
-        # If LocationManager already returns a Result object, 
-        # just convert it directly to your custom response.
         return LocationManager.get_locations().to_custom_response()
 
     except Exception as e:
@@ -18,6 +16,9 @@ def get_locations():
             stacktrace=frappe.get_traceback()
         )
 
-        return Result.error(
-            "Unable to fetch locations."
-        ).to_custom_response()
+        return custom_response(
+            message="Failed to fetch locations",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )

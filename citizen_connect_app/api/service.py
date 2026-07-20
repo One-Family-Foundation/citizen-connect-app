@@ -1,4 +1,5 @@
 import frappe
+from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.service import ServiceManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
@@ -31,9 +32,12 @@ def get(
             stacktrace=frappe.get_traceback(),
         )
 
-        return Result.error(
-            "Failed to fetch services"
-        ).to_custom_response()
+        return custom_response(
+            message="Failed to fetch services",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
 
 
 @frappe.whitelist(allow_guest=True)
@@ -48,6 +52,9 @@ def get_categories():
             stacktrace=frappe.get_traceback(),
         )
 
-        return Result.error(
-            "Failed to fetch categories"
-        ).to_custom_response()
+        return custom_response(
+            message="Failed to fetch categories",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )

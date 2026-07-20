@@ -1,9 +1,12 @@
 import frappe
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.error_logger import ErrorLogger
+from citizen_connect_app.models.service import Service
 
 
 class ServiceManager:
+
+    CATEGORIES_CACHE_KEY = "service_categories_v1"
 
     @staticmethod
     def get_list(
@@ -16,7 +19,7 @@ class ServiceManager:
         geo2=None,
     ) -> Result:
         try:
-            # Validate pagination
+            # Validate pagination parameters
             limit = max(1, min(int(limit), 100))
             offset = max(0, int(offset))
 
@@ -33,11 +36,9 @@ class ServiceManager:
             if country:
                 filters.append("geo1.country_name = %s")
                 values.append(country)
-
             if geo1:
                 filters.append("geo1.geo_l1 = %s")
                 values.append(geo1)
-
             if geo2:
                 filters.append("geo2.geo_2 = %s")
                 values.append(geo2)
@@ -46,6 +47,7 @@ class ServiceManager:
             if filters:
                 where_clause = "WHERE " + " AND ".join(filters)
 
+            
             values.extend([limit, offset])
 
             services = frappe.db.sql(
@@ -54,15 +56,9 @@ class ServiceManager:
                     s.name AS id,
                     s.title,
                     s.description,
-
-                    s.gender,
-                    s.income,
-                    s.age,
-
                     s.service_country,
                     geo1.geo_l1 AS service_geo1,
                     geo2.geo_2 AS service_geo2,
-
                     s.cost_model,
                     s.cost_details,
                     s.sponsorship_information,
@@ -72,10 +68,8 @@ class ServiceManager:
                     s.creation,
                     s.eligibility_condition,
                     s.rating,
-
                     s.ngo_org AS ngo_id,
                     org.org_name AS ngo_name,
-
                     l1.catalogue_name AS l1_name,
                     l2.catalogue_name AS l2_name
                 FROM `tabService` s
@@ -103,35 +97,45 @@ class ServiceManager:
                 as_dict=True,
             )
 
-            # Transform response
-            for service in services:
-                # Location
-                location = {}
+            # Transform raw rows into domain objects
+            service_list = []
+            for row in services:
+                service = Service(
+                    id=row["id"],
+                    title=row["title"],
+                    description=row["description"],
+                    location={
+                        "country": row["service_country"],
+                        "geo1": row["service_geo1"],
+                        "geo2": row["service_geo2"],
+                    },
+                    cost_model=row["cost_model"],
+                    cost_details=row["cost_details"],
+                    sponsorship_information=row["sponsorship_information"],
+                    availability_status=row["availability_status"],
+                    service_channel=row["service_channel"],
+                    service_status=row["service_status"],
+                    creation=row["creation"],
+                    eligibility_condition=row["eligibility_condition"],
+                    rating=row["rating"],
+                    ngo_id=row["ngo_id"],
+                    ngo_name=row["ngo_name"],
+                    service_category={
+                        "l1": {"name": row["l1_name"]},
+                        "l2": {"name": row["l2_name"]}
+                    }
+                )
+                service_list.append(service.to_dict())
 
-                if service.get("service_country"):
-                    location["country"] = service.pop("service_country")
-
-                if service.get("service_geo1"):
-                    location["geo1"] = service.pop("service_geo1")
-
-                if service.get("service_geo2"):
-                    location["geo2"] = service.pop("service_geo2")
-
-                service["location"] = location
-
-                # Service Category Hierarchy
-                service["service_category"] = {
-                    "l1": {"name": service.pop("l1_name")},
-                    "l2": {"name": service.pop("l2_name")},
-                }
-
-            return Result.success( {
-                "services": services,
+            return Result.success(
+                message="Services fetched successfully.",
+                data={
+                "services": service_list,
                 "limit": limit,
                 "offset": offset,
-                "has_more": len(services) == limit,
-               }
-            )
+                "has_more": len(service_list) == limit,
+            })
+
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch services",
@@ -140,10 +144,18 @@ class ServiceManager:
             )
             raise
 
-
     @staticmethod
-    def get_categories():
+    def get_categories() -> Result:
+        cache = frappe.cache()
+
         try:
+            cached_data = cache.get_value(ServiceManager.CATEGORIES_CACHE_KEY)
+            if cached_data :
+                frappe.logger().info("Locations API: Cache Hit")
+                return Result.success(
+                     message="Services fetched successfully.",
+                     data=cached_data
+                )
             rows = frappe.db.sql(
                 """
                 SELECT
@@ -162,21 +174,34 @@ class ServiceManager:
             )
 
             categories = {}
-
             for row in rows:
-                if row.l1_id not in categories:
-                    categories[row.l1_id] = {
-                        "id": row.l1_id,
-                        "name": row.l1_name,
+                l1_id = row["l1_id"]
+                if l1_id not in categories:
+                    categories[l1_id] = {
+                        "id": l1_id,
+                        "name": row["l1_name"],
                         "children": [],
                     }
 
-                if row.l2_id:
-                    categories[row.l1_id]["children"].append(
-                        {"id": row.l2_id, "name": row.l2_name}
-                    )
+                if row["l2_id"]:
+                    categories[l1_id]["children"].append({
+                        "id": row["l2_id"], 
+                        "name": row["l2_name"]
+                    })
 
-            return Result.success({"categories": list(categories.values())})
+          
+            response = {
+                "categories": list(categories.values())
+            }
+            cache.set_value(
+                ServiceManager.CATEGORIES_CACHE_KEY,
+                response,
+                expires_in_sec=3600
+            )
+            return Result.success(
+                message="Services Fetched successfully",
+                data=response
+            )
             
         except Exception as e:
             ErrorLogger.log(
@@ -185,3 +210,5 @@ class ServiceManager:
                 stacktrace=frappe.get_traceback(),
             )
             raise
+
+    
