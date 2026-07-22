@@ -78,5 +78,5 @@ class LocationManager:
                 error=str(e)
             )
     
-def clear_locations_cache():
+def clear_locations_cache(doc , method):
     frappe.cache().delete_value(LocationManager.CACHE_KEY)    
