@@ -1,7 +1,7 @@
 import frappe
-from samaaja.utils.result import Result
-from citizen_connect_app.utils.error_logger import ErrorLogger
 from citizen_connect_app.models.service import Service
+from citizen_connect_app.utils.error_logger import ErrorLogger
+from samaaja.utils.result import Result
 
 
 class ServiceManager:
@@ -32,7 +32,7 @@ class ServiceManager:
                 values.append(category_l1)
             if category_l2:
                 filters.append("l2.catalogue_name = %s")
-                values.append(category_l2)            
+                values.append(category_l2)
             if country:
                 filters.append("geo1.country_name = %s")
                 values.append(country)
@@ -47,7 +47,6 @@ class ServiceManager:
             if filters:
                 where_clause = "WHERE " + " AND ".join(filters)
 
-            
             values.extend([limit, offset])
 
             services = frappe.db.sql(
@@ -122,23 +121,116 @@ class ServiceManager:
                     ngo_name=row["ngo_name"],
                     service_category={
                         "l1": {"name": row["l1_name"]},
-                        "l2": {"name": row["l2_name"]}
-                    }
+                        "l2": {"name": row["l2_name"]},
+                    },
                 )
                 service_list.append(service.to_dict())
 
             return Result.success(
                 message="Services fetched successfully.",
                 data={
-                "services": service_list,
-                "limit": limit,
-                "offset": offset,
-                "has_more": len(service_list) == limit,
-            })
+                    "services": service_list,
+                    "limit": limit,
+                    "offset": offset,
+                    "has_more": len(service_list) == limit,
+                },
+            )
 
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch services",
+                details=str(e),
+                stacktrace=frappe.get_traceback(),
+            )
+            raise
+
+    @staticmethod
+    def get_service(service_id: str) -> Result:
+        try:
+            service = frappe.db.sql(
+                """
+                SELECT
+                    s.name AS id,
+                    s.title,
+                    s.description,
+                    s.service_country,
+                    geo1.geo_l1 AS service_geo1,
+                    geo2.geo_2 AS service_geo2,
+                    s.cost_model,
+                    s.cost_details,
+                    s.sponsorship_information,
+                    s.availability_status,
+                    s.service_channel,
+                    s.service_status,
+                    s.creation,
+                    s.eligibility_condition,
+                    s.rating,
+                    s.ngo_org AS ngo_id,
+                    org.org_name AS ngo_name,
+                    l1.catalogue_name AS l1_name,
+                    l2.catalogue_name AS l2_name
+                FROM `tabService` s
+                LEFT JOIN `tabOrganisation` org
+                    ON org.name = s.ngo_org
+                LEFT JOIN `tabGeography L1` geo1
+                    ON geo1.name = s.service_geo1
+                LEFT JOIN `tabGeography L2` geo2
+                    ON geo2.name = s.service_geo2
+                LEFT JOIN `tabService Category` selected_category
+                    ON selected_category.name = s.service_category
+                LEFT JOIN `tabService Category` l1
+                    ON l1.lft <= selected_category.lft
+                    AND l1.rgt >= selected_category.rgt
+                    AND l1.category_level = 'L1'
+                LEFT JOIN `tabService Category` l2
+                    ON l2.lft <= selected_category.lft
+                    AND l2.rgt >= selected_category.rgt
+                    AND l2.category_level = 'L2'
+                WHERE s.name = %s
+                """,
+                (service_id,),
+                as_dict=True,
+            )
+
+            if not service:
+                return Result.not_found(message="Service not found.")
+
+            row = service[0]
+
+            service_data = Service(
+                id=row["id"],
+                title=row["title"],
+                description=row["description"],
+                location={
+                    "country": row["service_country"],
+                    "geo1": row["service_geo1"],
+                    "geo2": row["service_geo2"],
+                },
+                cost_model=row["cost_model"],
+                cost_details=row["cost_details"],
+                sponsorship_information=row["sponsorship_information"],
+                availability_status=row["availability_status"],
+                service_channel=row["service_channel"],
+                service_status=row["service_status"],
+                creation=row["creation"],
+                eligibility_condition=row["eligibility_condition"],
+                rating=row["rating"],
+                ngo_id=row["ngo_id"],
+                ngo_name=row["ngo_name"],
+                service_category={
+                    "l1": {"name": row["l1_name"]},
+                    "l2": {"name": row["l2_name"]},
+                },
+            )
+
+            return Result.success(
+                message="Service fetched successfully.",
+                data=service_data.to_dict(),
+            )
+
+        except Exception as e:
+            ErrorLogger.log(
+                message="Failed to fetch service",
                 details=str(e),
                 stacktrace=frappe.get_traceback(),
             )
@@ -150,11 +242,10 @@ class ServiceManager:
 
         try:
             cached_data = cache.get_value(ServiceManager.CATEGORIES_CACHE_KEY)
-            if cached_data :
+            if cached_data:
                 frappe.logger().info("Locations API: Cache Hit")
                 return Result.success(
-                     message="Services fetched successfully.",
-                     data=cached_data
+                    message="Services fetched successfully.", data=cached_data
                 )
             rows = frappe.db.sql(
                 """
@@ -184,25 +275,20 @@ class ServiceManager:
                     }
 
                 if row["l2_id"]:
-                    categories[l1_id]["children"].append({
-                        "id": row["l2_id"], 
-                        "name": row["l2_name"]
-                    })
+                    categories[l1_id]["children"].append(
+                        {"id": row["l2_id"], "name": row["l2_name"]}
+                    )
 
-          
-            response = {
-                "categories": list(categories.values())
-            }
+            response = {"categories": list(categories.values())}
             cache.set_value(
                 ServiceManager.CATEGORIES_CACHE_KEY,
                 response,
-                expires_in_sec=3600
+                expires_in_sec=3600,
             )
             return Result.success(
-                message="Services Fetched successfully",
-                data=response
+                message="Services Fetched successfully", data=response
             )
-            
+
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch categories",
@@ -210,5 +296,7 @@ class ServiceManager:
                 stacktrace=frappe.get_traceback(),
             )
             raise
-
-    
+    @staticmethod
+    def clear_categories_cache(doc=None, method=None):
+        cache = frappe.cache()
+        cache.delete_value(ServiceManager.CATEGORIES_CACHE_KEY)

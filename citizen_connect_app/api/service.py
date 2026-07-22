@@ -41,6 +41,26 @@ def get(
 
 
 @frappe.whitelist(allow_guest=True)
+def detail(service_id):
+    try:
+        return ServiceManager.get_service(service_id).to_custom_response()
+
+    except Exception as e:
+        ErrorLogger.log(
+            message="Failed to fetch service",
+            details=str(e),
+            stacktrace=frappe.get_traceback(),
+        )
+
+        return custom_response(
+            message="Failed to fetch service",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
+
+
+@frappe.whitelist(allow_guest=True)
 def get_categories():
     try:
         return ServiceManager.get_categories().to_custom_response()

@@ -18,7 +18,7 @@ class LocationManager:
                     data=cached_data
                 )
             frappe.logger().info("Locations API: Cache Miss")
-            # 1. Fetch all records in bulk to avoid the N+1 query problem
+            
             countries = frappe.get_all(
                 "Country", 
                 fields=["name", "country_name"]

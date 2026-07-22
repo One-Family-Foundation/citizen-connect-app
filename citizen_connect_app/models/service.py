@@ -11,7 +11,6 @@ class Service:
    
 
     location: dict
-
     cost_model: str
     cost_details: float
     sponsorship_information: str
