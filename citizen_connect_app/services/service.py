@@ -1,5 +1,4 @@
 import frappe
-from citizen_connect_app.models.service import Service
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -99,33 +98,8 @@ class ServiceManager:
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
-                service = Service(
-                    id=row["id"],
-                    title=row["title"],
-                    description=row["description"],
-                    location={
-                        "country": row["service_country"],
-                        "geo1": row["service_geo1"],
-                        "geo2": row["service_geo2"],
-                    },
-                    cost_model=row["cost_model"],
-                    cost_details=row["cost_details"],
-                    sponsorship_information=row["sponsorship_information"],
-                    availability_status=row["availability_status"],
-                    service_channel=row["service_channel"],
-                    service_status=row["service_status"],
-                    creation=row["creation"],
-                    eligibility_condition=row["eligibility_condition"],
-                    rating=row["rating"],
-                    ngo_id=row["ngo_id"],
-                    ngo_name=row["ngo_name"],
-                    service_category={
-                        "l1": {"name": row["l1_name"]},
-                        "l2": {"name": row["l2_name"]},
-                    },
-                )
-                service_list.append(service.to_dict())
-
+                service = ServiceManager._create_service(row)
+                service_list.append(service)
             return Result.success(
                 message="Services fetched successfully.",
                 data={
@@ -145,7 +119,7 @@ class ServiceManager:
             raise
 
     @staticmethod
-    def get_service(service_id: str) -> Result:
+    def get(service_id: str) -> Result:
         try:
             service = frappe.db.sql(
                 """
@@ -194,40 +168,12 @@ class ServiceManager:
 
             if not service:
                 return Result.not_found(message="Service not found.")
-
             row = service[0]
-
-            service_data = Service(
-                id=row["id"],
-                title=row["title"],
-                description=row["description"],
-                location={
-                    "country": row["service_country"],
-                    "geo1": row["service_geo1"],
-                    "geo2": row["service_geo2"],
-                },
-                cost_model=row["cost_model"],
-                cost_details=row["cost_details"],
-                sponsorship_information=row["sponsorship_information"],
-                availability_status=row["availability_status"],
-                service_channel=row["service_channel"],
-                service_status=row["service_status"],
-                creation=row["creation"],
-                eligibility_condition=row["eligibility_condition"],
-                rating=row["rating"],
-                ngo_id=row["ngo_id"],
-                ngo_name=row["ngo_name"],
-                service_category={
-                    "l1": {"name": row["l1_name"]},
-                    "l2": {"name": row["l2_name"]},
-                },
-            )
-
+            service_data = ServiceManager._create_service(row)
             return Result.success(
                 message="Service fetched successfully.",
-                data=service_data.to_dict(),
+                data=service_data,
             )
-
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch service",
@@ -235,7 +181,35 @@ class ServiceManager:
                 stacktrace=frappe.get_traceback(),
             )
             raise
-
+    
+    @staticmethod
+    def _create_service(row: dict) -> Service:
+      return {
+        "id": row["id"],
+        "title": row["title"],
+        "description": row["description"],
+        "location": {
+            "country": row["service_country"],
+            "geo1": row["service_geo1"],
+            "geo2": row["service_geo2"],
+        },
+        "cost_model": row["cost_model"],
+        "cost_details": row["cost_details"],
+        "sponsorship_information": row["sponsorship_information"],
+        "availability_status": row["availability_status"],
+        "service_channel": row["service_channel"],
+        "service_status": row["service_status"],
+        "creation": row["creation"],
+        "eligibility_condition": row["eligibility_condition"],
+        "rating": row["rating"],
+        "ngo_id": row["ngo_id"],
+        "ngo_name": row["ngo_name"],
+        "service_category": {
+            "l1": {"name": row["l1_name"]},
+            "l2": {"name": row["l2_name"]},
+        },
+    }
+    
     @staticmethod
     def get_categories() -> Result:
         cache = frappe.cache()
@@ -296,7 +270,6 @@ class ServiceManager:
                 stacktrace=frappe.get_traceback(),
             )
             raise
-    @staticmethod
-    def clear_categories_cache(doc=None, method=None):
-        cache = frappe.cache()
-        cache.delete_value(ServiceManager.CATEGORIES_CACHE_KEY)
+
+def clear_categories_cache(doc=None, method=None):
+    frappe.cache().delete_value(ServiceManager.CATEGORIES_CACHE_KEY)

@@ -3,7 +3,6 @@ from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.service import ServiceManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
-
 @frappe.whitelist(allow_guest=True)
 def get(
     limit=10,
@@ -39,11 +38,10 @@ def get(
             error=True,
         )
 
-
 @frappe.whitelist(allow_guest=True)
 def detail(service_id):
     try:
-        return ServiceManager.get_service(service_id).to_custom_response()
+        return ServiceManager.get(service_id).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(
@@ -58,7 +56,6 @@ def detail(service_id):
             status_code=500,
             error=True,
         )
-
 
 @frappe.whitelist(allow_guest=True)
 def get_categories():

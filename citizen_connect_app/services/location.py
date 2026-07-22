@@ -7,7 +7,7 @@ class LocationManager:
     CACHE_KEY = "locations_api_v1"
 
     @staticmethod
-    def get_locations():
+    def get_list():
         cache = frappe.cache()
         try:
             cached_data = cache.get_value(LocationManager.CACHE_KEY)
@@ -77,7 +77,6 @@ class LocationManager:
                 message="Failed to fetch locations",
                 error=str(e)
             )
-    @staticmethod
-    def clear_cache():
-        """Clear location cache manually."""
-        frappe.cache().delete_value(LocationManager.CACHE_KEY)    
+    
+def clear_locations_cache():
+    frappe.cache().delete_value(LocationManager.CACHE_KEY)    

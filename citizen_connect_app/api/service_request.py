@@ -3,7 +3,6 @@ from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.service_request import ServiceRequestManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
-
 @frappe.whitelist(allow_guest=True)
 def create_service_request():
     try:
@@ -17,7 +16,6 @@ def create_service_request():
             details=str(e),
             stacktrace=frappe.get_traceback(),
         )
-
         return custom_response(
             message="Something went wrong.",
             is_internal_server_error=True,
