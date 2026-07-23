@@ -12,7 +12,6 @@
   "age",
   "gender",
   "situation_desc",
-  "status",
   "workflow_state",
   "photo"
  ],
@@ -64,12 +63,6 @@
    "label": "Photo"
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "New\nAssigned\nIn Progress\nResolved\nClosed\nRejected"
-  },
-  {
    "fieldname": "workflow_state",
    "fieldtype": "Data",
    "label": "Workflow state"
@@ -78,7 +71,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-21 17:33:37.627853",
+ "modified": "2026-07-23 20:11:05.107645",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service Request Help",

@@ -1,4 +1,5 @@
 import frappe
+
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -68,8 +69,24 @@ class ServiceManager:
                     s.rating,
                     s.ngo_org AS ngo_id,
                     org.org_name AS ngo_name,
-                    l1.catalogue_name AS l1_name,
-                    l2.catalogue_name AS l2_name
+                    (
+                        SELECT l1.catalogue_name
+                        FROM `tabService Category` l1
+                        WHERE l1.lft <= selected_category.lft
+                          AND l1.rgt >= selected_category.rgt
+                          AND l1.category_level = 'L1'
+                        ORDER BY l1.lft DESC
+                        LIMIT 1
+                    ) AS l1_name,
+                    (
+                        SELECT l2.catalogue_name
+                        FROM `tabService Category` l2
+                        WHERE l2.lft <= selected_category.lft
+                          AND l2.rgt >= selected_category.rgt
+                          AND l2.category_level = 'L2'
+                        ORDER BY l2.lft DESC
+                        LIMIT 1
+                    ) AS l2_name
                 FROM `tabService` s
                 LEFT JOIN `tabOrganisation` org
                     ON org.name = s.ngo_org
@@ -79,14 +96,6 @@ class ServiceManager:
                     ON geo2.name = s.service_geo2
                 LEFT JOIN `tabService Category` selected_category
                     ON selected_category.name = s.service_category
-                LEFT JOIN `tabService Category` l1
-                    ON l1.lft <= selected_category.lft
-                    AND l1.rgt >= selected_category.rgt
-                    AND l1.category_level = 'L1'
-                LEFT JOIN `tabService Category` l2
-                    ON l2.lft <= selected_category.lft
-                    AND l2.rgt >= selected_category.rgt
-                    AND l2.category_level = 'L2'
                 {where_clause}
                 ORDER BY s.creation DESC
                 LIMIT %s OFFSET %s
@@ -100,6 +109,7 @@ class ServiceManager:
             for row in services:
                 service = ServiceManager._create_service(row)
                 service_list.append(service)
+
             return Result.success(
                 message="Services fetched successfully.",
                 data={
@@ -168,12 +178,15 @@ class ServiceManager:
 
             if not service:
                 return Result.not_found(message="Service not found.")
+
             row = service[0]
             service_data = ServiceManager._create_service(row)
+
             return Result.success(
                 message="Service fetched successfully.",
                 data=service_data,
             )
+
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch service",
@@ -181,35 +194,35 @@ class ServiceManager:
                 stacktrace=frappe.get_traceback(),
             )
             raise
-    
+
     @staticmethod
-    def _create_service(row: dict) -> Service:
-      return {
-        "id": row["id"],
-        "title": row["title"],
-        "description": row["description"],
-        "location": {
-            "country": row["service_country"],
-            "geo1": row["service_geo1"],
-            "geo2": row["service_geo2"],
-        },
-        "cost_model": row["cost_model"],
-        "cost_details": row["cost_details"],
-        "sponsorship_information": row["sponsorship_information"],
-        "availability_status": row["availability_status"],
-        "service_channel": row["service_channel"],
-        "service_status": row["service_status"],
-        "creation": row["creation"],
-        "eligibility_condition": row["eligibility_condition"],
-        "rating": row["rating"],
-        "ngo_id": row["ngo_id"],
-        "ngo_name": row["ngo_name"],
-        "service_category": {
-            "l1": {"name": row["l1_name"]},
-            "l2": {"name": row["l2_name"]},
-        },
-    }
-    
+    def _create_service(row: dict) -> dict:
+        return {
+            "id": row["id"],
+            "title": row["title"],
+            "description": row["description"],
+            "location": {
+                "country": row["service_country"],
+                "geo1": row["service_geo1"],
+                "geo2": row["service_geo2"],
+            },
+            "cost_model": row["cost_model"],
+            "cost_details": row["cost_details"],
+            "sponsorship_information": row["sponsorship_information"],
+            "availability_status": row["availability_status"],
+            "service_channel": row["service_channel"],
+            "service_status": row["service_status"],
+            "creation": row["creation"],
+            "eligibility_condition": row["eligibility_condition"],
+            "rating": row["rating"],
+            "ngo_id": row["ngo_id"],
+            "ngo_name": row["ngo_name"],
+            "service_category": {
+                "l1": {"name": row["l1_name"]},
+                "l2": {"name": row["l2_name"]},
+            },
+        }
+
     @staticmethod
     def get_categories() -> Result:
         cache = frappe.cache()
@@ -219,8 +232,10 @@ class ServiceManager:
             if cached_data:
                 frappe.logger().info("Locations API: Cache Hit")
                 return Result.success(
-                    message="Services fetched successfully.", data=cached_data
+                    message="Services fetched successfully.",
+                    data=cached_data,
                 )
+
             rows = frappe.db.sql(
                 """
                 SELECT

@@ -49,11 +49,9 @@ class ServiceRequestManager:
 
         except Exception as e:
             ErrorLogger.log(
-                message="Failed to create service request",
-                details=str(e),
-                stacktrace=frappe.get_traceback(),
+                title="Failed to create service request",
+                message=str(e)
             )
-
             return Result.failure(
                 "Failed to create service request",
                 error_data=str(e),
