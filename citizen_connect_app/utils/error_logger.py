@@ -7,15 +7,13 @@ logger = get_logger("citizen_connect")
 class ErrorLogger:
 
     @staticmethod
-    def log(message: str, details: str, stacktrace: str):
+    def log(error: Exception):
         frappe.log_error(
-            title=message,
-            traceback=stacktrace
+            title=str(error),
+            message=frappe.get_traceback()
         )
 
         logger.error(
-            "%s\nDetails: %s\nStacktrace:\n%s",
-            message,
-            details,
-            stacktrace
+            message=frappe.get_traceback(),
+            stacktrace=frappe.get_traceback()
         )

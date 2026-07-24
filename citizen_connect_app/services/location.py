@@ -72,7 +72,10 @@ class LocationManager:
             )
 
         except Exception as e:
-            ErrorLogger.log_error(e)
+            ErrorLogger.log_error(
+                message="Failed to fetch locations",
+                stacktrace=frappe.get_traceback()
+            )
             return Result.failure(
                 message="Failed to fetch locations",
                 error=str(e)

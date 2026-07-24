@@ -27,7 +27,6 @@ def get(
     except Exception as e:
         ErrorLogger.log(
             message="Failed to fetch services",
-            details=str(e),
             stacktrace=frappe.get_traceback(),
         )
 
@@ -46,7 +45,6 @@ def detail(service_id):
     except Exception as e:
         ErrorLogger.log(
             message="Failed to fetch service",
-            details=str(e),
             stacktrace=frappe.get_traceback(),
         )
 
@@ -65,7 +63,6 @@ def get_categories():
     except Exception as e:
         ErrorLogger.log(
             message="Failed to fetch categories",
-            details=str(e),
             stacktrace=frappe.get_traceback(),
         )
 

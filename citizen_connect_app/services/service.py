@@ -27,12 +27,22 @@ class ServiceManager:
             filters = []
             values = []
 
-            if category_l1:
-                filters.append("l1.catalogue_name = %s")
-                values.append(category_l1)
+            # Category filters
             if category_l2:
-                filters.append("l2.catalogue_name = %s")
+                # Exact L2 match
+                filters.append("s.service_category = %s")
                 values.append(category_l2)
+
+            elif category_l1:
+                # All L2s under the selected L1
+                filters.append("""
+                    s.service_category IN (
+                        SELECT name
+                        FROM `tabService Category`
+                        WHERE parent_service_category = %s
+                    )
+                """)
+                values.append(category_l1)
             if country:
                 filters.append("geo1.country_name = %s")
                 values.append(country)
@@ -50,59 +60,50 @@ class ServiceManager:
             values.extend([limit, offset])
 
             services = frappe.db.sql(
-                f"""
-                SELECT
-                    s.name AS id,
-                    s.title,
-                    s.description,
-                    s.service_country,
-                    geo1.geo_l1 AS service_geo1,
-                    geo2.geo_2 AS service_geo2,
-                    s.cost_model,
-                    s.cost_details,
-                    s.sponsorship_information,
-                    s.availability_status,
-                    s.service_channel,
-                    s.service_status,
-                    s.creation,
-                    s.eligibility_condition,
-                    s.rating,
-                    s.ngo_org AS ngo_id,
-                    org.org_name AS ngo_name,
-                    (
-                        SELECT l1.catalogue_name
-                        FROM `tabService Category` l1
-                        WHERE l1.lft <= selected_category.lft
-                          AND l1.rgt >= selected_category.rgt
-                          AND l1.category_level = 'L1'
-                        ORDER BY l1.lft DESC
-                        LIMIT 1
-                    ) AS l1_name,
-                    (
-                        SELECT l2.catalogue_name
-                        FROM `tabService Category` l2
-                        WHERE l2.lft <= selected_category.lft
-                          AND l2.rgt >= selected_category.rgt
-                          AND l2.category_level = 'L2'
-                        ORDER BY l2.lft DESC
-                        LIMIT 1
-                    ) AS l2_name
-                FROM `tabService` s
-                LEFT JOIN `tabOrganisation` org
-                    ON org.name = s.ngo_org
-                LEFT JOIN `tabGeography L1` geo1
-                    ON geo1.name = s.service_geo1
-                LEFT JOIN `tabGeography L2` geo2
-                    ON geo2.name = s.service_geo2
-                LEFT JOIN `tabService Category` selected_category
-                    ON selected_category.name = s.service_category
-                {where_clause}
-                ORDER BY s.creation DESC
-                LIMIT %s OFFSET %s
-                """,
-                values,
-                as_dict=True,
-            )
+                    f"""
+                    SELECT
+                        s.name AS id,
+                        s.title,
+                        s.description,
+                        s.service_country,
+                        geo1.geo_l1 AS service_geo1,
+                        geo2.geo_2 AS service_geo2,
+                        s.cost_model,
+                        s.cost_details,
+                        s.sponsorship_information,
+                        s.availability_status,
+                        s.service_channel,
+                        s.service_status,
+                        s.creation,
+                        s.eligibility_condition,
+                        s.rating,
+                        s.ngo_org AS ngo_name,
+
+                        parent_category.catalogue_name AS l1_name,
+                        selected_category.catalogue_name AS l2_name
+
+                    FROM `tabService` s
+
+                    LEFT JOIN `tabGeography L1` geo1
+                        ON geo1.name = s.service_geo1
+
+                    LEFT JOIN `tabGeography L2` geo2
+                        ON geo2.name = s.service_geo2
+
+                    LEFT JOIN `tabService Category` selected_category
+                        ON selected_category.name = s.service_category
+
+                    LEFT JOIN `tabService Category` parent_category
+                        ON parent_category.name = selected_category.parent_service_category
+
+                    {where_clause}
+
+                    ORDER BY s.creation DESC
+                    LIMIT %s OFFSET %s
+                    """,
+                    values,
+                    as_dict=True,
+                )
 
             # Transform raw rows into domain objects
             service_list = []
@@ -123,7 +124,6 @@ class ServiceManager:
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch services",
-                details=str(e),
                 stacktrace=frappe.get_traceback(),
             )
             raise
@@ -149,27 +149,22 @@ class ServiceManager:
                     s.creation,
                     s.eligibility_condition,
                     s.rating,
-                    s.ngo_org AS ngo_id,
-                    org.org_name AS ngo_name,
-                    l1.catalogue_name AS l1_name,
-                    l2.catalogue_name AS l2_name
+                    s.ngo_org AS ngo_name,
+
+                    l2.parent_service_category AS l1_name,
+                    s.service_category AS l2_name
+
                 FROM `tabService` s
-                LEFT JOIN `tabOrganisation` org
-                    ON org.name = s.ngo_org
+
                 LEFT JOIN `tabGeography L1` geo1
                     ON geo1.name = s.service_geo1
+
                 LEFT JOIN `tabGeography L2` geo2
                     ON geo2.name = s.service_geo2
-                LEFT JOIN `tabService Category` selected_category
-                    ON selected_category.name = s.service_category
-                LEFT JOIN `tabService Category` l1
-                    ON l1.lft <= selected_category.lft
-                    AND l1.rgt >= selected_category.rgt
-                    AND l1.category_level = 'L1'
+
                 LEFT JOIN `tabService Category` l2
-                    ON l2.lft <= selected_category.lft
-                    AND l2.rgt >= selected_category.rgt
-                    AND l2.category_level = 'L2'
+                    ON l2.name = s.service_category
+
                 WHERE s.name = %s
                 """,
                 (service_id,),
@@ -187,14 +182,12 @@ class ServiceManager:
                 data=service_data,
             )
 
-        except Exception as e:
+        except Exception:
             ErrorLogger.log(
                 message="Failed to fetch service",
-                details=str(e),
                 stacktrace=frappe.get_traceback(),
             )
             raise
-
     @staticmethod
     def _create_service(row: dict) -> dict:
         return {
@@ -215,7 +208,6 @@ class ServiceManager:
             "creation": row["creation"],
             "eligibility_condition": row["eligibility_condition"],
             "rating": row["rating"],
-            "ngo_id": row["ngo_id"],
             "ngo_name": row["ngo_name"],
             "service_category": {
                 "l1": {"name": row["l1_name"]},
@@ -281,7 +273,6 @@ class ServiceManager:
         except Exception as e:
             ErrorLogger.log(
                 message="Failed to fetch categories",
-                details=str(e),
                 stacktrace=frappe.get_traceback(),
             )
             raise

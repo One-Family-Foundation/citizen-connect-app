@@ -10,7 +10,6 @@ def get_locations():
     except Exception as e:
         ErrorLogger.log(
             message="Failed to fetch locations",
-            details=str(e),
             stacktrace=frappe.get_traceback()
         )
         return custom_response(

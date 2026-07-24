@@ -2,6 +2,7 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
+ "autoname": "field:catalogue_name",
  "creation": "2026-07-15 10:08:08.485745",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -27,7 +28,8 @@
    "label": "Catalogue Name",
    "length": 30,
    "no_copy": 1,
-   "reqd": 1
+   "reqd": 1,
+   "unique": 1
   },
   {
    "fieldname": "category_level",
@@ -77,10 +79,11 @@
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-07-23 11:50:06.712598",
+ "modified": "2026-07-24 08:15:55.359186",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service Category",
+ "naming_rule": "By fieldname",
  "nsm_parent_field": "parent_service_category",
  "owner": "Administrator",
  "permissions": [

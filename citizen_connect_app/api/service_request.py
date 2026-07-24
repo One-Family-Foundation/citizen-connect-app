@@ -12,8 +12,8 @@ def create():
 
     except Exception as e:
         ErrorLogger.log(
-            title="Failed to create service request",
-            message=str(e)
+            message="Failed to create service request",
+            stacktrace=frappe.get_traceback()
         )
         return custom_response(
             message="Something went wrong.",

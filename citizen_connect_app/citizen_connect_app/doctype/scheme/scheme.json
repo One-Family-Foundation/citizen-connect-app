@@ -2,25 +2,136 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
+ "autoname": "field:scheme_name",
  "creation": "2026-07-23 09:57:24.435918",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_owhk"
+  "scheme_name",
+  "description",
+  "benefit",
+  "eligibility",
+  "documents_required",
+  "application_url",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "gender",
+  "disability",
+  "income",
+  "issuing_body",
+  "status",
+  "rating"
  ],
  "fields": [
   {
-   "fieldname": "section_break_owhk",
-   "fieldtype": "Section Break"
+   "fieldname": "scheme_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Scheme Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "benefit",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Benefits",
+   "reqd": 1
+  },
+  {
+   "fieldname": "eligibility",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Eligibility",
+   "reqd": 1
+  },
+  {
+   "fieldname": "documents_required",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Documents Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "application_url",
+   "fieldtype": "Data",
+   "label": "Application URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geography L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geography L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale\nOthers",
+   "reqd": 1
+  },
+  {
+   "fieldname": "disability",
+   "fieldtype": "Select",
+   "label": "Disability",
+   "options": "Yes\nNo",
+   "reqd": 1
+  },
+  {
+   "fieldname": "income",
+   "fieldtype": "Currency",
+   "label": "Income",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "issuing_body",
+   "fieldtype": "Data",
+   "label": "Issuing Body ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nIn-Active",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "Rating"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-23 09:57:24.435918",
+ "modified": "2026-07-24 12:15:58.031835",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",
+ "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {
@@ -38,7 +149,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "scheme_name"
 }
