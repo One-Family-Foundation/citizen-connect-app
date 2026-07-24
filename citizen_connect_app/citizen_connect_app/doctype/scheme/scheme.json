@@ -2,7 +2,6 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
- "autoname": "field:scheme_name",
  "creation": "2026-07-23 09:57:24.435918",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -17,10 +16,11 @@
   "geo_l1",
   "geo_l2",
   "gender",
-  "disability",
+  "disable_relevant",
   "income",
   "issuing_body",
-  "status",
+  "is_active",
+  "is_verified",
   "rating"
  ],
  "fields": [
@@ -29,6 +29,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Scheme Name",
+   "length": 120,
    "reqd": 1,
    "unique": 1
   },
@@ -92,13 +93,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "disability",
-   "fieldtype": "Select",
-   "label": "Disability",
-   "options": "Yes\nNo",
-   "reqd": 1
-  },
-  {
    "fieldname": "income",
    "fieldtype": "Currency",
    "label": "Income",
@@ -112,26 +106,38 @@
    "reqd": 1
   },
   {
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "Active\nIn-Active",
-   "reqd": 1
-  },
-  {
    "fieldname": "rating",
    "fieldtype": "Rating",
    "label": "Rating"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active ?",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "Is Verified ?"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable_relevant",
+   "fieldtype": "Check",
+   "label": "Relevant for Disabled ?",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-24 12:15:58.031835",
+ "modified": "2026-07-24 13:16:04.383497",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",
- "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

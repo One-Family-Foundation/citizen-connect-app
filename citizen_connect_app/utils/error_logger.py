@@ -1,7 +1,8 @@
 import frappe
-from frappe.utils.logger import get_logger
+from frappe.utils import logger
 
-logger = get_logger("citizen_connect")
+logger.set_log_level("DEBUG")
+logger = frappe.logger("citizen_connect_app", allow_site=True, file_count=50)
 
 
 class ErrorLogger:
@@ -14,6 +15,6 @@ class ErrorLogger:
         )
 
         logger.error(
-            message=frappe.get_traceback(),
-            stacktrace=frappe.get_traceback()
+            frappe.get_traceback()
+            
         )

@@ -7,7 +7,7 @@ from samaaja.utils.result import Result
 class ServiceRequestManager:
 
     @staticmethod
-    def create(data: dict) -> Result:
+    def create(data: dict, attachment=None) -> Result:
         try:
             if not data.get("mobile_num"):
                 return Result.bad_request("Mobile Number is required")
@@ -34,24 +34,29 @@ class ServiceRequestManager:
             service_request.age = data.get("age")
             service_request.gender = data.get("gender")
             service_request.situation_desc = data.get("situation_desc")
-            service_request.photo = data.get("photo")
-            service_request.status = "New"
 
+            if attachment:
+                file_doc = frappe.get_doc({
+                    "doctype": "File",
+                    "file_name": attachment.filename,
+                    "content": attachment.stream.read(),
+                    "is_private": 0,
+                })
+                file_doc.save(ignore_permissions=True)
+                service_request.attachment = file_doc.file_url
             service_request.save(ignore_permissions=True)
 
             return Result.success(
                 "Service request submitted successfully",
                 data={
                     "name": service_request.name,
-                    "status": service_request.status,
+                    "status": "New",
                 },
             )
 
         except Exception as e:
-            ErrorLogger.log(
-                message="Failed to create service request",
-                stacktrace=frappe.get_traceback()
-            )
+            ErrorLogger.log(e)
+            
             return Result.failure(
                 "Failed to create service request",
                 error_data=str(e),

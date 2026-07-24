@@ -13,7 +13,7 @@
   "gender",
   "situation_desc",
   "workflow_state",
-  "photo"
+  "attachment"
  ],
  "fields": [
   {
@@ -58,20 +58,20 @@
    "reqd": 1
   },
   {
-   "fieldname": "photo",
-   "fieldtype": "Attach Image",
-   "label": "Photo"
-  },
-  {
    "fieldname": "workflow_state",
    "fieldtype": "Data",
    "label": "Workflow state"
+  },
+  {
+   "fieldname": "attachment",
+   "fieldtype": "Attach",
+   "label": "Attachment"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-23 20:11:05.107645",
+ "modified": "2026-07-24 15:53:51.270211",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service Request Help",

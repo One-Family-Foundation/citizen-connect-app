@@ -20,6 +20,11 @@
   "service_status",
   "service_channel",
   "eligibility_condition",
+  "contact_details_section",
+  "contact_number",
+  "whatsapp_number",
+  "column_break_hsjr",
+  "email",
   "location_details_section",
   "service_country",
   "service_geo1",
@@ -136,12 +141,37 @@
   {
    "fieldname": "column_break_maqh",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Phone",
+   "label": "Contact Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "whatsapp_number",
+   "fieldtype": "Phone",
+   "label": "Whatsapp Number"
+  },
+  {
+   "fieldname": "column_break_hsjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-17 19:51:12.649132",
+ "modified": "2026-07-24 13:02:20.942747",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

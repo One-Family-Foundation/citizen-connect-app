@@ -76,6 +76,9 @@ class ServiceManager:
                         s.service_status,
                         s.creation,
                         s.eligibility_condition,
+                        s.contact_number,
+                        s.email,
+                        s.whatsapp_number,
                         s.rating,
                         s.ngo_org AS ngo_name,
 
@@ -122,10 +125,7 @@ class ServiceManager:
             )
 
         except Exception as e:
-            ErrorLogger.log(
-                message="Failed to fetch services",
-                stacktrace=frappe.get_traceback(),
-            )
+            ErrorLogger.log(e)
             raise
 
     @staticmethod
@@ -147,6 +147,9 @@ class ServiceManager:
                     s.service_channel,
                     s.service_status,
                     s.creation,
+                    s.contact_number,
+                    s.email,
+                    s.whatsapp_number,
                     s.eligibility_condition,
                     s.rating,
                     s.ngo_org AS ngo_name,
@@ -183,10 +186,7 @@ class ServiceManager:
             )
 
         except Exception:
-            ErrorLogger.log(
-                message="Failed to fetch service",
-                stacktrace=frappe.get_traceback(),
-            )
+            ErrorLogger.log(e)
             raise
     @staticmethod
     def _create_service(row: dict) -> dict:
@@ -209,6 +209,9 @@ class ServiceManager:
             "eligibility_condition": row["eligibility_condition"],
             "rating": row["rating"],
             "ngo_name": row["ngo_name"],
+            "mobile_number": row["contact_number"],
+            "email_id":row["email"],
+            "whatsapp_mobile_number":row["whatsapp_number"],
             "service_category": {
                 "l1": {"name": row["l1_name"]},
                 "l2": {"name": row["l2_name"]},
@@ -271,10 +274,7 @@ class ServiceManager:
             )
 
         except Exception as e:
-            ErrorLogger.log(
-                message="Failed to fetch categories",
-                stacktrace=frappe.get_traceback(),
-            )
+            ErrorLogger.log(e)
             raise
 
 def clear_categories_cache(doc=None, method=None):

@@ -25,14 +25,10 @@ def get(
         ).to_custom_response()
 
     except Exception as e:
-        ErrorLogger.log(
-            message="Failed to fetch services",
-            stacktrace=frappe.get_traceback(),
-        )
+        ErrorLogger.log(e)
 
         return custom_response(
             message="Failed to fetch services",
-            data={"error": str(e)},
             status_code=500,
             error=True,
         )
@@ -43,14 +39,10 @@ def detail(service_id):
         return ServiceManager.get(service_id).to_custom_response()
 
     except Exception as e:
-        ErrorLogger.log(
-            message="Failed to fetch service",
-            stacktrace=frappe.get_traceback(),
-        )
+        ErrorLogger.log(e)
 
         return custom_response(
             message="Failed to fetch service",
-            data={"error": str(e)},
             status_code=500,
             error=True,
         )
@@ -61,14 +53,10 @@ def get_categories():
         return ServiceManager.get_categories().to_custom_response()
 
     except Exception as e:
-        ErrorLogger.log(
-            message="Failed to fetch categories",
-            stacktrace=frappe.get_traceback(),
-        )
+        ErrorLogger.log(e)
 
         return custom_response(
             message="Failed to fetch categories",
-            data={"error": str(e)},
             status_code=500,
             error=True,
         )

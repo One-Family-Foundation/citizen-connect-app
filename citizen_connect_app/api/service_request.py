@@ -7,14 +7,12 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 def create():
     try:
         data = frappe.form_dict
+        attachment = frappe.request.files.get("file")
 
-        return ServiceRequestManager.create(data).to_custom_response()
+        return ServiceRequestManager.create(data, attachment).to_custom_response()
 
     except Exception as e:
-        ErrorLogger.log(
-            message="Failed to create service request",
-            stacktrace=frappe.get_traceback()
-        )
+        ErrorLogger.log(e)
         return custom_response(
             message="Something went wrong.",
             status_code=500,
