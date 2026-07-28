@@ -1,0 +1,163 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-07-23 09:57:24.435918",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "scheme_name",
+  "description",
+  "benefit",
+  "eligibility",
+  "documents_required",
+  "application_url",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "gender",
+  "disable_relevant",
+  "income",
+  "issuing_body",
+  "is_active",
+  "is_verified",
+  "rating"
+ ],
+ "fields": [
+  {
+   "fieldname": "scheme_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Scheme Name",
+   "length": 120,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "benefit",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Benefits",
+   "reqd": 1
+  },
+  {
+   "fieldname": "eligibility",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Eligibility",
+   "reqd": 1
+  },
+  {
+   "fieldname": "documents_required",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Documents Required",
+   "reqd": 1
+  },
+  {
+   "fieldname": "application_url",
+   "fieldtype": "Data",
+   "label": "Application URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geography L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geography L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale\nOthers",
+   "reqd": 1
+  },
+  {
+   "fieldname": "income",
+   "fieldtype": "Currency",
+   "label": "Income",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "issuing_body",
+   "fieldtype": "Data",
+   "label": "Issuing Body ",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Rating",
+   "label": "Rating"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active ?",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "Is Verified ?"
+  },
+  {
+   "default": "0",
+   "fieldname": "disable_relevant",
+   "fieldtype": "Check",
+   "label": "Relevant for Disabled ?",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-24 13:16:04.383497",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Scheme",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "scheme_name"
+}

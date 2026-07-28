@@ -1,0 +1,200 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-07-15 11:09:06.336874",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "basic_details_section",
+  "service_category",
+  "title",
+  "description",
+  "sponsorship_information",
+  "column_break_maqh",
+  "ngo_org",
+  "cost_model",
+  "cost_details",
+  "rating",
+  "availability_status",
+  "service_status",
+  "service_channel",
+  "eligibility_condition",
+  "contact_details_section",
+  "contact_number",
+  "whatsapp_number",
+  "column_break_hsjr",
+  "email",
+  "location_details_section",
+  "service_country",
+  "service_geo1",
+  "service_geo2"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sponsorship_information",
+   "fieldtype": "Long Text",
+   "label": "Sponsorship Information"
+  },
+  {
+   "fieldname": "availability_status",
+   "fieldtype": "Select",
+   "label": "Availability Status",
+   "options": "Active\nInactive",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_channel",
+   "fieldtype": "Select",
+   "label": "Service Channel",
+   "options": "Remote\nHybrid\nOn-site",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_status",
+   "fieldtype": "Select",
+   "label": "Service Status",
+   "options": "Approved\nPending\nRejected",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo_org",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "NGO",
+   "options": "Organisation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_model",
+   "fieldtype": "Select",
+   "label": "Cost Model",
+   "options": "Free\nPaid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "cost_details",
+   "fieldtype": "Currency",
+   "label": "Cost"
+  },
+  {
+   "fieldname": "service_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Service Category",
+   "options": "Service Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "Location Details"
+  },
+  {
+   "fieldname": "service_country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_geo1",
+   "fieldtype": "Link",
+   "label": "Geography L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "service_geo2",
+   "fieldtype": "Link",
+   "label": "Geography L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "eligibility_condition",
+   "fieldtype": "Text",
+   "label": "Eligibility Condition"
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Float",
+   "label": "Rating"
+  },
+  {
+   "fieldname": "basic_details_section",
+   "fieldtype": "Section Break",
+   "label": "Basic Details"
+  },
+  {
+   "fieldname": "column_break_maqh",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_details_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Details"
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Phone",
+   "label": "Contact Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "whatsapp_number",
+   "fieldtype": "Phone",
+   "label": "Whatsapp Number"
+  },
+  {
+   "fieldname": "column_break_hsjr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-07-24 13:02:20.942747",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Service",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title"
+}

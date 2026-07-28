@@ -1,0 +1,110 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "autoname": "field:catalogue_name",
+ "creation": "2026-07-15 10:08:08.485745",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_jzu8",
+  "catalogue_name",
+  "category_level",
+  "lft",
+  "rgt",
+  "is_group",
+  "old_parent",
+  "parent_service_category"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_jzu8",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "catalogue_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Catalogue Name",
+   "length": 30,
+   "no_copy": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "category_level",
+   "fieldtype": "Select",
+   "label": "Category Level",
+   "options": "L1\nL2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "lft",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Left",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "fieldname": "rgt",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Right",
+   "no_copy": 1,
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_group",
+   "fieldtype": "Check",
+   "label": "Is Group"
+  },
+  {
+   "fieldname": "old_parent",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Old Parent",
+   "options": "Service Category"
+  },
+  {
+   "fieldname": "parent_service_category",
+   "fieldtype": "Link",
+   "ignore_user_permissions": 1,
+   "label": "Parent Service Category",
+   "options": "Service Category"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "is_tree": 1,
+ "links": [],
+ "modified": "2026-07-24 08:15:55.359186",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Service Category",
+ "naming_rule": "By fieldname",
+ "nsm_parent_field": "parent_service_category",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "catalogue_name"
+}
