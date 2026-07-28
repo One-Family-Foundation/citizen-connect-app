@@ -75,6 +75,7 @@ class ServiceManager:
                         s.service_channel,
                         s.service_status,
                         s.creation,
+                        s.modified,
                         s.eligibility_condition,
                         s.contact_number,
                         s.email,
@@ -101,7 +102,7 @@ class ServiceManager:
 
                     {where_clause}
 
-                    ORDER BY s.creation DESC
+                    ORDER BY s.modified DESC
                     LIMIT %s OFFSET %s
                     """,
                     values,
@@ -206,6 +207,7 @@ class ServiceManager:
             "service_channel": row["service_channel"],
             "service_status": row["service_status"],
             "creation": row["creation"],
+            "modified": row["modified"],
             "eligibility_condition": row["eligibility_condition"],
             "rating": row["rating"],
             "ngo_name": row["ngo_name"],

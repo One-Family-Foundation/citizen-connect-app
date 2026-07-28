@@ -8,7 +8,9 @@
  "engine": "InnoDB",
  "field_order": [
   "org_name",
-  "about"
+  "phone",
+  "about",
+  "email"
  ],
  "fields": [
   {
@@ -23,12 +25,23 @@
    "fieldname": "about",
    "fieldtype": "Small Text",
    "label": "About"
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Phone",
+   "label": "Phone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "email",
+   "fieldtype": "Data",
+   "label": "Email"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-24 08:57:51.617072",
+ "modified": "2026-07-27 13:06:37.989895",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Organisation",
