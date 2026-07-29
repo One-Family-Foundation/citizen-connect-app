@@ -4,7 +4,7 @@ from citizen_connect_app.services.service import ServiceManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
 @frappe.whitelist(allow_guest=True)
-def get(
+def get_list(
     limit=10,
     offset=0,
     category_l1=None,
@@ -34,7 +34,7 @@ def get(
         )
 
 @frappe.whitelist(allow_guest=True)
-def detail(service_id):
+def get(service_id):
     try:
         return ServiceManager.get(service_id).to_custom_response()
 

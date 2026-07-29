@@ -1,7 +1,8 @@
 import frappe
 from samaaja.utils.custom_response import custom_response
-from citizen_connect_app.services.service_request import ServiceRequestManager
+from citizen_connect_app.services.request_help import RequestHelpManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
+
 
 @frappe.whitelist(allow_guest=True)
 def create():
@@ -9,7 +10,11 @@ def create():
         data = frappe.form_dict
         attachment = frappe.request.files.get("file")
 
-        return ServiceRequestManager.create(data, attachment).to_custom_response()
+        return RequestHelpManager.create(
+            data=data,
+            request_type="service",
+            attachment=attachment,
+        ).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
@@ -18,5 +23,3 @@ def create():
             status_code=500,
             error=True,
         )
-
-
