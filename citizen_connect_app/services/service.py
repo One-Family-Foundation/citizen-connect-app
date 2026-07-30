@@ -139,6 +139,7 @@ class ServiceManager:
                     s.service_channel,
                     s.service_status,
                     s.creation,
+                    s.modified,
                     s.contact_number,
                     s.email,
                     s.whatsapp_number,
@@ -176,8 +177,7 @@ class ServiceManager:
                 message="Service fetched successfully.",
                 data=service_data,
             )
-
-        except Exception:
+        except Exception as e:
             ErrorLogger.log(e)
             raise
     @staticmethod
