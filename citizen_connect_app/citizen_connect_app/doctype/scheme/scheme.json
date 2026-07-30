@@ -7,6 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "scheme_name",
+  "category_l1",
+  "category_l2",
   "description",
   "benefit",
   "eligibility",
@@ -17,11 +19,13 @@
   "geo_l2",
   "gender",
   "disable_relevant",
-  "income",
+  "income_limit",
+  "currency",
   "issuing_body",
   "is_active",
   "is_verified",
-  "rating"
+  "rating",
+  "ngos"
  ],
  "fields": [
   {
@@ -89,20 +93,14 @@
    "fieldname": "gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale\nOthers",
-   "reqd": 1
-  },
-  {
-   "fieldname": "income",
-   "fieldtype": "Currency",
-   "label": "Income",
-   "non_negative": 1,
+   "options": "All\nMale\nFemale\nNon-binary",
    "reqd": 1
   },
   {
    "fieldname": "issuing_body",
    "fieldtype": "Data",
    "label": "Issuing Body ",
+   "length": 120,
    "reqd": 1
   },
   {
@@ -129,12 +127,46 @@
    "fieldtype": "Check",
    "label": "Relevant for Disabled ?",
    "reqd": 1
+  },
+  {
+   "fieldname": "income_limit",
+   "fieldtype": "Int",
+   "label": "Income Limit",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "currency",
+   "fieldtype": "Link",
+   "label": "Currency",
+   "options": "Currency",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngos",
+   "fieldtype": "Table",
+   "label": "NGOs",
+   "options": "Scheme NGO"
+  },
+  {
+   "fieldname": "category_l1",
+   "fieldtype": "Link",
+   "label": "Category L1",
+   "options": "Service Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category_l2",
+   "fieldtype": "Link",
+   "label": "Category L2",
+   "options": "Service Category",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-24 13:16:04.383497",
+ "modified": "2026-07-27 17:11:33.695312",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",

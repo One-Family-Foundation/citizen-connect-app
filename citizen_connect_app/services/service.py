@@ -30,18 +30,12 @@ class ServiceManager:
             # Category filters
             if category_l2:
                 # Exact L2 match
-                filters.append("s.service_category = %s")
+                filters.append("s.category_l2 = %s")
                 values.append(category_l2)
 
             elif category_l1:
                 # All L2s under the selected L1
-                filters.append("""
-                    s.service_category IN (
-                        SELECT name
-                        FROM `tabService Category`
-                        WHERE parent_service_category = %s
-                    )
-                """)
+                filters.append("s.category_l1 = %s")
                 values.append(category_l1)
             if country:
                 filters.append("geo1.country_name = %s")
@@ -83,8 +77,9 @@ class ServiceManager:
                         s.rating,
                         s.ngo_org AS ngo_name,
 
-                        parent_category.catalogue_name AS l1_name,
-                        selected_category.catalogue_name AS l2_name
+                        s.category_l1 AS l1_name,
+                        s.category_l2 AS l2_name
+                        
 
                     FROM `tabService` s
 
@@ -94,11 +89,7 @@ class ServiceManager:
                     LEFT JOIN `tabGeography L2` geo2
                         ON geo2.name = s.service_geo2
 
-                    LEFT JOIN `tabService Category` selected_category
-                        ON selected_category.name = s.service_category
-
-                    LEFT JOIN `tabService Category` parent_category
-                        ON parent_category.name = selected_category.parent_service_category
+                    
 
                     {where_clause}
 

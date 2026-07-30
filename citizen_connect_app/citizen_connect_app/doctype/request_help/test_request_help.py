@@ -13,9 +13,9 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
 
-class IntegrationTestServiceRequestHelp(IntegrationTestCase):
+class IntegrationTestRequestHelp(IntegrationTestCase):
 	"""
-	Integration tests for ServiceRequestHelp.
+	Integration tests for RequestHelp.
 	Use this class for testing interactions between multiple components.
 	"""
 
