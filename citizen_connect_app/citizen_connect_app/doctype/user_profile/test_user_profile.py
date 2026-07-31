@@ -13,9 +13,9 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
 
-class IntegrationTestOTP(IntegrationTestCase):
+class IntegrationTestUserProfile(IntegrationTestCase):
 	"""
-	Integration tests for OTP.
+	Integration tests for UserProfile.
 	Use this class for testing interactions between multiple components.
 	"""
 

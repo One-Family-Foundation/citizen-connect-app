@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class OTP(Document):
+class UserProfile(Document):
 	pass
