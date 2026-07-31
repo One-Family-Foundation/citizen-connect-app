@@ -2,7 +2,7 @@ import secrets
 import frappe
 from frappe import _
 from frappe.utils import validate_email_address
-
+from samaaja.utils.result import Result
 OTP_EXPIRY_MINUTES = 5
 VERIFIED_EXPIRY_MINUTES = 15
 
@@ -34,7 +34,9 @@ class OTPService:
 	def send_otp(email):
 		email = (email or "").strip().lower()
 		if not email:
-			frappe.throw(_("Email is required."))
+			return Result.bad_request(
+             message="Email is required."
+            )
 
 		validate_email_address(email, throw=True)
 
@@ -46,30 +48,35 @@ class OTPService:
 			expires_in_sec=OTP_EXPIRY_MINUTES * 60,
 		)
 
-		# FOR NOW: return the OTP directly since no email/SMS delivery
-		# channel is wired up yet. This must be removed/gated behind a
-		# dev-only flag before this goes anywhere near production —
-		# see the note in the response from earlier in this thread.
-		return {
-			"email": email,
-			"otp": otp,
-			"otp_expires_in_minutes": OTP_EXPIRY_MINUTES,
-		}
+		return Result.success(
+               message="OTP sent successfully.",
+             data={
+                "email": email,
+                "otp": otp,
+                "otp_expires_in_minutes": OTP_EXPIRY_MINUTES,
+            },
+        )
 
 	@staticmethod
 	def verify_otp(email, otp):
 		email = (email or "").strip().lower()
 		if not email or not otp:
-			frappe.throw(_("Email and OTP are required."))
+			return Result.bad_request(
+                   message="Email and OTP are required."
+            )
 
 		key = OTPService._cache_key(email)
 		cached_otp = frappe.cache().get_value(key)
 
 		if not cached_otp:
-			return False
+			return Result.bad_request(
+              message="Invalid or expired OTP."
+            )
 
 		if str(cached_otp) != str(otp).strip():
-			return False
+			return Result.bad_request(
+                  message="Invalid or expired OTP."
+            )
 
 		frappe.cache().delete_value(key)
 
@@ -81,7 +88,12 @@ class OTPService:
 			expires_in_sec=VERIFIED_EXPIRY_MINUTES * 60,
 		)
 
-		return True
+		return Result.success(
+               message="OTP verified successfully.",
+               data={
+                  "verified": True,
+                },
+        )
 
 	@staticmethod
 	def is_verified(email):

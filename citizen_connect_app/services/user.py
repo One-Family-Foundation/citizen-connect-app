@@ -1,85 +1,89 @@
 import frappe
 from frappe import _
-from citizen_connect_app.models.user import User
 from pydantic import ValidationError
+
+from citizen_connect_app.models.user import User
 from citizen_connect_app.services.otp_service import OTPService
 from samaaja.utils.result import Result
 
 
 class UserManager:
-	"""Service layer for registration and OTP-based login.
+    """Service layer for registration and OTP-based login.
 
-	OTP issuance/verification is delegated entirely to OTPService —
-	this class does not touch the OTP cache directly.
-	"""
+    OTP issuance/verification is delegated entirely to OTPService —
+    this class does not touch the OTP cache directly.
+    """
 
-	@staticmethod
-	def register(full_name, email, mobile_no,location):
-		email = (email or "").strip().lower()
+    @staticmethod
+    def register(full_name, email, mobile_no, location):
+        email = (email or "").strip().lower()
 
-		if not OTPService.is_verified(email):
-			return {"success": False, "message": "Please verify your email with an OTP before registering."}
+        if not OTPService.is_verified(email):
+            return Result.bad_request(
+                message="Please verify your email with an OTP before registering."
+            )
+        try:
+            user_data = User(
+                full_name=full_name,
+                email=email,
+                mobile_no=mobile_no,
+                location=location,
+            )
+        except ValidationError as e:
+            return Result.bad_request(message=e.errors()[0]["msg"])
 
-		try:
-			user_data = User(
-				full_name=full_name,
-				email=email,
-			)
-		except ValidationError as e:
-			return Result.bad_request(message=e.errors()[0]["msg"])
+        if frappe.db.exists("User", {"email": user_data.email}):
+            return Result.bad_request(message="Email already registered.")
 
-		if frappe.db.exists("User", {"email": user_data.email}):
-			return Result.bad_request(message="Email already registered.")
+        user = frappe.get_doc(
+            {
+                "doctype": "User",
+                "email": user_data.email,
+                "first_name": user_data.full_name,
+                "mobile_no": user_data.mobile_no,
+                "location": user_data.location,
+                "enabled": 1,
+                "send_welcome_email": 0,
+            }
+        )
+        user.insert(ignore_permissions=True)
 
+        frappe.local.login_manager.user = user.name
+        frappe.local.login_manager.post_login()
 
-		user = frappe.get_doc(
-			{
-				"doctype": "User",
-				"email": user_data.email,
-				"first_name": user_data.full_name,
-				"mobile_no": user_data.mobile_no,
-				"location":user_data.location,
-				"enabled": 1,
-				
-				"send_welcome_email": 0,
-			}
-		)
-		user.insert(ignore_permissions=True)
+        OTPService.clear_verified(email)
 
-		frappe.local.login_manager.user = user.name
-		frappe.local.login_manager.post_login()
+        return Result.success(
+            message="User registered successfully.",
+            data={
+                "user_id": user.name,
+                "full_name": user.full_name,
+                "email": user.email,
+                "mobile_no": user.mobile_no,
+                "sid": frappe.session.sid,
+            },
+        )
 
-		OTPService.clear_verified(email)
+    @staticmethod
+    def login(email, otp):
+        email = (email or "").strip().lower()
 
-		return {
-			"success": True,
-			"user_id": user.name,
-			"full_name": user.full_name,
-			"email": user.email,
-			"mobile_no": user.mobile_no,
-			"sid": frappe.session.sid,
-		}
+        otp_result = OTPService.verify_otp(email, otp)
 
-	# ------------------------------------------------------------------
-	# Login
-	# ------------------------------------------------------------------
+        if otp_result.is_bad_request:
+            return otp_result
 
-	@staticmethod
-	def login(email, otp):
-		email = (email or "").strip().lower()
+        user_name = frappe.db.get_value("User", {"email": email}, "name")
+        if not user_name:
+            return Result.not_found(message="User not found.")
 
-		if not OTPService.verify_otp(email, otp):
-			return {"success": False, "message": "Invalid or expired OTP."}
+        frappe.local.login_manager.user = user_name
+        frappe.local.login_manager.post_login()
 
-		user_name = frappe.db.get_value("User", {"email": email}, "name")
-		if not user_name:
-			frappe.throw(_("User not found."))
-
-		frappe.local.login_manager.user = user_name
-		frappe.local.login_manager.post_login()
-
-		return {
-			"success": True,
-			"user_id": user_name,
-			"sid": frappe.session.sid,
-		}
+        return Result.success(
+            message="Login successful.",
+            data={
+                "user_id": user_name,
+                "sid": frappe.session.sid,
+            },
+        )
