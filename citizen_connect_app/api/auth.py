@@ -1,13 +1,10 @@
 import frappe
-
 from samaaja.utils.custom_response import custom_response
 from samaaja.utils.result import Result
-
 from citizen_connect_app.services.otp_service import OTPService
 from citizen_connect_app.services.user import UserManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
-
-
+from frappe.utils.oauth import get_oauth2_authorize_url
 @frappe.whitelist(allow_guest=True)
 def send_otp(email):
     try:
@@ -70,5 +67,30 @@ def register(full_name, email, mobile_no=None, location=None):
         ErrorLogger.log(e)
         return Result.failure(
             message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            error_data=str(e),
+        ).to_custom_response()
+
+@frappe.whitelist(allow_guest=True)
+def get_google_auth_url():
+    """
+    Generate Google OAuth authorization URL.
+    """
+    provider = "google"
+
+    try:
+        auth_url = get_oauth2_authorize_url(
+            provider,
+            redirect_to="/homepage"
+        )
+
+        return Result.success(
+            message="Google authentication URL generated successfully.",
+            data={"auth_url": auth_url},
+        ).to_custom_response()
+
+    except Exception as e:
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Could not generate Google authentication URL.",
             error_data=str(e),
         ).to_custom_response()
