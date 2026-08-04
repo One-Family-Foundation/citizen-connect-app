@@ -8,14 +8,6 @@ VERIFIED_EXPIRY_MINUTES = 15
 
 
 class OTPService:
-	"""Generic OTP issuance/verification, keyed only by email.
-
-	Verifying an OTP does not immediately log anyone in or register
-	them — it sets a separate "verified" flag in cache for this email,
-	valid for VERIFIED_EXPIRY_MINUTES. Register checks that flag rather
-	than re-running OTP verification itself, so the OTP is consumed
-	exactly once, at verify time.
-	"""
 
 	@staticmethod
 	def _cache_key(email):
@@ -69,19 +61,13 @@ class OTPService:
 		cached_otp = frappe.cache().get_value(key)
 
 		if not cached_otp:
-			return Result.bad_request(
-              message="Invalid or expired OTP."
-            )
+			return False
 
 		if str(cached_otp) != str(otp).strip():
-			return Result.bad_request(
-                  message="Invalid or expired OTP."
-            )
+			return False
 
 		frappe.cache().delete_value(key)
 
-		# Mark this email as verified so register() can check it later
-		# without needing the OTP again.
 		frappe.cache().set_value(
 			OTPService._verified_cache_key(email),
 			True,

@@ -8,12 +8,7 @@ from samaaja.utils.result import Result
 
 
 class UserManager:
-    """Service layer for registration and OTP-based login.
-
-    OTP issuance/verification is delegated entirely to OTPService —
-    this class does not touch the OTP cache directly.
-    """
-
+    
     @staticmethod
     def register(full_name, email, mobile_no, location):
         email = (email or "").strip().lower()
@@ -70,7 +65,7 @@ class UserManager:
 
         otp_result = OTPService.verify_otp(email, otp)
 
-        if otp_result.is_bad_request:
+        if not otp_result.is_success:
             return otp_result
 
         user_name = frappe.db.get_value("User", {"email": email}, "name")

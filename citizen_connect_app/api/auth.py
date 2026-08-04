@@ -1,36 +1,42 @@
 import frappe
+from frappe.utils.oauth import get_oauth2_authorize_url
 from samaaja.utils.custom_response import custom_response
 from samaaja.utils.result import Result
 from citizen_connect_app.services.otp_service import OTPService
 from citizen_connect_app.services.user import UserManager
 from citizen_connect_app.utils.error_logger import ErrorLogger
-from frappe.utils.oauth import get_oauth2_authorize_url
+
+
 @frappe.whitelist(allow_guest=True)
 def send_otp(email):
     try:
         result = OTPService.send_otp(email=email)
-
         return result.to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
-        return Result.failure(message="Something went wrong.",
-            error_data=str(e),).to_custom_response( )
+        return custom_response(
+            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
 
 
 @frappe.whitelist(allow_guest=True)
 def verify_otp(email, otp):
     try:
         result = OTPService.verify_otp(email=email, otp=otp)
-
-        return result.to_custom_response( )
+        return result.to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
-        return Result.failure(
-            message="Something went wrong.",
-            error_data=str(e),
-            ).to_custom_response()
+        return custom_response(
+            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
 
 
 @frappe.whitelist(allow_guest=True)
@@ -40,15 +46,16 @@ def login(email, otp):
             email=email,
             otp=otp,
         )
-
         return result.to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
-        return Result.failure(
+        return custom_response(
             message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
-            error_data=str(e),
-        ).to_custom_response()
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
 
 
 @frappe.whitelist(allow_guest=True)
@@ -60,15 +67,17 @@ def register(full_name, email, mobile_no=None, location=None):
             mobile_no=mobile_no,
             location=location,
         )
-
         return result.to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
-        return Result.failure(
+        return custom_response(
             message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
-            error_data=str(e),
-        ).to_custom_response()
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
+
 
 @frappe.whitelist(allow_guest=True)
 def get_google_auth_url():
@@ -90,7 +99,9 @@ def get_google_auth_url():
 
     except Exception as e:
         ErrorLogger.log(e)
-        return Result.failure(
-            message="Could not generate Google authentication URL.",
-            error_data=str(e),
-        ).to_custom_response()
+        return custom_response(
+            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            data={"error": str(e)},
+            status_code=500,
+            error=True,
+        )
