@@ -15,11 +15,25 @@ class User(BaseModel):
     def clean_name(cls, value: str):
         return value.strip()
 
+    @field_validator("location", mode="before")
+    @classmethod
+    def empty_location_to_none(cls, value):
+        if value == "":
+            return None
+        return value
+    
     @field_validator("email")
     @classmethod
     def clean_email(cls, value: str):
         return value.strip().lower()
-
+    
+    @field_validator("mobile_no", mode="before")
+    @classmethod
+    def empty_mobile_to_none(cls, value):
+        if value == "":
+            return None
+        return value
+    
     @field_validator("mobile_no")
     @classmethod
     def clean_mobile(cls, value: Optional[str]):

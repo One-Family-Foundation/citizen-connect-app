@@ -25,7 +25,11 @@ class UserManager:
                 location=location,
             )
         except ValidationError as e:
-            return Result.bad_request(message=e.errors()[0]["msg"])
+            messages = [
+                f"{'.'.join(map(str, err['loc']))}: {err['msg']}"
+                for err in e.errors()
+            ]
+            return Result.bad_request(message="; ".join(messages))
 
         if frappe.db.exists("User", {"email": user_data.email}):
             return Result.bad_request(message="Email already registered.")
