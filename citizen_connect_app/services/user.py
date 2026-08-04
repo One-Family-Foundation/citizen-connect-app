@@ -65,7 +65,7 @@ class UserManager:
 
         otp_result = OTPService.verify_otp(email, otp)
 
-        if not otp_result.is_success:
+        if not otp_result.success:
             return otp_result
 
         user_name = frappe.db.get_value("User", {"email": email}, "name")

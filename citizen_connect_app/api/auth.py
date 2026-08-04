@@ -16,7 +16,7 @@ def send_otp(email):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            message= "Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -32,7 +32,7 @@ def verify_otp(email, otp):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            message= "Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -51,7 +51,7 @@ def login(email, otp):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            message= "Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -72,7 +72,7 @@ def register(full_name, email, mobile_no=None, location=None):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            message="Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -100,7 +100,7 @@ def get_google_auth_url():
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message=str(e) if isinstance(e, frappe.ValidationError) else "Something went wrong.",
+            message= "Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
