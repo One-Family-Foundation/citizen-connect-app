@@ -36,22 +36,42 @@ class UserManager:
         if frappe.db.exists("User", {"email": user_data.email}):
             return Result.bad_request(message="Email already registered.")
         location = user_data.location
-        
+        country = None
         geo_l1 = None
         geo_l2 = None
-        if location:
-            geo_l1 = frappe.db.get_value(
-              "Geography L1",
-              {"geo_l1": location.geo1},
-               "name",
+        if location.country:
+            country = frappe.db.get_value(
+                "Country",
+                {"country_name": location.country},
+                "name"
             )
+            if not country:
+                return Result.bad_request(
+                    message="Invalid country selected."
+               )
+        if location.geo1:
+            geo_l1 = frappe.db.get_value(
+               "Geography L1",
+               {"geo_l1": location.geo1},
+               "name"
+            )
+
+            if not geo_l1:
+                return Result.bad_request(
+                   message="Invalid Geography L1 selected."
+                )
+        if location.geo2:
             geo_l2 = frappe.db.get_value(
-               "Geography L2",
-               {"geo_2": location.geo2},
-                "name",
+            "Geography L2",
+            {"geo_2": location.geo2},
+            "name"
+        )
+
+        if not geo_l2:
+            return Result.bad_request(
+                message="Invalid Geography L2 selected."
             )
         try:
-            # Create User
             user = frappe.get_doc(
                 {
                     "doctype": "User",
@@ -64,7 +84,6 @@ class UserManager:
             )
             user.insert(ignore_permissions=True)
 
-            # Create User Profile
             user_profile = frappe.get_doc(
                 {
                     "doctype": "User Profile",
@@ -77,9 +96,6 @@ class UserManager:
                 }
             )
             user_profile.insert(ignore_permissions=True)
-
-            # Commit only if both inserts succeed
-            frappe.db.commit()
 
             # Login user
             frappe.local.login_manager.user = user.name
@@ -99,10 +115,7 @@ class UserManager:
                 },
             )
 
-        except Exception as e:
-            # Rollback User if User Profile creation fails
-            frappe.db.rollback()
-
+        except Exception as e:         
             ErrorLogger.log(e)
             return Result.failure(
                 message="Registration failed. Please check your location details and try again."
