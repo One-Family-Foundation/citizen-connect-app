@@ -1,3 +1,4 @@
+import json
 import frappe
 from frappe.utils.oauth import get_oauth2_authorize_url
 from samaaja.utils.custom_response import custom_response
@@ -16,7 +17,7 @@ def send_otp(email):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message= "Something went wrong.",
+            message="Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -32,7 +33,7 @@ def verify_otp(email, otp):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message= "Something went wrong.",
+            message="Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -51,7 +52,7 @@ def login(email, otp):
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message= "Something went wrong.",
+            message="Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,
@@ -61,6 +62,12 @@ def login(email, otp):
 @frappe.whitelist(allow_guest=True)
 def register(full_name, email, mobile_no=None, location=None):
     try:
+        if isinstance(location, str) and location.strip():
+            try:
+                location = json.loads(location)
+            except (ValueError, TypeError):
+                location = None
+
         result = UserManager.register(
             full_name=full_name,
             email=email,
@@ -100,7 +107,7 @@ def get_google_auth_url():
     except Exception as e:
         ErrorLogger.log(e)
         return custom_response(
-            message= "Something went wrong.",
+            message="Something went wrong.",
             data={"error": str(e)},
             status_code=500,
             error=True,

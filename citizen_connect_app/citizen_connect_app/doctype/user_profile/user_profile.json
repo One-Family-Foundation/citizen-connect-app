@@ -6,18 +6,56 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "section_break_jkfs"
+  "user",
+  "phone",
+  "user_type",
+  "country",
+  "geo_l1",
+  "geo_l2"
  ],
  "fields": [
   {
-   "fieldname": "section_break_jkfs",
-   "fieldtype": "Section Break"
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "User",
+   "options": "User",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone",
+   "fieldtype": "Phone",
+   "label": "Phone"
+  },
+  {
+   "fieldname": "user_type",
+   "fieldtype": "Select",
+   "label": "User Type",
+   "options": "Citizen\nVolunteer"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geo L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geo L2",
+   "options": "Geography L2"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-31 12:16:46.464574",
+ "modified": "2026-08-04 16:23:25.358485",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "User Profile",

@@ -61,10 +61,14 @@ class OTPService:
 		cached_otp = frappe.cache().get_value(key)
 
 		if not cached_otp:
-			return False
+			return Result.bad_request(
+                 message="OTP has expired."
+            )
 
 		if str(cached_otp) != str(otp).strip():
-			return False
+			return Result.bad_request(
+                message="Invalid OTP."
+            )
 
 		frappe.cache().delete_value(key)
 
