@@ -5,7 +5,7 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
 @frappe.whitelist(allow_guest=True)
-def get_list1(
+def get_list(
     limit=10,
     offset=0,
     category_l1=None,
@@ -42,7 +42,7 @@ def get_list1(
 
 
 @frappe.whitelist(allow_guest=True)
-def get1(opportunity_id):
+def get(opportunity_id):
     try:
         return OpportunityManager.get(opportunity_id).to_custom_response()
 
