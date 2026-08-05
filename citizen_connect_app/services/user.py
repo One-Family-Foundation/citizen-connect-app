@@ -35,42 +35,42 @@ class UserManager:
 
         if frappe.db.exists("User", {"email": user_data.email}):
             return Result.bad_request(message="Email already registered.")
-        location = user_data.location
+        
         country = None
         geo_l1 = None
         geo_l2 = None
-        if location.country:
-            country = frappe.db.get_value(
-                "Country",
-                {"country_name": location.country},
-                "name"
-            )
-            if not country:
-                return Result.bad_request(
-                    message="Invalid country selected."
-               )
-        if location.geo1:
-            geo_l1 = frappe.db.get_value(
-               "Geography L1",
-               {"geo_l1": location.geo1},
-               "name"
-            )
-
-            if not geo_l1:
-                return Result.bad_request(
-                   message="Invalid Geography L1 selected."
+        if user_data.location:
+            location = user_data.location
+            if location.country:
+                country = frappe.db.get_value(
+                    "Country",
+                    {"country_name": location.country},
+                    "name"
                 )
-        if location.geo2:
-            geo_l2 = frappe.db.get_value(
-            "Geography L2",
-            {"geo_2": location.geo2},
-            "name"
-        )
-
-        if not geo_l2:
-            return Result.bad_request(
-                message="Invalid Geography L2 selected."
-            )
+                if not country:
+                    return Result.bad_request(
+                        message="Invalid country selected."
+                )
+                if location.geo1:
+                    geo_l1 = frappe.db.get_value(
+                        "Geography L1",
+                        {"geo_l1": location.geo1},
+                        "name"
+                    )
+                    if not geo_l1:
+                        return Result.bad_request(
+                        message="Invalid Geography L1 selected."
+                    )
+                    if location.geo2:
+                        geo_l2 = frappe.db.get_value(
+                            "Geography L2",
+                            {"geo_2": location.geo2},
+                            "name"
+                        )
+                    if not geo_l2:
+                        return Result.bad_request(
+                            message="Invalid Geography L2 selected."
+                        )
         try:
             user = frappe.get_doc(
                 {
@@ -90,9 +90,9 @@ class UserManager:
                     "user": user.name,
                     "phone": user_data.mobile_no,
                     "user_type": "Citizen",
-                    "country":location.country if location else None,
-                    "geo_l1": geo_l1,
-                    "geo_l2": geo_l2,
+                    "country": country if location else None,
+                    "geo_l1": geo_l1 if location else None,
+                    "geo_l2": geo_l2 if location else None,
                 }
             )
             user_profile.insert(ignore_permissions=True)
