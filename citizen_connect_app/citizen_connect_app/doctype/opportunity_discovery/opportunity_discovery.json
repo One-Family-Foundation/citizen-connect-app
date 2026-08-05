@@ -79,8 +79,9 @@
   },
   {
    "fieldname": "expected_time",
-   "fieldtype": "Text",
+   "fieldtype": "Data",
    "label": "Expected Time",
+   "length": 60,
    "reqd": 1
   },
   {
@@ -139,7 +140,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-03 15:42:47.612291",
+ "modified": "2026-08-05 15:57:47.298209",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",

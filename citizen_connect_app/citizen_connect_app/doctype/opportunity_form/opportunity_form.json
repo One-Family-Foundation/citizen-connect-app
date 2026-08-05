@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "opportunity_id",
+  "user",
   "full_name",
   "email",
   "phone",
@@ -66,12 +67,18 @@
    "fieldname": "attachment",
    "fieldtype": "Attach",
    "label": "Attachment"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-03 16:42:42.896244",
+ "modified": "2026-08-05 21:41:10.421768",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Form",
@@ -92,7 +99,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "email"
 }

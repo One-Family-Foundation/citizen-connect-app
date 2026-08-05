@@ -1,5 +1,9 @@
 import frappe
 
+from citizen_connect_app.models.volunteer_opportunity import (
+    GuestOpportunityForm,
+    LoggedInOpportunityForm,
+)
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -9,34 +13,90 @@ class OpportunityApplicationManager:
     @staticmethod
     def create(data: dict, attachment=None) -> Result:
         try:
-            if not data.get("opportunity_id"):
-                return Result.bad_request("Opportunity ID is required")
+            if frappe.session.user == "Guest":
+                data = GuestOpportunityForm(**data)
 
-            if not data.get("email"):
-                return Result.bad_request("Email is required")
+                full_name = data.full_name
+                email = data.email
+                phone = data.phone
+                user = None
 
-            # Prevent same user from applying twice
-            filters = {
-                "opportunity_id": data.get("opportunity_id"),
-                "email": data.get("email"),
-            }
+            else:
+                data = LoggedInOpportunityForm(**data)
 
-            if frappe.db.exists("Opportunity Form", filters):
+                user = frappe.get_doc("User", frappe.session.user)
+
+                profile_name = frappe.db.get_value(
+                    "User Profile",
+                    {"user": user.name},
+                    "name",
+                )
+
+                if not profile_name:
+                    return Result.not_found("User profile not found.")
+
+                profile = frappe.get_doc("User Profile", profile_name)
+
+                full_name = user.first_name
+                email = user.email
+
+                if profile.phone:
+                    phone = profile.phone
+                else:
+                    if not data.phone:
+                        return Result.bad_request(
+                            "Phone number is required."
+                        )
+
+                    phone = data.phone
+                    profile.phone = phone
+                    profile.save(ignore_permissions=True)
+
+            if not frappe.db.exists(
+                "Opportunity Discovery",
+                {
+                    "name": data.opportunity_id,
+                    "status": "Active",
+                },
+            ):
+                return Result.not_found("Volunteer opportunity not found.")
+
+            if frappe.session.user == "Guest":
+                duplicate = frappe.db.exists(
+                    "Opportunity Form",
+                    {
+                        "opportunity_id": data.opportunity_id,
+                        "email": email,
+                    },
+                )
+            else:
+                duplicate = frappe.db.exists(
+                    "Opportunity Form",
+                    {
+                        "opportunity_id": data.opportunity_id,
+                        "user": user.name,
+                    },
+                )
+
+            if duplicate:
                 return Result.bad_request(
                     "You have already submitted an application for this opportunity."
                 )
 
             application = frappe.new_doc("Opportunity Form")
 
-            application.opportunity_id = data.get("opportunity_id")
-            application.full_name = data.get("full_name")
-            application.email = data.get("email")
-            application.phone = data.get("phone")
-            application.age = data.get("age")
-            application.gender = data.get("gender")
-            application.description = data.get("description")
+            application.opportunity_id = data.opportunity_id
 
-            # Save attachment if provided
+            if frappe.session.user != "Guest":
+                application.user = user.name
+
+            application.full_name = full_name
+            application.email = email
+            application.phone = phone
+            application.age = data.age
+            application.gender = data.gender
+            application.description = data.description
+
             if attachment:
                 file_doc = frappe.get_doc(
                     {
@@ -52,7 +112,7 @@ class OpportunityApplicationManager:
             application.save(ignore_permissions=True)
 
             return Result.success(
-                "Application submitted successfully",
+                message="Application submitted successfully.",
                 data={
                     "name": application.name,
                 },
@@ -62,6 +122,6 @@ class OpportunityApplicationManager:
             ErrorLogger.log(e)
 
             return Result.failure(
-                "Failed to submit application",
+                message="Failed to submit application.",
                 error_data=str(e),
             )

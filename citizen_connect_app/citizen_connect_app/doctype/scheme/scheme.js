@@ -64,3 +64,40 @@ frappe.ui.form.on("Scheme", {
         frm.set_value("geo_l2", "");
     }
 });
+function validate_length(value, label, min, max) {
+    if (!value) return;
+
+    value = value.trim();
+
+    if (value.length < min) {
+        frappe.throw(__("{0} must be at least {1} characters long.", [label, min]));
+    }
+
+    if (value.length > max) {
+        frappe.throw(__("{0} cannot exceed {1} characters.", [label, max]));
+    }
+}
+
+frappe.ui.form.on("Scheme", {
+    validate(frm) {
+
+        if (frm.doc.application_url) {
+            try {
+                const url = new URL(frm.doc.application_url);
+
+                if (!["http:", "https:"].includes(url.protocol)) {
+                    frappe.throw(__("Application URL must start with http:// or https://"));
+                }
+            } catch (e) {
+                frappe.throw(__("Please enter a valid Application URL."));
+            }
+        }
+
+        validate_length(frm.doc.scheme_name, "Scheme Name", 5, 120);
+        validate_length(frm.doc.description, "Description", 20, 400);
+        validate_length(frm.doc.benefit, "Benefits", 20, 1000);
+        validate_length(frm.doc.eligibility, "Eligibility", 20, 1000);
+        validate_length(frm.doc.documents_required, "Documents Required", 10, 800);
+        validate_length(frm.doc.issuing_body, "Issuing Body", 3, 120);
+    }
+});

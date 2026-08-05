@@ -15,7 +15,7 @@ def get_list(
     geo2=None,
     volunteer_format=None,
     compensation_type=None,
-    status=None,
+    status="Active",
 ):
     try:
         return OpportunityManager.get_list(

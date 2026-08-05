@@ -1,20 +1,20 @@
 import frappe
-from frappe.utils import logger
 
-logger.set_log_level("DEBUG")
-logger = frappe.logger("citizen_connect_app", allow_site=True, file_count=50)
+logger = frappe.logger(
+    "citizen_connect_app",
+    allow_site=True,
+    file_count=50
+)
+
+logger.setLevel("DEBUG")
 
 
 class ErrorLogger:
 
     @staticmethod
     def log(error: Exception):
-        frappe.log_error(
-            title=str(error),
-            message=frappe.get_traceback()
-        )
-
-        logger.error(
-            frappe.get_traceback()
-            
-        )
+        frappe.db.rollback()
+        traceback = frappe.get_traceback()
+        frappe.log_error(title=str(error)[:140], message=traceback)
+        frappe.db.commit()
+        logger.error(traceback)

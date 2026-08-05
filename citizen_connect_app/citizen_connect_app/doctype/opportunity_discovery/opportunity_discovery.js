@@ -1,11 +1,3 @@
-// Copyright (c) 2026, One Family Foundation and contributors
-// For license information, please see license.txt
-
-// frappe.ui.form.on("Opportunity Discovery", {
-// 	refresh(frm) {
-
-// 	},
-// });
 frappe.ui.form.on("Opportunity Discovery", {
     refresh(frm) {
 
@@ -67,5 +59,32 @@ frappe.ui.form.on("Opportunity Discovery", {
 
     geo_l1(frm) {
         frm.set_value("geo_l2", "");
+    },
+
+    validate(frm) {
+
+        if (frm.doc.title) {
+            const len = frm.doc.title.trim().length;
+
+            if (len < 5 || len > 120) {
+                frappe.throw(__("Title must be between 5 and 120 characters."));
+            }
+        }
+
+        if (frm.doc.description) {
+            const len = frm.doc.description.trim().length;
+
+            if (len < 20 || len > 400) {
+                frappe.throw(__("Description must be between 20 and 400 characters."));
+            }
+        }
+
+        if (frm.doc.expected_time) {
+            const len = frm.doc.expected_time.trim().length;
+
+            if (len < 3 || len > 60) {
+                frappe.throw(__("Expected Time must be between 3 and 60 characters."));
+            }
+        }
     }
 });
