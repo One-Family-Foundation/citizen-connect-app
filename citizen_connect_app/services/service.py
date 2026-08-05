@@ -177,8 +177,7 @@ class ServiceManager:
                 message="Service fetched successfully.",
                 data=service_data,
             )
-
-        except Exception:
+        except Exception as e:
             ErrorLogger.log(e)
             raise
     @staticmethod

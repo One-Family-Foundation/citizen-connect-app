@@ -1,0 +1,165 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-03 11:04:53.659558",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "service_l1",
+  "service_l2",
+  "crisis_link",
+  "description",
+  "skills",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "volunteer_format",
+  "expected_time",
+  "start_date",
+  "end_date",
+  "compensation_type",
+  "ngo",
+  "rating_uimw",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_l1",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category L1",
+   "options": "Service Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service_l2",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category L2",
+   "options": "Service Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "crisis_link",
+   "fieldtype": "Data",
+   "label": "Crisis Link"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "skills",
+   "fieldtype": "Text",
+   "label": "Skills",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geo L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geo L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "volunteer_format",
+   "fieldtype": "Select",
+   "label": "Volunteer format",
+   "options": "On-site\nRemote\nHybrid",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expected_time",
+   "fieldtype": "Text",
+   "label": "Expected Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "end_date",
+   "fieldtype": "Date",
+   "label": "End Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "compensation_type",
+   "fieldtype": "Select",
+   "label": "Compensation Type",
+   "options": "Pro Bono\nStipend",
+   "reqd": 1
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "label": "NGO",
+   "options": "Organisation",
+   "reqd": 1
+  },
+  {
+   "fieldname": "rating_uimw",
+   "fieldtype": "Rating"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nIn-active"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-03 11:46:30.778054",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Opportunity Discovery",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
