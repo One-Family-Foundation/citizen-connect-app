@@ -1,0 +1,5 @@
+name: Dev
+variables:
+  - name: BASE_URL
+    value: https://admin.citizen-connect.org/
+    description: ""

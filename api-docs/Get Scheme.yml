@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.scheme.get?scheme_id=m3b5vugeds
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.scheme.get?scheme_id=m3b5vugeds"
   params:
     - name: scheme_id
       value: m3b5vugeds

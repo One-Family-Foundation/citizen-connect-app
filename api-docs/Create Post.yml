@@ -1,0 +1,35 @@
+info:
+  name: Create Post
+  type: http
+  seq: 12
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.post.create"
+  body:
+    type: multipart-form
+    data:
+      - name: files
+        type: text
+        value: ""
+      - name: description
+        type: text
+        value: This is my second post from bruno
+      - name: category
+        type: text
+        value: '{"l1":"Healthcare"}'
+      - name: location
+        type: text
+        value: |-
+          {
+          "country": "India",
+          "geo1": "Maharashtra",
+          "geo2": "Pune"
+          }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

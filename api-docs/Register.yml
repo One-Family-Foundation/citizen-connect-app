@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.auth.register
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.auth.register"
   body:
     type: json
     data: |-
