@@ -1,0 +1,15 @@
+info:
+  name: Apply Volunteer Opportunty
+  type: http
+  seq: 11
+
+http:
+  method: GET
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.volunteer_application.apply
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
