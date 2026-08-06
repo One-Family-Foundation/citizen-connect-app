@@ -20,7 +20,7 @@ class OTPService:
 	@staticmethod
 	def _generate_otp():
 		# 4-digit OTP: 1000-9999
-		return '1234'
+		return "1234"
 		#return str(secrets.randbelow(9000) + 1000)
 
 	@staticmethod

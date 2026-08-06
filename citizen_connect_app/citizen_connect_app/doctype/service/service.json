@@ -165,21 +165,21 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category_L1",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
   },
   {
    "fieldname": "category_l2",
    "fieldtype": "Link",
    "label": "Category L2",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-28 18:52:12.632047",
+ "modified": "2026-08-05 23:13:09.137919",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

@@ -3,7 +3,7 @@ from frappe import _
 from frappe.model.document import Document
 
 
-class ServiceCategory(Document):
+class Category(Document):
 
     def validate(self):
         self.validate_category_level()
@@ -16,16 +16,16 @@ class ServiceCategory(Document):
             frappe.throw(_("Only L1 and L2 categories are allowed."))
 
         if self.category_level == "L1":
-            if self.parent_service_category:
+            if self.parent_category:
                 frappe.throw(_("L1 categories cannot have a parent."))
 
         elif self.category_level == "L2":
-            if not self.parent_service_category:
+            if not self.parent_category:
                 frappe.throw(_("L2 categories must have an L1 parent."))
 
             parent = frappe.get_doc(
-                "Service Category",
-                self.parent_service_category,
+                "Category",
+                self.parent_category,
             )
 
             if parent.category_level != "L1":
@@ -37,16 +37,16 @@ class ServiceCategory(Document):
         """Prevent duplicate categories under the same parent."""
 
         duplicate = frappe.db.exists(
-            "Service Category",
+            "Category",
             {
                 "catalogue_name": self.catalogue_name,
-                "parent_service_category": self.parent_service_category,
+                "parent_category": self.parent_category,
                 "name": ["!=", self.name],
             },
         )
 
         if duplicate:
-            if self.parent_service_category:
+            if self.parent_category:
                 frappe.throw(
                     _(
                         "Category '{0}' already exists under the selected parent."

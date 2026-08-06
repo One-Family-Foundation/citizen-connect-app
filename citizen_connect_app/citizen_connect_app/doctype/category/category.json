@@ -14,7 +14,7 @@
   "rgt",
   "is_group",
   "old_parent",
-  "parent_service_category"
+  "parent_category"
  ],
  "fields": [
   {
@@ -65,26 +65,26 @@
    "fieldtype": "Link",
    "hidden": 1,
    "label": "Old Parent",
-   "options": "Service Category"
+   "options": "Category"
   },
   {
-   "fieldname": "parent_service_category",
+   "fieldname": "parent_category",
    "fieldtype": "Link",
    "ignore_user_permissions": 1,
-   "label": "Parent Service Category",
-   "options": "Service Category"
+   "label": "Parent Category",
+   "options": "Category"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "is_tree": 1,
  "links": [],
- "modified": "2026-07-24 08:15:55.359186",
+ "modified": "2026-08-05 23:19:27.107245",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
- "name": "Service Category",
+ "name": "Category",
  "naming_rule": "By fieldname",
- "nsm_parent_field": "parent_service_category",
+ "nsm_parent_field": "parent_category",
  "owner": "Administrator",
  "permissions": [
   {

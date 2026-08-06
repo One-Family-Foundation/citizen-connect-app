@@ -147,7 +147,7 @@ class ServiceManager:
                     s.rating,
                     s.ngo_org AS ngo_name,
 
-                    l2.parent_service_category AS l1_name,
+                    l2.parent_category AS l1_name,
                     s.service_category AS l2_name
 
                 FROM `tabService` s
@@ -158,7 +158,7 @@ class ServiceManager:
                 LEFT JOIN `tabGeography L2` geo2
                     ON geo2.name = s.service_geo2
 
-                LEFT JOIN `tabService Category` l2
+                LEFT JOIN `tab Category` l2
                     ON l2.name = s.service_category
 
                 WHERE s.name = %s
@@ -231,9 +231,9 @@ class ServiceManager:
                     l1.catalogue_name AS l1_name,
                     l2.name AS l2_id,
                     l2.catalogue_name AS l2_name
-                FROM `tabService Category` l1
-                LEFT JOIN `tabService Category` l2
-                    ON l2.parent_service_category = l1.name
+                FROM `tabCategory` l1
+                LEFT JOIN `tabCategory` l2
+                    ON l2.parent_category = l1.name
                     AND l2.category_level = 'L2'
                 WHERE l1.category_level = 'L1'
                 ORDER BY l1.catalogue_name, l2.catalogue_name;
