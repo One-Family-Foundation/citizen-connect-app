@@ -1,6 +1,18 @@
 import frappe
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.error_logger import ErrorLogger
+from citizen_connect_app.models.post import Post, PostResponse
+from citizen_connect_app.models.utils import Location
+from pydantic import ValidationError
+from citizen_connect_app.utils.commons  import resolve_location
+
+logger = frappe.logger(
+    "citizen_connect_app",
+    allow_site=True,
+    file_count=50
+)
+
+logger.setLevel("DEBUG")
 
 MIN_LIMIT = 1
 MAX_LIMIT = 100
@@ -19,7 +31,6 @@ def create_post(post_data: dict) -> Result:
                 for err in e.errors()
             ]
             return Result.bad_request(message="; ".join(messages))
-        
         saved_files = []
         for file in post.files:
             saved_file = frappe.get_doc({
@@ -32,19 +43,29 @@ def create_post(post_data: dict) -> Result:
                 "doctype": "Post Media",
                 "media": saved_file.file_url
             })
-
+        
+        location = Location()
+        if post.location:
+            location_result = resolve_location(post.location)
+            if location_result.is_bad_request:
+                return location_result
+            location.country = location_result.data.country
+            location.geo1 = location_result.data.geo1
+            location.geo2 = location_result.data.geo2
         doc = frappe.get_doc({
             "doctype": "Post",
             "description": post.description,
-            "location": post.location.model_dump() if post.location else None,
-            "category": post.category.model_dump() if post.category else None,
+            "country": location.country,
+            "geography_l1": location.geo1,
+            "geography_l2": location.geo2 ,
+            "category_l1": post.category.l1 if post.category else None,
             "user": frappe.session.user,
             "media": saved_files,
         }).insert(ignore_permissions=True)
-
-        return Result.success(data=doc.as_dict())
+        logger.info(f"Post created with ID: {doc.name}")
+        return Result.success(message="Post created successfully.", data=doc.as_dict())
     except Exception as e:
-        ErrorLogger.log_error(frappe.get_traceback(), "Post creation failed")
+        ErrorLogger.log(e)
         return Result.failure(message="Failed to create post.", data={"error": str(e)}, error_data={"traceback": frappe.get_traceback()})
 
 def get_list(
@@ -56,7 +77,7 @@ def get_list(
         offset = max(0, int(offset))
 
         query = f"""
-            SELECT
+                SELECT
                 p.name as id,
                 p.description,
                 p.country,
@@ -77,5 +98,5 @@ def get_list(
         return Result.success(data=posts)
 
     except Exception as e:
-        ErrorLogger.log_error(frappe.get_traceback(), "Get post list failed")
+        ErrorLogger.log(frappe.get_traceback(), "Get post list failed")
         return Result.failure(message="Failed to get post list.", data={"error": str(e)}, error_data={"traceback": frappe.get_traceback()})

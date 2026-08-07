@@ -1,0 +1,103 @@
+import frappe
+from pydantic import ValidationError
+
+from samaaja.utils.result import Result
+from citizen_connect_app.models.community_check import CommunityCheck
+from citizen_connect_app.models.utils import Location
+from citizen_connect_app.utils.commons import resolve_location
+from citizen_connect_app.utils.error_logger import ErrorLogger
+
+
+logger = frappe.logger(
+    "citizen_connect_app",
+    allow_site=True,
+    file_count=50,
+)
+
+logger.setLevel("DEBUG")
+
+
+def create_community_check(community_check_data: dict) -> Result:
+    try:
+        try:
+            community_check = CommunityCheck(**community_check_data)
+        except ValidationError as e:
+            messages = [
+                f"{'.'.join(map(str, err['loc']))}: {err['msg']}"
+                for err in e.errors()
+            ]
+            return Result.bad_request(message="; ".join(messages))
+
+        media_url = None
+
+        file = frappe.request.files.get("file")
+
+        if file and file.filename:
+            saved_file = frappe.get_doc(
+                {
+                    "doctype": "File",
+                    "file_name": file.filename,
+                    "content": file.read(),
+                    "is_private": 1,
+                }
+            ).insert(ignore_permissions=True)
+
+            media_url = saved_file.file_url
+
+        location = Location()
+
+        if community_check.location:
+            location_result = resolve_location(community_check.location)
+
+            if location_result.is_bad_request:
+                return location_result
+
+            location.country = location_result.data.country
+            location.geo1 = location_result.data.geo1
+            location.geo2 = location_result.data.geo2
+
+        user_id = None
+
+        if frappe.session.user != "Guest":
+            user_id = frappe.session.user
+        elif community_check.user_id:
+            user_id = community_check.user_id
+
+        doc_data = {
+            "doctype": "Community Check",
+            "user_id": user_id,
+            "category": community_check.category.l1 if community_check.category else None,
+            "water_supply": community_check.water_supply,
+            "electricity": community_check.electricity,
+            "road": community_check.road,
+            "teacher_at_school": community_check.teacher_at_school,
+            "healthcare": community_check.healthcare,
+            "internet": community_check.internet,
+            "sanitation": community_check.sanitation,
+            "local_governance": community_check.local_governance,
+            "additional_observations": community_check.additional_observations,
+            "confidence_level": community_check.confidence_level,
+            "country": location.country,
+            "geo_l1": location.geo1,
+            "geo_l2": location.geo2,
+        }
+
+        if media_url:
+            doc_data["media"] = media_url
+
+        doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)
+
+        logger.info(f"Community Check created with ID: {doc.name}")
+
+        return Result.success(
+            message="Community check created successfully.",
+            data=doc.as_dict(),
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Failed to create community check.",
+            data={"error": str(e)},
+            error_data={"traceback": frappe.get_traceback()},
+        )

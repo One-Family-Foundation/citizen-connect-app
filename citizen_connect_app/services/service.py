@@ -158,7 +158,7 @@ class ServiceManager:
                 LEFT JOIN `tabGeography L2` geo2
                     ON geo2.name = s.service_geo2
 
-                LEFT JOIN `tab Category` l2
+                LEFT JOIN `tabCategory` l2
                     ON l2.name = s.service_category
 
                 WHERE s.name = %s

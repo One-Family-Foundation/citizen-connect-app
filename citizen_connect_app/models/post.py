@@ -18,11 +18,7 @@ class Post(BaseModel):
     @field_validator("location", "category", mode="before")
     @classmethod
     def clean_optional_fields(cls, value):
-        return _empty_to_none(value)
-    
-    
-    def _empty_to_none(value):
-    return None if value == "" else value
+        return None if value == "" else value
 
 class PostResponse(BaseModel):
     id: str
