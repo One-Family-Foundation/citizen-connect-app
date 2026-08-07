@@ -1,0 +1,37 @@
+info:
+  name: Create Issue
+  type: http
+  seq: 13
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.post.create"
+  body:
+    type: multipart-form
+    data:
+      - name: files
+        type: file
+        value:
+          - /Users/ankitsaxena/Downloads/ATEC_Proposal.pdf
+        contentType: application/pdf
+      - name: description
+        type: text
+        value: This is my third post from bruno
+      - name: category
+        type: text
+        value: '{"l1":"Healthcare"}'
+      - name: location
+        type: text
+        value: |-
+          {
+          "country": "India",
+          "geo1": "Maharashtra",
+          "geo2": "Pune"
+          }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
