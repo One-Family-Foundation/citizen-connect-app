@@ -17,7 +17,7 @@ logger = frappe.logger(
 logger.setLevel("DEBUG")
 
 
-def create_community_check(community_check_data: dict) -> Result:
+def create(community_check_data: dict) -> Result:
     try:
         try:
             community_check = CommunityCheck(**community_check_data)
@@ -28,21 +28,18 @@ def create_community_check(community_check_data: dict) -> Result:
             ]
             return Result.bad_request(message="; ".join(messages))
 
-        media_url = None
-
-        file = frappe.request.files.get("file")
-
-        if file and file.filename:
-            saved_file = frappe.get_doc(
-                {
-                    "doctype": "File",
-                    "file_name": file.filename,
-                    "content": file.read(),
-                    "is_private": 1,
-                }
-            ).insert(ignore_permissions=True)
-
-            media_url = saved_file.file_url
+        saved_files = []
+        for file in community_check.files:
+            saved_file = frappe.get_doc({
+                "doctype": "File",
+                "file_name": file.filename,
+                "content": file.read(),
+                "is_private": 1,
+            }).insert(ignore_permissions=True)
+            saved_files.append({
+                "doctype": "Media",
+                "media": saved_file.file_url
+            })
 
         location = Location()
 
@@ -80,10 +77,8 @@ def create_community_check(community_check_data: dict) -> Result:
             "country": location.country,
             "geo_l1": location.geo1,
             "geo_l2": location.geo2,
+            "media":saved_files
         }
-
-        if media_url:
-            doc_data["media"] = media_url
 
         doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)
 

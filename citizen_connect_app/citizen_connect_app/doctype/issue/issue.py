@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class PostMedia(Document):
+class Issue(Document):
 	pass

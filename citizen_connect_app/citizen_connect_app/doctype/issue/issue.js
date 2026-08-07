@@ -1,7 +1,7 @@
 // Copyright (c) 2026, One Family Foundation and contributors
 // For license information, please see license.txt
 
-// frappe.ui.form.on("Report Issue", {
+// frappe.ui.form.on("Issue", {
 // 	refresh(frm) {
 
 // 	},

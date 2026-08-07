@@ -27,6 +27,7 @@ class CommunityCheck(BaseModel):
     media: Optional[str] = None
 
     confidence_level: str
+    files: list = Field(default_factory=list)
 
     @field_validator("additional_observations", mode="before")
     @classmethod

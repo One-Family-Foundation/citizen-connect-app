@@ -68,13 +68,13 @@
    "fieldname": "media",
    "fieldtype": "Table",
    "label": "Media",
-   "options": "Post Media"
+   "options": "Media"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-05 23:29:59.618419",
+ "modified": "2026-08-07 14:42:00.828137",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Post",

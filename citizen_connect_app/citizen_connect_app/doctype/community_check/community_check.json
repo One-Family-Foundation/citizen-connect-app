@@ -16,12 +16,13 @@
   "internet",
   "sanitation",
   "local_governance",
-  "additional_observations",
-  "media",
   "confidence_level",
   "country",
   "geo_l1",
-  "geo_l2"
+  "geo_l2",
+  "column_break_hhez",
+  "additional_observations",
+  "media"
  ],
  "fields": [
   {
@@ -104,8 +105,9 @@
   },
   {
    "fieldname": "media",
-   "fieldtype": "Attach",
-   "label": "Media"
+   "fieldtype": "Table",
+   "label": "Media Files",
+   "options": "Media"
   },
   {
    "fieldname": "confidence_level",
@@ -131,12 +133,16 @@
    "fieldtype": "Link",
    "label": "Geo L2",
    "options": "Geography L2"
+  },
+  {
+   "fieldname": "column_break_hhez",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-07 12:24:38.412896",
+ "modified": "2026-08-07 14:52:09.430791",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Community Check",

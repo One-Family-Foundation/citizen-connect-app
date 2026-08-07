@@ -40,7 +40,7 @@ def create_post(post_data: dict) -> Result:
                 "is_private": 1,
             }).insert(ignore_permissions=True)
             saved_files.append({
-                "doctype": "Post Media",
+                "doctype": "Media",
                 "media": saved_file.file_url
             })
         

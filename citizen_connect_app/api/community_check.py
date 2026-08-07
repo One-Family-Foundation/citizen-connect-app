@@ -3,12 +3,12 @@ import json
 import frappe
 
 from samaaja.utils.custom_response import custom_response
-from citizen_connect_app.services.community_check import create_community_check
+from citizen_connect_app.services.community_check_manager import create
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
 @frappe.whitelist(allow_guest=True)
-def create():
+def create_community_check():
     try:
         data = {
             "user_id": frappe.form_dict.get("user_id"),
@@ -24,15 +24,12 @@ def create():
                 "additional_observations"
             ),
             "confidence_level": frappe.form_dict.get("confidence_level"),
-            "location": json.loads(frappe.form_dict.get("location"))
-            if frappe.form_dict.get("location")
-            else None,
-            "category": json.loads(frappe.form_dict.get("category"))
-            if frappe.form_dict.get("category")
-            else None,
+            "location": json.loads(frappe.form_dict.get("location")),
+            "category": json.loads(frappe.form_dict.get("category")),
+            "files": [f for f in frappe.request.files.getlist("files") if f.filename]
         }
 
-        return create_community_check(
+        return create(
             community_check_data=data
         ).to_custom_response()
 

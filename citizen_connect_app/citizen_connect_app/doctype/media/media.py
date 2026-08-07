@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class ReportIssue(Document):
+class Media(Document):
 	pass
