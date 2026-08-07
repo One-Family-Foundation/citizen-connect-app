@@ -1,4 +1,5 @@
 from typing import Optional
+from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 from typing import Annotated
 from citizen_connect_app.models.utils import Location, Category
@@ -19,13 +20,23 @@ class Post(BaseModel):
     @classmethod
     def clean_optional_fields(cls, value):
         return None if value == "" else value
+class MediaResponse(BaseModel):
+    media: str
+    caption: Optional[str] = None
+
 
 class PostResponse(BaseModel):
     id: str
     description: str
+
     country: Optional[str] = None
     geography_l1: Optional[str] = None
+    geography_l2: Optional[str] = None
     category_l1: Optional[str] = None
+
     user: str
-    creation: str
-    modified: str
+
+    media: list[MediaResponse] = Field(default_factory=list)
+
+    creation: datetime
+    modified: datetime

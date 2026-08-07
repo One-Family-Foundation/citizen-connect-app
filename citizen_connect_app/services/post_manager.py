@@ -1,7 +1,7 @@
 import frappe
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.error_logger import ErrorLogger
-from citizen_connect_app.models.post import Post, PostResponse
+from citizen_connect_app.models.post import Post, PostResponse , MediaResponse
 from citizen_connect_app.models.utils import Location
 from pydantic import ValidationError
 from citizen_connect_app.utils.commons  import resolve_location
@@ -71,32 +71,118 @@ def create_post(post_data: dict) -> Result:
 def get_list(
     limit=DEFAULT_LIMIT,
     offset=DEFAULT_OFFSET,
+    category_l1=None,
+    country=None,
+    geography_l1=None,
+    geography_l2=None,
 ) -> Result:
     try:
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
         offset = max(0, int(offset))
+        where_clause, values = build_filters(
+            category_l1=category_l1,
+            country=country,
+            geography_l1=geography_l1,
+            geography_l2=geography_l2,
+        )
+
 
         query = f"""
-                SELECT
-                p.name as id,
+            SELECT
+                p.name AS id,
                 p.description,
-                p.country,
-                p.geography_l1,
-                p.geography_l2,
-                p.category_l1,
                 p.user,
                 p.creation,
-                p.modified
+                p.modified,
+
+                c.country_name AS country,
+                g1.geo_l1 AS geography_l1,
+                g2.geo_2 AS geography_l2,
+                p.category_l1
+
             FROM `tabPost` p
+
+            LEFT JOIN `tabCountry` c
+                ON c.name = p.country
+
+            LEFT JOIN `tabGeography L1` g1
+                ON g1.name = p.geography_l1
+
+            LEFT JOIN `tabGeography L2` g2
+                ON g2.name = p.geography_l2
+               {where_clause}
+
             ORDER BY p.creation DESC
             LIMIT %s OFFSET %s
         """
+        values.extend([limit, offset])
+        post_rows = frappe.db.sql(query, tuple(values) , as_dict=True)
 
-        post_rows = frappe.db.sql(query, (limit, offset), as_dict=True)
+        post_ids = [post["id"] for post in post_rows]
 
+        media_map = {}
+
+        if post_ids:
+            media_rows = frappe.get_all(
+                "Media",
+                filters={
+                    "parent": ["in", post_ids],
+                    "parenttype": "Post",
+                    "parentfield": "media",
+                },
+                fields=["parent", "media", "caption"],
+            )
+
+            for row in media_rows:
+                media_map.setdefault(row.parent, []).append({
+                    "media": row.media,
+                    "caption": row.caption,
+                })
+
+        for post in post_rows:
+            post["media"] = media_map.get(post["id"], [])
+            print(post_rows)
         posts = [PostResponse(**row).model_dump() for row in post_rows]
-        return Result.success(data=posts)
+
+        return Result.success(
+            message="Posts fetched successfully.",
+            data=posts,
+        )
 
     except Exception as e:
-        ErrorLogger.log(frappe.get_traceback(), "Get post list failed")
-        return Result.failure(message="Failed to get post list.", data={"error": str(e)}, error_data={"traceback": frappe.get_traceback()})
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Failed to get post list.",
+            data={"error": str(e)},
+            error_data={"traceback": frappe.get_traceback()},
+        )
+def build_filters(
+    category_l1=None,
+    country=None,
+    geography_l1=None,
+    geography_l2=None,
+):
+    conditions = []
+    values = []
+
+    if category_l1:
+        conditions.append("p.category_l1 = %s")
+        values.append(category_l1)
+
+    if country:
+        conditions.append("p.country = %s")
+        values.append(country)
+
+    if geography_l1:
+        conditions.append("p.geography_l1 = %s")
+        values.append(geography_l1)
+
+    if geography_l2:
+        conditions.append("p.geography_l2 = %s")
+        values.append(geography_l2)
+
+    where_clause = ""
+    if conditions:
+        where_clause = "WHERE " + " AND ".join(conditions)
+
+    return where_clause, values        
