@@ -174,11 +174,11 @@ def build_filters(
         values.append(country)
 
     if geography_l1:
-        conditions.append("p.geography_l1 = %s")
+        conditions.append("g1.geo_l1 = %s")
         values.append(geography_l1)
 
     if geography_l2:
-        conditions.append("p.geography_l2 = %s")
+        conditions.append("g2.geo_2 = %s")
         values.append(geography_l2)
 
     where_clause = ""
