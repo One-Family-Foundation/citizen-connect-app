@@ -7,8 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "user_id",
-  "service_id",
-  "scheme_id",
+  "category",
+  "id",
   "rating"
  ],
  "fields": [
@@ -21,29 +21,31 @@
    "reqd": 1
   },
   {
-   "fieldname": "service_id",
-   "fieldtype": "Link",
-   "label": "Service Id",
-   "options": "Service"
-  },
-  {
-   "fieldname": "scheme_id",
-   "fieldtype": "Link",
-   "label": "Scheme Id",
-   "options": "Scheme"
-  },
-  {
    "fieldname": "rating",
    "fieldtype": "Rating",
    "in_list_view": 1,
    "label": "Rating",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Data",
+   "label": "Category ",
+   "options": "Service",
+   "reqd": 1
+  },
+  {
+   "fieldname": "id",
+   "fieldtype": "Data",
+   "label": "Id",
+   "options": "Scheme",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-07 14:10:57.866087",
+ "modified": "2026-08-08 15:12:48.505903",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Rating",
