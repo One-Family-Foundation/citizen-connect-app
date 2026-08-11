@@ -9,11 +9,32 @@ class RequestHelpManager:
     @staticmethod
     def create(data: dict, request_type: str, attachment=None) -> Result:
         try:
-            if not data.get("mobile_num"):
-                return Result.bad_request("Mobile Number is required")
+            if frappe.session.user == "Guest":
+                full_name = data.get("full_name")
+                email = data.get("email")
+                mobile_num = data.get("mobile_num")
+            else:
+                user = frappe.get_doc("User",  frappe.session.user)
+                profile_name = frappe.db.get_value("User Profile", {"user":user.name},"name")
+                if not profile_name:
+                    return Result.bad_request("Profile not found")
+                profile = frappe.get_doc("User Profile", profile_name)
+                full_name = user.first_name
+                email = user.email
+
+                if profile.phone:
+                    mobile_num = profile.phone
+                else:
+                    if not data.get("mobile_num"):
+                        return Result.bad_request("mobile number is required")
+                    mobile_num = data.get("mobile_num")
+                    profile.phone = mobile_num
+                    profile.save(ignore_permissions=True)                   
+        
+            
 
             filters = {
-                "mobile_num": data.get("mobile_num"),
+                "mobile_num": mobile_num
             }
 
             if request_type == "service":
@@ -37,9 +58,9 @@ class RequestHelpManager:
 
             request.service_name = data.get("service_name")
             request.scheme_name = data.get("scheme_name")
-            request.full_name = data.get("full_name")
-            request.email = data.get("email")
-            request.mobile_num = data.get("mobile_num")
+            request.full_name = full_name
+            request.email = email
+            request.mobile_num = mobile_num
             request.age = data.get("age")
             request.gender = data.get("gender")
             request.situation_desc = data.get("situation_desc")

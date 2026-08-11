@@ -9,9 +9,9 @@ from citizen_connect_app.models.ngo import NGO
 
 class Skill(BaseModel):
     skill_name: str
+    
 class Opportunity(BaseModel):
     id: str
-
     title: str
     description: Optional[str] = None
     skills: list[Skill] = []

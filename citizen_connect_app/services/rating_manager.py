@@ -24,11 +24,11 @@ def create_rating(category: str, item_id: str, rating) -> Result:
         if not item_id:
             return Result.failure("Item ID is required.")
 
-        # Validate item exists
+        # Get Scheme/Service document using ORM
         if not frappe.db.exists(category, item_id):
-            return Result.failure(
-                f"{category} not found."
-            )
+            return Result.failure(f"{category} not found.")
+
+        item_doc = frappe.get_doc(category, item_id)
 
         # Validate rating
         try:
@@ -37,9 +37,7 @@ def create_rating(category: str, item_id: str, rating) -> Result:
             return Result.failure("Rating must be a valid number.")
 
         if rating < 1 or rating > 5:
-            return Result.failure(
-                "Rating must be between 1 and 5."
-            )
+            return Result.failure("Rating must be between 1 and 5.")
 
         # Check whether user already rated this item
         existing_rating = frappe.db.exists(
@@ -56,7 +54,24 @@ def create_rating(category: str, item_id: str, rating) -> Result:
                 f"You have already rated this {category.lower()}."
             )
 
-        # Create rating
+        # Get current values from ORM document
+        total_users = item_doc.total_users or 0
+        total_rating_sum = item_doc.total_rating_sum or 0
+
+        # Calculate new values
+        total_users += 1
+        total_rating_sum += rating
+
+        new_rating = total_rating_sum / total_users
+
+        # Update document using ORM
+        item_doc.total_users = total_users
+        item_doc.total_rating_sum = total_rating_sum
+        item_doc.rating = new_rating
+
+        item_doc.save(ignore_permissions=True)
+
+        # Create Rating document using ORM
         rating_doc = frappe.get_doc(
             {
                 "doctype": "Rating",
@@ -83,8 +98,11 @@ def create_rating(category: str, item_id: str, rating) -> Result:
         )
 
     except Exception as e:
+        frappe.db.rollback()
         ErrorLogger.log(e)
 
         return Result.failure(
-            "Failed to submit rating."
+            message="Failed to submit rating.",
+            data={"error": str(e)},
+            error_data={"traceback": frappe.get_traceback()},
         )

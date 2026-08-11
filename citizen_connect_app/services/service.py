@@ -76,6 +76,7 @@ class ServiceManager:
                         s.whatsapp_number,
                         s.rating,
                         s.ngo_org AS ngo_name,
+                        
 
                         s.category_l1 AS l1_name,
                         s.category_l2 AS l2_name

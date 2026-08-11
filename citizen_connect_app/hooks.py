@@ -257,7 +257,7 @@ app_license = "mit"
 # ignore_translatable_strings_from = []
 
 doc_events = {
-    "Service Category": {
+    " Category": {
         "on_update": "citizen_connect_app.services.service.clear_categories_cache",
         "after_insert": "citizen_connect_app.services.service.clear_categories_cache",
         "on_trash": "citizen_connect_app.services.service.clear_categories_cache",
