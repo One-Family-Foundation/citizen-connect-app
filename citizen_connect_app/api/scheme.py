@@ -16,7 +16,7 @@ def get_list(
     gender=None,
     disabled=None,
     verified=None,
-    active=None,
+    
 ):
     try:
         return SchemeManager.get_list(
@@ -30,7 +30,7 @@ def get_list(
             gender=gender,
             disabled=disabled,
             verified=verified,
-            active=active,
+            
         ).to_custom_response()
 
     except Exception as e:

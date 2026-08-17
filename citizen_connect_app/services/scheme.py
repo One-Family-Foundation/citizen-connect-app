@@ -96,7 +96,7 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
-        active=None,
+     
     ) -> Result:
         """Fetch a paginated, filterable list of schemes."""
         try:
@@ -112,7 +112,7 @@ class SchemeManager:
                 gender=gender,
                 disabled=disabled,
                 verified=verified,
-                active=active,
+                
             )
             values.extend([limit, offset])
 
@@ -158,6 +158,7 @@ class SchemeManager:
                     {SchemeManager._SELECT_FIELDS}
                 {SchemeManager._JOINS}
                 WHERE s.name = %s
+                AND s.is_active = 1
             """
 
             scheme_rows = frappe.db.sql(query, (scheme_id,), as_dict=True)
@@ -177,6 +178,7 @@ class SchemeManager:
         except Exception as e:
             ErrorLogger.log(e)
             raise
+            
 
     @staticmethod
     def _build_filters(
@@ -188,9 +190,9 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
-        active=None,
+        
     ):
-        filters = []
+        filters = ["s.is_active = 1"]
         values = []
 
         # Category filters
@@ -228,9 +230,7 @@ class SchemeManager:
             filters.append("s.is_verified = %s")
             values.append(verified)
 
-        if active is not None:
-            filters.append("s.is_active = %s")
-            values.append(active)
+      
 
         where_clause = ""
         if filters:

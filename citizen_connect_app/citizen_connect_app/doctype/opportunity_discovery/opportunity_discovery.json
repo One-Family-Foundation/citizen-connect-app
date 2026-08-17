@@ -7,8 +7,8 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
-  "service_l1",
-  "service_l2",
+  "category_l1",
+  "category_l2",
   "crisis_link",
   "description",
   "skills",
@@ -30,22 +30,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
-   "reqd": 1
-  },
-  {
-   "fieldname": "service_l1",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Category L1",
-   "options": "Service Category",
-   "reqd": 1
-  },
-  {
-   "fieldname": "service_l2",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Category L2",
-   "options": "Service Category",
+   "length": 120,
    "reqd": 1
   },
   {
@@ -94,8 +79,9 @@
   },
   {
    "fieldname": "expected_time",
-   "fieldtype": "Text",
+   "fieldtype": "Data",
    "label": "Expected Time",
+   "length": 60,
    "reqd": 1
   },
   {
@@ -133,12 +119,28 @@
    "fieldtype": "Select",
    "label": "Status",
    "options": "Active\nIn-active"
+  },
+  {
+   "fieldname": "category_l1",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category L1",
+   "options": "Service Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category_l2",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category L2",
+   "options": "Service Category",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-03 11:46:30.778054",
+ "modified": "2026-08-05 15:57:47.298209",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",
@@ -159,7 +161,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }

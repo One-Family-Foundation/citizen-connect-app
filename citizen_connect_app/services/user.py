@@ -77,7 +77,6 @@ class UserManager:
                     "doctype": "User",
                     "email": user_data.email,
                     "first_name": user_data.full_name,
-                    "mobile_no": user_data.mobile_no,
                     "enabled": 1,
                     "send_welcome_email": 0,
                 }
