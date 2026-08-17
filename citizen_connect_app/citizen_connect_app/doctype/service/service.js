@@ -24,7 +24,7 @@ frappe.ui.form.on("Service", {
             return {
                 filters: {
                     category_level: "L2",
-                    parent_service_category: frm.doc.category_l1
+                    parent_category: frm.doc.category_l1
                 }
             };
         });

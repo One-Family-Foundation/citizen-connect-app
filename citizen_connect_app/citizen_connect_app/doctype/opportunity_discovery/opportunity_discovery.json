@@ -47,8 +47,9 @@
   },
   {
    "fieldname": "skills",
-   "fieldtype": "Text",
+   "fieldtype": "Table",
    "label": "Skills",
+   "options": "Skill",
    "reqd": 1
   },
   {
@@ -125,7 +126,7 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category L1",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
   },
   {
@@ -133,14 +134,14 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category L2",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-05 15:57:47.298209",
+ "modified": "2026-08-06 11:45:22.983020",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",

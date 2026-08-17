@@ -149,5 +149,7 @@ class UserManager:
             ErrorLogger.log(e)
 
             return Result.failure(
-                message=str(e)
+                message="Failed to login.",
+                data={"error": str(e)},
+                error_data={"traceback": frappe.get_traceback()},
             )

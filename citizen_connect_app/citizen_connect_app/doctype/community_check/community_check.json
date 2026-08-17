@@ -1,0 +1,169 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-07 12:05:05.004721",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "user_id",
+  "category",
+  "water_supply",
+  "electricity",
+  "road",
+  "teacher_at_school",
+  "healthcare",
+  "internet",
+  "sanitation",
+  "local_governance",
+  "confidence_level",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "column_break_hhez",
+  "additional_observations",
+  "media"
+ ],
+ "fields": [
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Link",
+   "label": "User Id",
+   "options": "User"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "water_supply",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Water Supply",
+   "options": "Available\nPartial(<12h)\nNone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "electricity",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Electricity",
+   "options": "24h Available\nPartial (<12h)\nNone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "road",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Roads",
+   "options": "Good Condition\nPoor Condition\nImpassable",
+   "reqd": 1
+  },
+  {
+   "fieldname": "teacher_at_school",
+   "fieldtype": "Select",
+   "label": "Teacher at School",
+   "options": "Present\nSome Missing\nNot Present",
+   "reqd": 1
+  },
+  {
+   "fieldname": "healthcare",
+   "fieldtype": "Select",
+   "label": "Healthcare",
+   "options": "Regular\nIrregular\nNone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "internet",
+   "fieldtype": "Select",
+   "label": "Internet",
+   "options": "Good\nPoor/Slow\nNone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sanitation",
+   "fieldtype": "Select",
+   "label": "Sanitation",
+   "options": "Functional\nPartial\nNone",
+   "reqd": 1
+  },
+  {
+   "fieldname": "local_governance",
+   "fieldtype": "Select",
+   "label": "Local Governance",
+   "options": "Functional\nLimited\nNon-functional",
+   "reqd": 1
+  },
+  {
+   "fieldname": "additional_observations",
+   "fieldtype": "Text",
+   "label": "Additional Observations"
+  },
+  {
+   "fieldname": "media",
+   "fieldtype": "Table",
+   "label": "Media Files",
+   "options": "Media"
+  },
+  {
+   "fieldname": "confidence_level",
+   "fieldtype": "Select",
+   "label": "Confidence Level",
+   "options": "Very Confident\nSomewhat Confident\nNot Sure"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geo L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geo L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "column_break_hhez",
+   "fieldtype": "Column Break"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-07 14:52:09.430791",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Community Check",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

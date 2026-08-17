@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.scheme.get_list
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.scheme.get_list"
   auth: inherit
 
 settings:

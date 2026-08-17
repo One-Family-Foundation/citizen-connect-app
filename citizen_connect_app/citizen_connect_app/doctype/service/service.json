@@ -21,6 +21,9 @@
   "service_status",
   "service_channel",
   "eligibility_condition",
+  "section_break_vwca",
+  "total_rating_sum",
+  "total_users",
   "contact_details_section",
   "contact_number",
   "whatsapp_number",
@@ -123,7 +126,7 @@
   },
   {
    "fieldname": "rating",
-   "fieldtype": "Float",
+   "fieldtype": "Int",
    "label": "Rating"
   },
   {
@@ -165,21 +168,38 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category_L1",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
   },
   {
    "fieldname": "category_l2",
    "fieldtype": "Link",
    "label": "Category L2",
-   "options": "Service Category",
+   "options": "Category",
    "reqd": 1
+  },
+  {
+   "fieldname": "section_break_vwca",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "total_rating_sum",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Total Rating Sum",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "total_users",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Total Users"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-28 18:52:12.632047",
+ "modified": "2026-08-10 16:58:10.670075",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

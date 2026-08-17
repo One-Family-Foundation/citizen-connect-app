@@ -1,0 +1,61 @@
+info:
+  name: Create Community Check
+  type: http
+  seq: 14
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.community_check.create_community_check"
+  body:
+    type: multipart-form
+    data:
+      - name: files
+        type: file
+        value:
+          - /Users/ankitsaxena/Downloads/ATEC_Proposal.pdf
+        contentType: application/pdf
+      - name: additional_observations
+        type: text
+        value: Water supply and electricity are working properly. Roads are in good condition.
+      - name: electricity
+        type: text
+        value: 24h Available
+      - name: location
+        type: text
+        value: |-
+          {
+          "country": "India",
+          "geo1": "Maharashtra",
+          "geo2": "Pune"
+          }
+      - name: road
+        type: text
+        value: Good Condition
+      - name: teacher_at_school
+        type: text
+        value: Present
+      - name: healthcare
+        type: text
+        value: Regular
+      - name: internet
+        type: text
+        value: Good
+      - name: sanitation
+        type: text
+        value: Functional
+      - name: local_governance
+        type: text
+        value: Functional
+      - name: confidence_level
+        type: text
+        value: Very Confident
+      - name: category
+        type: text
+        value: '{"l1":"Healthcare"}'
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

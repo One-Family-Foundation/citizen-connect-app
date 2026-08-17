@@ -5,7 +5,7 @@ info:
 
 http:
   method: POST
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.auth.verify_otp?email=saxenankit3@gmail.com&otp=5177
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.auth.verify_otp?email=saxenankit3@gmail.com&otp=5177"
   params:
     - name: email
       value: saxenankit3@gmail.com

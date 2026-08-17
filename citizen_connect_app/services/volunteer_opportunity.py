@@ -3,6 +3,7 @@ import frappe
 from citizen_connect_app.models.volunteer_opportunity import (
     Opportunity,
     OpportunitySummary,
+    Skill
 )
 from citizen_connect_app.models.ngo import NGO
 from citizen_connect_app.models.utils import Location, Category
@@ -21,7 +22,6 @@ class OpportunityManager:
         o.name AS id,
         o.title,
         o.description,
-        o.skills,
         o.crisis_link,
 
         o.category_l1 AS category_l1_name,
@@ -50,7 +50,7 @@ class OpportunityManager:
 
     _JOINS = """
         FROM `tabOpportunity Discovery` o
-
+        
         LEFT JOIN `tabCountry` c
             ON c.name = o.country
 
@@ -208,7 +208,21 @@ class OpportunityManager:
             where = "WHERE " + " AND ".join(filters)
 
         return where, values
+    @staticmethod
+    def _get_skills(opportunity_id):
+        rows = frappe.get_all(
+            "Skill",
+            filters={
+               "parent": opportunity_id,
+               "parenttype": "Opportunity Discovery",
+               "parentfield": "skills",
+            },
+           fields=["skill_name"],
+           order_by="idx",
+        )
 
+        return [ Skill(skill_name=row["skill_name"])for row in rows ]
+    
     @staticmethod
     def _create_summary(row):
 
@@ -246,12 +260,13 @@ class OpportunityManager:
                 name=row["ngo_name"],
                 phone=row["phone"],
             )
+        skills = OpportunityManager._get_skills(row["id"])
 
         return Opportunity(
             id=row["id"],
             title=row["title"],
             description=row["description"],
-            skills=row["skills"],
+            skills=skills,
             crisis_link=row["crisis_link"],
             location=Location(
                 country=row["country"],

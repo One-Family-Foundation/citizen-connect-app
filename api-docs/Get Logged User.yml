@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/frappe.auth.get_logged_user
+  url: "{{BASE_URL}}/api/method/frappe.auth.get_logged_user"
   auth: inherit
 
 settings:
