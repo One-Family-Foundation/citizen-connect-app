@@ -1,0 +1,30 @@
+info:
+  name: Service Request help
+  type: http
+  seq: 21
+
+http:
+  method: POST
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service_request.create
+  headers:
+    - name: email
+      value: itsvivekg10@gmail.com
+    - name: mobile_num
+      value: +91    9876543210
+    - name: service_name
+      value: su2gdsb6rv
+    - name: age
+      value: "21"
+    - name: gender
+      value: Male
+    - name: description
+      value: I need help with this service
+    - name: full_name
+      value: vivek
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

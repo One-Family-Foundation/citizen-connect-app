@@ -1,0 +1,37 @@
+info:
+  name: Scheme Request Help
+  type: http
+  seq: 22
+
+http:
+  method: GET
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.scheme_request.create?full_name=john&email=itsvivekg10@gmail.com&mobile_num=+91 983772737&scheme_name=&age=&gender=&description=
+  params:
+    - name: full_name
+      value: john
+      type: query
+    - name: email
+      value: itsvivekg10@gmail.com
+      type: query
+    - name: mobile_num
+      value: +91 983772737
+      type: query
+    - name: scheme_name
+      value: ""
+      type: query
+    - name: age
+      value: ""
+      type: query
+    - name: gender
+      value: ""
+      type: query
+    - name: description
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

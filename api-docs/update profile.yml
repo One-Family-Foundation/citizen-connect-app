@@ -1,0 +1,43 @@
+info:
+  name: Update Profile
+  type: http
+  seq: 15
+
+http:
+  method: GET
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.profile.update?profile_photo=&alternative_email=&phone=&user_type=&country=&geo_l1=&geo_l2=&org_name=
+  headers:
+    - name: Cookie
+      value: sid=
+  params:
+    - name: profile_photo
+      value: ""
+      type: query
+    - name: alternative_email
+      value: ""
+      type: query
+    - name: phone
+      value: ""
+      type: query
+    - name: user_type
+      value: ""
+      type: query
+    - name: country
+      value: ""
+      type: query
+    - name: geo_l1
+      value: ""
+      type: query
+    - name: geo_l2
+      value: ""
+      type: query
+    - name: org_name
+      value: ""
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
