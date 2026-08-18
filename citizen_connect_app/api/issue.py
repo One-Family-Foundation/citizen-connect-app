@@ -12,6 +12,7 @@ def create_issue():
     try:
         data = {
             "user_id": frappe.form_dict.get("user_id"),
+            "title": frappe.form_dict.get("title"),
             "description": frappe.form_dict.get("description"),
             "urgency": frappe.form_dict.get("urgency"),
             "allow_contact": frappe.form_dict.get("allow_contact"),

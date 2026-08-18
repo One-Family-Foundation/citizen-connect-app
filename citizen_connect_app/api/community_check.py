@@ -12,6 +12,8 @@ def create_community_check():
     try:
         data = {
             "user_id": frappe.form_dict.get("user_id"),
+            "title":frappe.form_dict.get("title"),
+            "description":frappe.form_dict.get("description"),
             "water_supply": frappe.form_dict.get("water_supply"),
             "electricity": frappe.form_dict.get("electricity"),
             "road": frappe.form_dict.get("road"),
@@ -20,12 +22,8 @@ def create_community_check():
             "internet": frappe.form_dict.get("internet"),
             "sanitation": frappe.form_dict.get("sanitation"),
             "local_governance": frappe.form_dict.get("local_governance"),
-            "additional_observations": frappe.form_dict.get(
-                "additional_observations"
-            ),
             "confidence_level": frappe.form_dict.get("confidence_level"),
             "location": json.loads(frappe.form_dict.get("location")),
-            "category": json.loads(frappe.form_dict.get("category")),
             "files": [f for f in frappe.request.files.getlist("files") if f.filename]
         }
 

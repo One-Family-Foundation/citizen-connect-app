@@ -7,13 +7,13 @@ from citizen_connect_app.models.utils import Location, Category
 
 class Issue(BaseModel):
     user_id: Optional[str] = None
-
+    title:Annotated[str, Field(min_length=10, max_length=120)]
     description: Annotated[str, Field(min_length=10, max_length=3000)]
     urgency: str
     allow_contact: bool = False
 
     location: Optional[Location] = None
-    category: Optional[Category] = None
+    category: Category
 
     files: list = Field(default_factory=list)
     

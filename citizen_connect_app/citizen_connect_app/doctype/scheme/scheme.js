@@ -5,6 +5,8 @@ frappe.ui.form.on("Scheme", {
     refresh(frm) {
 
         // Show only L1 categories
+        frm.set_df_property("rating", "read_only", 1);
+
         frm.set_query("category_l1", function () {
             return {
                 filters: {

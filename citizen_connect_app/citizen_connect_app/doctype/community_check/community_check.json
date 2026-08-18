@@ -7,7 +7,6 @@
  "engine": "InnoDB",
  "field_order": [
   "user_id",
-  "category",
   "water_supply",
   "electricity",
   "road",
@@ -30,14 +29,6 @@
    "fieldtype": "Link",
    "label": "User Id",
    "options": "User"
-  },
-  {
-   "fieldname": "category",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Category",
-   "options": "Category",
-   "reqd": 1
   },
   {
    "fieldname": "water_supply",
@@ -142,7 +133,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-07 14:52:09.430791",
+ "modified": "2026-08-12 14:29:35.948753",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Community Check",

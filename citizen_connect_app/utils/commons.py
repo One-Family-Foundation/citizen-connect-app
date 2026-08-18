@@ -39,3 +39,33 @@ def resolve_location(location:Location)->Result:
                     message="Invalid Geography L2 selected."
                 )
     return Result.success(message="Location resolved successfully.", data=Location(country=country, geo1=geo_l1, geo2=geo_l2),)
+
+def update_user_category_statistics(user_id, category):
+    if not user_id or not category:
+        return
+
+    stats_name = frappe.db.get_value(
+        "User Category Statistics",
+        {
+            "user": user_id,
+            "category_l1": category,
+        },
+        "name",
+    )
+
+    if stats_name:
+        stats = frappe.get_doc(
+            "User Category Statistics",
+            stats_name,
+        )
+
+        stats.count = (stats.count or 0) + 1
+        stats.save(ignore_permissions=True)
+
+    else:
+        frappe.get_doc({
+            "doctype": "User Category Statistics",
+            "user": user_id,
+            "category_l1": category,
+            "count": 1,
+        }).insert(ignore_permissions=True)    

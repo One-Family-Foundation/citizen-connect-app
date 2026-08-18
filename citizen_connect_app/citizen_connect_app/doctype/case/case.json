@@ -1,0 +1,290 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-12 14:01:09.070872",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "case_details_section",
+  "title",
+  "type",
+  "media",
+  "column_break_gpmo",
+  "category",
+  "description",
+  "request_help_section",
+  "service_id",
+  "scheme_id",
+  "age",
+  "gender",
+  "case_location_section",
+  "country",
+  "column_break_jpre",
+  "geo_l1",
+  "geo_l2",
+  "user_details_section",
+  "user_id",
+  "column_break_cbtz",
+  "user_name",
+  "email_id",
+  "mobile_no",
+  "community_check_details_section",
+  "confidence_level",
+  "water_supply",
+  "electricity",
+  "road",
+  "local_governance",
+  "column_break_fgwr",
+  "healthcare",
+  "teacher_at_school",
+  "internet",
+  "sanitation",
+  "issue_details_section",
+  "urgency",
+  "allocation_details_section",
+  "ngo_admin"
+ ],
+ "fields": [
+  {
+   "fieldname": "user_details_section",
+   "fieldtype": "Section Break",
+   "label": "User Details"
+  },
+  {
+   "fieldname": "case_details_section",
+   "fieldtype": "Section Break",
+   "label": "Case Details"
+  },
+  {
+   "fieldname": "column_break_gpmo",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "label": "Title"
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Text",
+   "label": "Description"
+  },
+  {
+   "fieldname": "type",
+   "fieldtype": "Select",
+   "label": "Type",
+   "options": "Issue\nCommunity Check\nScheme Request\nService Request\nCrisis",
+   "reqd": 1
+  },
+  {
+   "fieldname": "media",
+   "fieldtype": "Table",
+   "label": "Media",
+   "options": "Media"
+  },
+  {
+   "fieldname": "column_break_cbtz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "user_name",
+   "fieldtype": "Data",
+   "label": "User Name"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email Id"
+  },
+  {
+   "fieldname": "mobile_no",
+   "fieldtype": "Phone",
+   "label": "Mobile Number"
+  },
+  {
+   "fieldname": "case_location_section",
+   "fieldtype": "Section Break",
+   "label": "Case Location"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "column_break_jpre",
+   "fieldtype": "Column Break"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Community Check\";",
+   "fieldname": "community_check_details_section",
+   "fieldtype": "Section Break",
+   "label": "Community Check Details"
+  },
+  {
+   "fieldname": "confidence_level",
+   "fieldtype": "Select",
+   "label": "Confidence Level",
+   "options": "Very Confident\nSomewhat Confident\nNot Sure"
+  },
+  {
+   "fieldname": "water_supply",
+   "fieldtype": "Select",
+   "label": "Water Supply",
+   "options": "Available\nPartial(<12h)\nNone"
+  },
+  {
+   "depends_on": "eval:doc.type==\"Issue\";",
+   "fieldname": "issue_details_section",
+   "fieldtype": "Section Break",
+   "label": "Issue Details"
+  },
+  {
+   "fieldname": "urgency",
+   "fieldtype": "Select",
+   "label": "Urgency",
+   "options": "Medium\nHigh\nCritical"
+  },
+  {
+   "fieldname": "allocation_details_section",
+   "fieldtype": "Section Break",
+   "label": "Allocation Details"
+  },
+  {
+   "fieldname": "ngo_admin",
+   "fieldtype": "Link",
+   "label": "NGO Admin",
+   "options": "User"
+  },
+  {
+   "fieldname": "electricity",
+   "fieldtype": "Select",
+   "label": "Electricity",
+   "options": "Available\nPartial(<12h)\nNone"
+  },
+  {
+   "fieldname": "road",
+   "fieldtype": "Select",
+   "label": "Roads",
+   "options": "Good Condition\nPoor Condition\nImpassable"
+  },
+  {
+   "fieldname": "teacher_at_school",
+   "fieldtype": "Select",
+   "label": "Teacher at School",
+   "options": "Present\nSome Missing\nNot Present"
+  },
+  {
+   "fieldname": "healthcare",
+   "fieldtype": "Select",
+   "label": "Healthcare",
+   "options": "Regular\nIrregular\nNone"
+  },
+  {
+   "fieldname": "internet",
+   "fieldtype": "Select",
+   "label": "Internet",
+   "options": "Good\nPoor/Slow\nNone"
+  },
+  {
+   "fieldname": "sanitation",
+   "fieldtype": "Select",
+   "label": "Sanitation",
+   "options": "Functional\nPartial\nNone"
+  },
+  {
+   "fieldname": "local_governance",
+   "fieldtype": "Select",
+   "label": "Local Governance",
+   "options": "Functional\nLimited\nNon-functional"
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geography L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geography L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "user_id",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category"
+  },
+  {
+   "fieldname": "column_break_fgwr",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "request_help_section",
+   "fieldtype": "Section Break",
+   "label": "Request help"
+  },
+  {
+   "fieldname": "service_id",
+   "fieldtype": "Link",
+   "label": "Service Id",
+   "options": "Service"
+  },
+  {
+   "fieldname": "scheme_id",
+   "fieldtype": "Link",
+   "label": "Scheme Id",
+   "options": "Scheme"
+  },
+  {
+   "fieldname": "age",
+   "fieldtype": "Int",
+   "label": "Age"
+  },
+  {
+   "fieldname": "gender",
+   "fieldtype": "Select",
+   "label": "Gender",
+   "options": "Male\nFemale\nNon-binary\nPrefer not to say"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-17 13:21:38.625033",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Case",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "title"
+}

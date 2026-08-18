@@ -11,7 +11,7 @@ def create():
         attachment = frappe.request.files.get("file")
 
         return RequestHelpManager.create(
-            data=data,
+            request_data=data,
             request_type="service",
             attachment=attachment,
         ).to_custom_response()

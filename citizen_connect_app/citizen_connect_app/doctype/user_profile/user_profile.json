@@ -7,11 +7,14 @@
  "engine": "InnoDB",
  "field_order": [
   "user",
+  "profile_photo",
+  "alternative_email",
   "phone",
   "user_type",
   "country",
   "geo_l1",
-  "geo_l2"
+  "geo_l2",
+  "org_name"
  ],
  "fields": [
   {
@@ -50,12 +53,28 @@
    "fieldtype": "Link",
    "label": "Geo L2",
    "options": "Geography L2"
+  },
+  {
+   "fieldname": "profile_photo",
+   "fieldtype": "Attach Image",
+   "label": "Profile Photo"
+  },
+  {
+   "fieldname": "alternative_email",
+   "fieldtype": "Data",
+   "label": "Alternative Email"
+  },
+  {
+   "fieldname": "org_name",
+   "fieldtype": "Link",
+   "label": "Organisation Name",
+   "options": "Organisation"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-04 18:39:53.604742",
+ "modified": "2026-08-18 10:16:35.689312",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "User Profile",

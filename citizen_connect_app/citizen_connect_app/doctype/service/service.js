@@ -2,6 +2,7 @@ frappe.ui.form.on("Service", {
     refresh(frm) {
 
         // Show only L1 categories
+        frm.set_df_property("rating", "read_only", 1);
         frm.set_query("category_l1", function () {
             return {
                 filters: {
@@ -59,5 +60,5 @@ frappe.ui.form.on("Service", {
 
     service_geo1(frm) {
         frm.set_value("service_geo2", "");
-    }
+    },
 });

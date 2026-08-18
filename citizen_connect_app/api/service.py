@@ -12,6 +12,7 @@ def get_list(
     country=None,
     geo1=None,
     geo2=None,
+    lang="en",
 ):
     try:
         return ServiceManager.get_list(
@@ -22,6 +23,7 @@ def get_list(
             country=country,
             geo1=geo1,
             geo2=geo2,
+            lang="hi",
         ).to_custom_response()
 
     except Exception as e:

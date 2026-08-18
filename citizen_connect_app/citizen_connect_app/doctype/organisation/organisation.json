@@ -2,15 +2,32 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
- "autoname": "field:org_name",
  "creation": "2026-07-14 15:59:27.803572",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
   "org_name",
+  "short_name",
+  "category_l1",
+  "category_l2",
+  "established",
+  "language",
   "phone",
-  "about",
-  "email"
+  "email",
+  "is_active",
+  "column_break_mnfl",
+  "description",
+  "registered_address",
+  "registration_number",
+  "website_url",
+  "logo",
+  "ngo_admins_section",
+  "ngo_admin",
+  "location_details_section",
+  "country",
+  "column_break_fusq",
+  "geo_l1",
+  "geo_l2"
  ],
  "fields": [
   {
@@ -22,11 +39,6 @@
    "unique": 1
   },
   {
-   "fieldname": "about",
-   "fieldtype": "Small Text",
-   "label": "About"
-  },
-  {
    "fieldname": "phone",
    "fieldtype": "Phone",
    "label": "Phone",
@@ -36,16 +48,125 @@
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email"
+  },
+  {
+   "fieldname": "short_name",
+   "fieldtype": "Data",
+   "label": "Short Name"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geo L1",
+   "options": "Geography L1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geo L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "registered_address",
+   "fieldtype": "Small Text",
+   "label": "Registered Address"
+  },
+  {
+   "fieldname": "website_url",
+   "fieldtype": "Data",
+   "label": "Website URL",
+   "reqd": 1
+  },
+  {
+   "fieldname": "registration_number",
+   "fieldtype": "Data",
+   "label": "Registration Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "established",
+   "fieldtype": "Date",
+   "label": "Established",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "logo",
+   "fieldtype": "Attach Image",
+   "label": "Logo",
+   "reqd": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "is_active",
+   "fieldtype": "Check",
+   "label": "Is Active"
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "label": "Language",
+   "options": "Language"
+  },
+  {
+   "fieldname": "ngo_admin",
+   "fieldtype": "Table",
+   "options": "User Child Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category_l1",
+   "fieldtype": "Table MultiSelect",
+   "label": "Category L1",
+   "options": "Category Child Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category_l2",
+   "fieldtype": "Table MultiSelect",
+   "label": "Category L2",
+   "options": "Category Child Table",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_mnfl",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_details_section",
+   "fieldtype": "Section Break",
+   "label": "Location Details"
+  },
+  {
+   "fieldname": "column_break_fusq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "ngo_admins_section",
+   "fieldtype": "Section Break",
+   "label": "NGO Admins"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-27 13:06:37.989895",
+ "modified": "2026-08-15 20:21:54.339377",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Organisation",
- "naming_rule": "By fieldname",
  "owner": "Administrator",
  "permissions": [
   {

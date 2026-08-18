@@ -133,6 +133,9 @@ app_license = "mit"
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+permission_query_conditions = {
+    "Case": "citizen_connect_app.services.permission_manager.case_query"
+}
 
 # Document Events
 # ---------------
@@ -255,6 +258,13 @@ app_license = "mit"
 # ------------
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
+
+TRANSLATABLE_MASTER_FIELDS = {
+    "Service Category": "catalogue_name",
+    "Country": "country_name",
+    "Geography L1": "geo_l1",
+    "Geography L2": "geo_2",
+}
 
 doc_events = {
     " Category": {

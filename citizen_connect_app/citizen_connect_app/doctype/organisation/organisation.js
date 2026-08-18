@@ -1,8 +1,76 @@
-// Copyright (c) 2026, One Family Foundation and contributors
-// For license information, please see license.txt
+let L2_PARENT = {};
 
-// frappe.ui.form.on("Organisation", {
-// 	refresh(frm) {
+async function load_l2_map() {
+  const rows = await frappe.db.get_list("Category", {
+    filters: { category_level: "L2" },
+    fields: ["name", "parent_category"],
+    limit: 0
+  });
+  L2_PARENT = Object.fromEntries(rows.map(r => [r.name, r.parent_category]));
+}
 
-// 	},
-// });
+frappe.ui.form.on("Organisation", {
+  onload: load_l2_map,
+  refresh: load_l2_map,
+
+  setup(frm) {
+    frm.set_query("category_l1", () => ({
+      filters: { category_level: "L1" }
+    }));
+
+    frm.set_query("category_l2", () => {
+      const l1 = (frm.doc.category_l1 || []).map(r => r["category"]).filter(Boolean);
+      return {
+        filters: {
+          category_level: "L2",
+          parent_category: ["in", l1.length ? l1 : [""]]
+        }
+      };
+    });
+
+    frm.set_query("user", "ngo_admin", () => ({
+            filters: {
+                role_profile_name: "NGO Admin Role Profile",
+                enabled: 1
+            }
+        }));
+  },
+  category_l1(frm) {
+    sync_l2(frm);
+  },
+
+  validate(frm) {
+    sync_l2(frm, true);
+  }
+});
+
+frappe.ui.form.on("Category Child Table", {
+  category_l1_remove(frm) {
+    sync_l2(frm);
+  }
+});
+
+function sync_l2(frm, silent = false) {
+  const rows = frm.doc.category_l2 || [];
+  if (!rows.length) return;
+
+  const l1 = new Set((frm.doc.category_l1 || []).map(r => r["category"]).filter(Boolean));
+
+  const keep = rows.filter(r => {
+    const parent = L2_PARENT[r["category"]];
+    return parent === undefined ? true : l1.has(parent);
+  });
+
+  if (keep.length === rows.length) return;
+
+  frm.clear_table("category_l2");
+  keep.forEach(r => Object.assign(frm.add_child("category_l2"), { ["category"]: r["category"] }));
+  frm.refresh_field("category_l2");
+
+  if (!silent) {
+    frappe.show_alert({
+      message: __("Removed L2 categories whose parent was deselected"),
+      indicator: "orange"
+    });
+  }
+}

@@ -17,6 +17,7 @@ class ServiceManager:
         country=None,
         geo1=None,
         geo2=None,
+        lang="en",
     ) -> Result:
         try:
             # Validate pagination parameters
@@ -100,7 +101,7 @@ class ServiceManager:
                     values,
                     as_dict=True,
                 )
-
+            frappe.local.lang = lang
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
@@ -207,8 +208,8 @@ class ServiceManager:
             "email_id":row["email"],
             "whatsapp_mobile_number":row["whatsapp_number"],
             "service_category": {
-                "l1": {"name": row["l1_name"]},
-                "l2": {"name": row["l2_name"]},
+                "l1": {"name":row["l1_name"],"display_name": frappe._(row["l1_name"])},
+                "l2": {"name": row["l2_name"],"display_name": frappe._(row["l2_name"])},
             },
         }
 

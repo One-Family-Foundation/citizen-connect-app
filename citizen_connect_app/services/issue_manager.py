@@ -4,7 +4,7 @@ from pydantic import ValidationError
 from samaaja.utils.result import Result
 from citizen_connect_app.models.issue import Issue
 from citizen_connect_app.models.utils import Location
-from citizen_connect_app.utils.commons import resolve_location
+from citizen_connect_app.utils.commons import resolve_location  
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
@@ -61,7 +61,9 @@ def create(issue_data: dict) -> Result:
             user_id = issue.user_id
 
         doc_data = {  
-               "doctype": "Issue",
+               "doctype": "Case",
+               "type": "Issue",
+               "title":issue.title,
                 "user_id": user_id,
                 "issue_category": issue.category.l1 if issue.category else None,
                 "urgency": issue.urgency,
@@ -73,13 +75,34 @@ def create(issue_data: dict) -> Result:
                 "media": saved_files,
              }
 
-        doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)    
+        doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)
+        
+      
+        response_data = {
+            "name": doc.name,
+            "title": doc.title,
+            "description": doc.description,
+            "type": doc.type,
+            "urgency": doc.urgency,
+            "category": doc.issue_category,
+            "location": {
+                "country": doc.country,
+                "geo_l1": doc.geo_l1,
+                "geo_l2": doc.geo_l2,
+             },
+            "media": [
+               {
+                   "media": item.media
+                }
+                for item in doc.media
+            ],
+    }
 
         logger.info(f"Issue created with ID: {doc.name}")
 
         return Result.success(
             message="Issue created successfully.",
-            data=doc.as_dict(),
+            data=response_data,
         )
 
     except Exception as e:

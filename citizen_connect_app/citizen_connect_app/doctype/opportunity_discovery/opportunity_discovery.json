@@ -20,6 +20,7 @@
   "start_date",
   "end_date",
   "compensation_type",
+  "language",
   "ngo",
   "rating_uimw",
   "status"
@@ -136,12 +137,18 @@
    "label": "Category L2",
    "options": "Category",
    "reqd": 1
+  },
+  {
+   "fieldname": "language",
+   "fieldtype": "Link",
+   "label": "Language",
+   "options": "Language"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-06 11:45:22.983020",
+ "modified": "2026-08-14 12:56:56.830049",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",

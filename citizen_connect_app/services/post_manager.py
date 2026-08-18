@@ -37,7 +37,7 @@ def create_post(post_data: dict) -> Result:
                 "doctype": "File",
                 "file_name": file.filename,
                 "content": file.read(),
-                "is_private": 1,
+                "is_private": 0,
             }).insert(ignore_permissions=True)
             saved_files.append({
                 "doctype": "Media",
@@ -115,7 +115,9 @@ def get_list(
             ORDER BY p.creation DESC
             LIMIT %s OFFSET %s
         """
+
         values.extend([limit, offset])
+        media_base_url = frappe.utils.get_url()
         post_rows = frappe.db.sql(query, tuple(values) , as_dict=True)
 
         post_ids = [post["id"] for post in post_rows]
@@ -134,14 +136,18 @@ def get_list(
             )
 
             for row in media_rows:
+                media_url = row.media
+
+                if media_url and not media_url.startswith(("http://", "https://")):
+                    media_url = f"{media_base_url.rstrip('/')}/{media_url.lstrip('/')}"
+
                 media_map.setdefault(row.parent, []).append({
-                    "media": row.media,
+                    "media": media_url,
                     "caption": row.caption,
-                })
+                })    
 
         for post in post_rows:
             post["media"] = media_map.get(post["id"], [])
-            print(post_rows)
         posts = [PostResponse(**row).model_dump() for row in post_rows]
 
         return Result.success(

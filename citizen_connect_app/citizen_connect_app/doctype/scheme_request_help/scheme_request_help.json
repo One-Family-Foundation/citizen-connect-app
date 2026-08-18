@@ -18,7 +18,7 @@
    "fieldname": "scheme_id",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Scehme Id",
+   "label": "Scheme Id",
    "options": "Scheme",
    "reqd": 1
   },
@@ -57,7 +57,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-27 16:01:57.392305",
+ "modified": "2026-08-12 09:25:07.563321",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme Request Help",
