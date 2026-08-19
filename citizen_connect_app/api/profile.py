@@ -2,9 +2,9 @@ import frappe
 
 from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.profile_manager import (
-    update_profile
+    update_profile ,get_profile
 )
-
+from citizen_connect_app.utils.error_logger import ErrorLogger
 
 @frappe.whitelist()
 def update(
@@ -39,3 +39,20 @@ def update(
     }
 
     return update_profile(data).to_custom_response()
+
+
+@frappe.whitelist(allow_guest=True)
+def get(user_id=None):
+    try:
+        result = get_profile(user_id)
+
+        return result.to_custom_response()
+
+    except Exception as e:
+        ErrorLogger.log(e)
+
+        return custom_response(
+            message="Failed to fetch profile.",
+            status_code=500,
+            error=True,
+        )

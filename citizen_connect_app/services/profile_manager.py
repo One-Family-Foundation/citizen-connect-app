@@ -112,5 +112,179 @@ def update_profile(profile_data: dict) -> Result:
                 "traceback": frappe.get_traceback()
             },
         )
+def get_profile(user_id: str) -> Result:
+    """
+    Fetch public profile.
+    Guest users can access this profile.
+    """
 
-          
+    try:
+        if not user_id:
+            return Result.bad_request(
+                message="user_id is required."
+            )
+
+        if not frappe.db.exists("User", user_id):
+            return Result.bad_request(
+                message="User not found."
+            )
+
+        user = frappe.get_doc(
+            "User",
+            user_id
+        )
+
+        profile_name = frappe.db.get_value(
+            "User Profile",
+            {"user": user.name},
+            "name",
+        )
+
+        if not profile_name:
+            return Result.bad_request(
+                message="User profile not found."
+            )
+
+        profile = frappe.get_doc(
+            "User Profile",
+            profile_name
+        )
+
+        profile_data = {
+            "user_info": {
+                "id": profile.name,
+                "user": user.name,
+                "name": user.full_name,
+                "role": profile.user_type or "Citizen",
+                "profile_image": profile.profile_photo,
+                "org_name": profile.org_name,
+
+                "location": {
+                    "country": profile.country,
+                    "geo1": profile.geo_l1,
+                    "geo2": profile.geo_l2,
+                },
+
+                # Dummy data
+                "interests": [
+                    "Cleanliness Drives",
+                    "Fundraising",
+                    "Youth Counseling",
+                ],
+            },
+
+            # Dummy statistics
+            "stats": {
+                "actions": 24,
+                "resolved": 10,
+                "posts": 8,
+                "rank": "#8",
+            },
+
+            # Dummy badges
+            "badges": [
+                {
+                    "id": "community_starter",
+                    "title": "Community Starter",
+                    "icon": "add-circle-outline",
+                },
+                {
+                    "id": "first_action",
+                    "title": "First Action",
+                    "icon": "leaf-outline",
+                },
+                {
+                    "id": "water_champion",
+                    "title": "Water Champion",
+                    "icon": "water-outline",
+                },
+                {
+                    "id": "active_volunteer",
+                    "title": "Active Volunteer",
+                    "icon": "heart-handshake-outline",
+                },
+            ],
+
+            "leaderboard": {
+                "rank": 8,
+                "message": "You're #8 this month",
+            },
+
+            "activity_counts": {
+                "cases": 3,
+                "actions": 2,
+                "posts": 2,
+            },
+
+            # Dummy cases
+            "cases": [
+                {
+                    "id": "CASE-001",
+                    "title": "Broken Street Light @ MG Road",
+                    "status": "In Progress",
+                    "type": "case",
+                },
+                {
+                    "id": "CASE-002",
+                    "title": "Water Leakage Near Ward 4 Park",
+                    "status": "Resolved",
+                    "type": "case",
+                },
+                {
+                    "id": "CASE-003",
+                    "title": "Request for Anganwadi Teacher",
+                    "status": "Pending Review",
+                    "type": "case",
+                },
+            ],
+
+            # Dummy actions
+            "actions": [
+                {
+                    "id": "ACT-001",
+                    "title": "Tree Plantation Drive",
+                    "category": "Biodiversity & Ecosystems",
+                    "likes": 128,
+                    "comments": 14,
+                    "date": "Apr 2",
+                    "status": "Completed",
+                },
+                {
+                    "id": "ACT-002",
+                    "title": "Water Quality Survey",
+                    "category": "Water Quality & Conservation",
+                    "likes": 128,
+                    "comments": 14,
+                    "date": "Apr 2",
+                    "status": "Completed",
+                },
+            ],
+
+            # Dummy posts
+            "posts": [
+                {
+                    "id": "POST-001",
+                    "title": "Cleanliness drive at Ward 4 was a success!",
+                    "likes": 128,
+                    "comments": 14,
+                    "date": "Apr 2",
+                    "status": "Published",
+                },
+            ],
+        }
+
+        return Result.success(
+            message="Profile fetched successfully.",
+            data=profile_data,
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+
+        return Result.failure(
+            message="Failed to fetch profile.",
+            data={"error": str(e)},
+            error_data={
+                "traceback": frappe.get_traceback()
+            },
+        )

@@ -76,11 +76,9 @@ class ServiceManager:
                         s.email,
                         s.whatsapp_number,
                         s.rating,
-                        s.ngo_org AS ngo_name,
-                        
-
                         s.category_l1 AS l1_name,
-                        s.category_l2 AS l2_name
+                        s.category_l2 AS l2_name,
+                        org.org_name AS ngo_name
                         
 
                     FROM `tabService` s
@@ -90,7 +88,8 @@ class ServiceManager:
 
                     LEFT JOIN `tabGeography L2` geo2
                         ON geo2.name = s.service_geo2
-
+                    LEFT JOIN `tabOrganisation` org
+                        ON org.name = s.ngo_org
                     
 
                     {where_clause}
@@ -147,10 +146,11 @@ class ServiceManager:
                     s.whatsapp_number,
                     s.eligibility_condition,
                     s.rating,
-                    s.ngo_org AS ngo_name,
+                    s.category_l1 AS l1_name,
+                    s.category_l2 AS l2_name,
+                    org.org_name AS ngo_name
 
-                    l2.parent_category AS l1_name,
-                    s.service_category AS l2_name
+                    
 
                 FROM `tabService` s
 
@@ -160,8 +160,10 @@ class ServiceManager:
                 LEFT JOIN `tabGeography L2` geo2
                     ON geo2.name = s.service_geo2
 
-                LEFT JOIN `tabCategory` l2
-                    ON l2.name = s.service_category
+                LEFT JOIN `tabOrganisation` org
+                    ON org.name = s.ngo_org    
+
+                
 
                 WHERE s.name = %s
                 """,
