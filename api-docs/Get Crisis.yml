@@ -1,0 +1,19 @@
+info:
+  name: Get Crisis
+  type: http
+  seq: 24
+
+http:
+  method: GET
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.crisis.get?crisis_id=ag285kkajq
+  params:
+    - name: crisis_id
+      value: ag285kkajq
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
