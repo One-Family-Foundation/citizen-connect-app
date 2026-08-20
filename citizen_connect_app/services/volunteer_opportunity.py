@@ -40,6 +40,7 @@ class OpportunityManager:
         org.name AS ngo_id,
         org.org_name AS ngo_name,
         org.phone,
+        org.email,
 
         o.rating_uimw AS rating,
         o.status,
@@ -260,6 +261,7 @@ class OpportunityManager:
                 id=row["ngo_id"],
                 name=row["ngo_name"],
                 phone=row["phone"],
+                email=row["email"],
             )
         skills = OpportunityManager._get_skills(row["id"])
 

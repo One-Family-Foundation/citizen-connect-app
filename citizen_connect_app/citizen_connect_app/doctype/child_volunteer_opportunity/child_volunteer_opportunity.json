@@ -1,0 +1,46 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-19 14:07:50.538363",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "child_vol_opportunity",
+  "num_of_volunteer"
+ ],
+ "fields": [
+  {
+   "fieldname": "num_of_volunteer",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Number Of Volunteer",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "child_vol_opportunity",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Volunteer Opportunity ",
+   "options": "Opportunity Discovery",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-20 07:19:23.071180",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Child Volunteer Opportunity",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

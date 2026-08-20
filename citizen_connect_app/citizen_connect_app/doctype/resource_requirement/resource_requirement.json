@@ -1,0 +1,78 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-19 13:50:51.119721",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "resource_name",
+  "quantity_requirement",
+  "qunatity_recieved",
+  "unit",
+  "priority",
+  "is_verified"
+ ],
+ "fields": [
+  {
+   "fieldname": "resource_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Resource Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "quantity_requirement",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Quantity Requirement",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "qunatity_recieved",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Quantity Recieved",
+   "non_negative": 1,
+   "reqd": 1
+  },
+  {
+   "fieldname": "priority",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Priority",
+   "options": "Critical\nHigh",
+   "reqd": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "is_verified",
+   "fieldtype": "Check",
+   "label": "Is Verified"
+  },
+  {
+   "fieldname": "unit",
+   "fieldtype": "Select",
+   "label": "Unit",
+   "options": "Bottles\nPackets\nKits",
+   "reqd": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2026-08-19 17:06:01.416821",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Resource Requirement",
+ "owner": "Administrator",
+ "permissions": [],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

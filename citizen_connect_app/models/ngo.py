@@ -8,6 +8,7 @@ class NGO(BaseModel):
     id: str
     name: str
     phone: Optional[str] = None
+    email: Optional[EmailStr] = None
 
 
 class CategoryChild(BaseModel):
