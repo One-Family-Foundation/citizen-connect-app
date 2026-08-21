@@ -15,7 +15,7 @@ class CommunityCheck(BaseModel):
     description: Optional[
         Annotated[str, Field(max_length=3000)]
     ] = None
-
+    category:Optional[str]=None
     water_supply: str
     electricity: str
     road: str
