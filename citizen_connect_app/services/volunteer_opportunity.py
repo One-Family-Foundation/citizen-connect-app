@@ -29,7 +29,7 @@ class OpportunityManager:
         o.language,
         c.name AS country,
         g1.geo_l1,
-        g2.geo_2,
+        g2.geo_l2,
 
         o.volunteer_format,
         o.expected_time,
@@ -188,7 +188,7 @@ class OpportunityManager:
             values.append(geo1)
 
         if geo2:
-            filters.append("g2.geo_2=%s")
+            filters.append("g2.geo_l2=%s")
             values.append(geo2)
 
         if volunteer_format:
@@ -234,7 +234,7 @@ class OpportunityManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             volunteer_format=row["volunteer_format"],
             start_date=row["start_date"],
@@ -274,7 +274,7 @@ class OpportunityManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             volunteer_format=row["volunteer_format"],
             expected_time=row["expected_time"],

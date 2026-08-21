@@ -32,7 +32,7 @@ TRANSLATABLE_MASTERS = {
 	"Category": "catalogue_name",
 	"Country": "country_name",
 	"Geography L1": "geo_l1",
-	"Geography L2": "geo_2",
+	"Geography L2": "geo_l2",
 }
 
 DEFAULT_LANGUAGES = ["hi"]

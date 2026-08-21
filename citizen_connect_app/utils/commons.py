@@ -31,7 +31,7 @@ def resolve_location(location:Location)->Result:
             if location.geo2:
                 geo_l2 = frappe.db.get_value(
                     "Geography L2",
-                    {"geo_2": location.geo2},
+                    {"geo_l2": location.geo2},
                     "name"
                 )
             if not geo_l2:

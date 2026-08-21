@@ -26,7 +26,7 @@ class SchemeManager:
         s.category_l2 AS category_l2_name,
         c.name AS country,
         g1.geo_l1,
-        g2.geo_2,
+        g2.geo_l2,
         s.gender,
         s.disable_relevant,
         s.income_limit,
@@ -214,7 +214,7 @@ class SchemeManager:
             values.append(geo1)
 
         if geo2:
-            filters.append("g2.geo_2 = %s")
+            filters.append("g2.geo_l2 = %s")
             values.append(geo2)
 
         # Other filters
@@ -247,7 +247,7 @@ class SchemeManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             disabled_relevant=row["disable_relevant"],
             currency=row["currency"],
@@ -278,7 +278,7 @@ class SchemeManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             gender=row["gender"],
             disabled_relevant=row["disable_relevant"],

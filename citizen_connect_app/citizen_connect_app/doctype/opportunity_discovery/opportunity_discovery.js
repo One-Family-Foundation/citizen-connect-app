@@ -82,8 +82,8 @@ frappe.ui.form.on("Opportunity Discovery", {
         if (frm.doc.expected_time) {
             const len = frm.doc.expected_time.trim().length;
 
-            if (len < 3 || len > 60) {
-                frappe.throw(__("Expected Time must be between 3 and 60 characters."));
+            if (len < 3 || len > 30) {
+                frappe.throw(__("Expected Time must be between 3 and 30 characters."));
             }
         }
     }
