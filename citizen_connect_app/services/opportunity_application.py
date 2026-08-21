@@ -15,6 +15,11 @@ class OpportunityApplicationManager:
         try:
             if frappe.session.user == "Guest":
                 data = GuestOpportunityForm(**data)
+                if not data.full_name:
+                   return Result.bad_request("Full name is required.")
+
+                if not data.email:
+                   return Result.bad_request("Email is required.")
 
                 full_name = data.full_name
                 email = data.email
@@ -113,8 +118,9 @@ class OpportunityApplicationManager:
                 application.attachment = file_doc.file_url
 
             application.save(ignore_permissions=True)
-            
-
+            frappe.db.commit()
+        
+        
             return Result.success(
                 message="Application submitted successfully.",
                 data={
