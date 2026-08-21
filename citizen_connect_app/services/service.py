@@ -100,7 +100,7 @@ class ServiceManager:
                     values,
                     as_dict=True,
                 )
-            frappe.local.lang = lang
+            
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
@@ -185,7 +185,7 @@ class ServiceManager:
             ErrorLogger.log(e)
             raise
     @staticmethod
-    def _create_service(row: dict) -> dict:
+    def _create_service(row, lang=None) -> dict:
         return {
             "id": row["id"],
             "title": row["title"],
@@ -210,8 +210,8 @@ class ServiceManager:
             "email_id":row["email"],
             "whatsapp_mobile_number":row["whatsapp_number"],
             "service_category": {
-                "l1": {"name":row["l1_name"],"display_name": frappe._(row["l1_name"])},
-                "l2": {"name": row["l2_name"],"display_name": frappe._(row["l2_name"])},
+                "l1": {"name":row["l1_name"],"display_name": frappe._(row["l1_name"], lang=lang)},
+                "l2": {"name": row["l2_name"],"display_name": frappe._(row["l2_name"], lang=lang)},
             },
         }
 

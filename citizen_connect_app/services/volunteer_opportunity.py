@@ -42,7 +42,7 @@ class OpportunityManager:
         org.phone,
         org.email,
 
-        o.rating_uimw AS rating,
+        o.rating AS rating,
         o.status,
 
         o.creation,

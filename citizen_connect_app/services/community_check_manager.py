@@ -66,6 +66,7 @@ def create(community_check_data: dict) -> Result:
             "user_id": user_id,
             "title":community_check.title,
             "description":community_check.description,
+            "category":"Infra Maintenance",
             "water_supply": community_check.water_supply,
             "electricity": community_check.electricity,
             "road": community_check.road,
@@ -81,40 +82,11 @@ def create(community_check_data: dict) -> Result:
             "media":saved_files
         }
 
-        doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)
+        frappe.get_doc(doc_data).insert(ignore_permissions=True)
 
-        response_data = {
-            "name":doc.name,
-            "type":doc.type,
-            "title":doc.title,
-            "description":doc.description,
-            "water_supply": doc.water_supply,
-            "electricity": doc.electricity,
-            "road": doc.road,
-            "teacher_at_school": doc.teacher_at_school,
-            "healthcare": doc.healthcare,
-            "internet": doc.internet,
-            "sanitation": doc.sanitation,
-            "local_governance": doc.local_governance,
-            "confidence_level": doc.confidence_level,
-            "location": {
-                "country": doc.country,
-                "geo_l1": doc.geo_l1,
-                "geo_l2": doc.geo_l2,
-            },
-            "media": [
-               {
-                    "media": item.media
-               }
-               for item in doc.media
-            ],
-        }
-
-        logger.info(f"Community Check created with ID: {doc.name}")
 
         return Result.success(
-            message="Community check created successfully.",
-            data=response_data,
+            message="Community check created successfully."
         )
 
     except Exception as e:

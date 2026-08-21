@@ -11,7 +11,7 @@ def create_rating(category: str, item_id: str, rating) -> Result:
         if not user or user == "Guest":
             return Result.failure("Login required to rate.")
 
-        allowed_categories = ["Scheme", "Service"]
+        allowed_categories = ["Scheme", "Service", "Opportunity Discovery"]
 
         if category not in allowed_categories:
             return Result.failure(

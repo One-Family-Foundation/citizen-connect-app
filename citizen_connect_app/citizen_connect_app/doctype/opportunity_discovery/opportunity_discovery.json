@@ -22,7 +22,9 @@
   "compensation_type",
   "language",
   "ngo",
-  "rating_uimw",
+  "rating",
+  "total_rating_sum",
+  "total_users",
   "status"
  ],
  "fields": [
@@ -113,10 +115,6 @@
    "reqd": 1
   },
   {
-   "fieldname": "rating_uimw",
-   "fieldtype": "Rating"
-  },
-  {
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
@@ -143,12 +141,32 @@
    "fieldtype": "Link",
    "label": "Language",
    "options": "Language"
+  },
+  {
+   "fieldname": "rating",
+   "fieldtype": "Int",
+   "label": "Rating",
+   "read_only": 1
+  },
+  {
+   "fieldname": "total_rating_sum",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Total Rating Sum",
+   "non_negative": 1
+  },
+  {
+   "fieldname": "total_users",
+   "fieldtype": "Int",
+   "hidden": 1,
+   "label": "Total Users",
+   "non_negative": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-14 12:56:56.830049",
+ "modified": "2026-08-21 10:47:10.288798",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",
