@@ -115,8 +115,8 @@ app_license = "mit"
 # To hook into the build process
 
 # after_build = "citizen_connect_app.build.after_build"
-after_install = "citizen_connect_app.utils.translation.install_custom_fields"
-after_migrate = "citizen_connect_app.utils.translation.install_custom_fields"
+after_install = "citizen_connect_app.utils.translations.install_custom_fields"
+after_migrate = "citizen_connect_app.utils.translations.install_custom_fields"
 
 # Desk Notifications
 # ------------------

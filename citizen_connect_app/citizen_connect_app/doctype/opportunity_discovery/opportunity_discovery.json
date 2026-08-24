@@ -6,26 +6,30 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "opportunity_discovery_section",
   "title",
   "category_l1",
   "category_l2",
+  "rating",
   "crisis_link",
+  "volunteer_format",
+  "expected_time",
+  "end_date",
+  "start_date",
+  "compensation_type",
+  "ngo",
+  "column_break_nqqi",
   "description",
   "skills",
+  "status",
+  "language",
+  "location_section",
   "country",
   "geo_l1",
   "geo_l2",
-  "volunteer_format",
-  "expected_time",
-  "start_date",
-  "end_date",
-  "compensation_type",
-  "language",
-  "ngo",
-  "rating",
-  "total_rating_sum",
+  "section_break_utgl",
   "total_users",
-  "status"
+  "total_rating_sum"
  ],
  "fields": [
   {
@@ -52,8 +56,7 @@
    "fieldname": "skills",
    "fieldtype": "Table",
    "label": "Skills",
-   "options": "Skill",
-   "reqd": 1
+   "options": "Skill"
   },
   {
    "fieldname": "country",
@@ -118,7 +121,8 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nIn-active"
+   "options": "Active\nIn-active",
+   "reqd": 1
   },
   {
    "fieldname": "category_l1",
@@ -161,12 +165,30 @@
    "hidden": 1,
    "label": "Total Users",
    "non_negative": 1
+  },
+  {
+   "fieldname": "column_break_nqqi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "section_break_utgl",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "opportunity_discovery_section",
+   "fieldtype": "Section Break",
+   "label": "Opportunity Discovery"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-21 10:47:10.288798",
+ "modified": "2026-08-21 15:23:13.762699",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",
