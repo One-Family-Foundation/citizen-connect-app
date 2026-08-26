@@ -2,43 +2,41 @@ from typing import Optional, Annotated
 
 from pydantic import BaseModel, Field, field_validator
 
-from citizen_connect_app.models.utils import Location, Category
+from citizen_connect_app.models.utils import Location
 
 
 class CommunityCheck(BaseModel):
     user_id: Optional[str] = None
 
-    category: Optional[Category] = None
     location: Optional[Location] = None
 
-    water_supply: Optional[str] = None
-    electricity: Optional[str] = None
-    road: Optional[str] = None
-    teacher_at_school: Optional[str] = None
-    healthcare: Optional[str] = None
-    internet: Optional[str] = None
-    sanitation: Optional[str] = None
-    local_governance: Optional[str] = None
+    title: Optional[str] = None
 
-    additional_observations: Optional[
+    description: Optional[
         Annotated[str, Field(max_length=3000)]
     ] = None
-
-    media: Optional[str] = None
+    category:Optional[str]=None
+    water_supply: str
+    electricity: str
+    road: str
+    teacher_at_school: str
+    healthcare: str
+    internet:str
+    sanitation: str
+    local_governance: str
 
     confidence_level: str
+
     files: list = Field(default_factory=list)
 
-    @field_validator("additional_observations", mode="before")
+    @field_validator("description", mode="before")
     @classmethod
-    def clean_observations(cls, value):
+    def clean_description(cls, value):
         if isinstance(value, str):
             return value.strip()
         return value
 
-    @field_validator("location", "category", mode="before")
+    @field_validator("location", mode="before")
     @classmethod
-    def clean_optional_fields(cls, value):
+    def clean_location(cls, value):
         return None if value == "" else value
-
-

@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.service.get?service_id=su2gdsb6rv"
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service.get?service_id=m8qb12jion
   params:
     - name: service_id
-      value: su2gdsb6rv
+      value: m8qb12jion
       type: query
   auth: inherit
 

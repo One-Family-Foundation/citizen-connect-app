@@ -19,7 +19,7 @@ class Opportunity(BaseModel):
     category: Category
 
     crisis_link: Optional[str] = None
-
+    language:Optional[str]=None
     location: Location
 
     volunteer_format: Optional[str] = None
@@ -44,7 +44,7 @@ class OpportunitySummary(BaseModel):
     description: Optional[str] = None
 
     category: Category
-
+    language: Optional[str] = None
     location: Location
 
     volunteer_format: Optional[str] = None

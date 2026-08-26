@@ -7,9 +7,11 @@
  "engine": "InnoDB",
  "field_order": [
   "basic_details_section",
+  "service_status",
+  "title",
+  "availability_status",
   "category_l1",
   "category_l2",
-  "title",
   "description",
   "sponsorship_information",
   "column_break_maqh",
@@ -17,8 +19,6 @@
   "cost_model",
   "cost_details",
   "rating",
-  "availability_status",
-  "service_status",
   "service_channel",
   "eligibility_condition",
   "section_break_vwca",
@@ -31,6 +31,7 @@
   "email",
   "location_details_section",
   "service_country",
+  "column_break_eugo",
   "service_geo1",
   "service_geo2"
  ],
@@ -65,8 +66,8 @@
    "fieldname": "service_status",
    "fieldtype": "Select",
    "label": "Service Status",
-   "options": "Approved\nPending\nRejected",
-   "reqd": 1
+   "options": "Pending\nApproved\nRejected",
+   "permlevel": 1
   },
   {
    "fieldname": "ngo_org",
@@ -127,7 +128,8 @@
   {
    "fieldname": "rating",
    "fieldtype": "Int",
-   "label": "Rating"
+   "label": "Rating",
+   "read_only": 1
   },
   {
    "fieldname": "basic_details_section",
@@ -194,12 +196,16 @@
    "fieldtype": "Int",
    "hidden": 1,
    "label": "Total Users"
+  },
+  {
+   "fieldname": "column_break_eugo",
+   "fieldtype": "Column Break"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-10 16:58:10.670075",
+ "modified": "2026-08-17 13:51:48.178198",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",
@@ -214,6 +220,18 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "NGO Admin",
    "share": 1,
    "write": 1
   }

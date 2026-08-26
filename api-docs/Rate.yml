@@ -1,0 +1,32 @@
+info:
+  name: Rate
+  type: http
+  seq: 13
+
+http:
+  method: POST
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.rating.create?category=service&item_id=su2gdsb6rv&rating=5
+  headers:
+    - name: Content-Type
+      value: application/x-www-form-urlencoded
+    - name: Cookie
+      value: sid=YOUR_SID
+  params:
+    - name: category
+      value: service
+      type: query
+    - name: item_id
+      value: su2gdsb6rv
+      type: query
+    - name: rating
+      value: "5"
+      type: query
+  body:
+    type: form-urlencoded
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

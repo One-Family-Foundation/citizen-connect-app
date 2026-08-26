@@ -17,6 +17,7 @@ class ServiceManager:
         country=None,
         geo1=None,
         geo2=None,
+        lang="en",
     ) -> Result:
         try:
             # Validate pagination parameters
@@ -75,11 +76,9 @@ class ServiceManager:
                         s.email,
                         s.whatsapp_number,
                         s.rating,
-                        s.ngo_org AS ngo_name,
-                        
-
                         s.category_l1 AS l1_name,
-                        s.category_l2 AS l2_name
+                        s.category_l2 AS l2_name,
+                        org.org_name AS ngo_name
                         
 
                     FROM `tabService` s
@@ -89,7 +88,8 @@ class ServiceManager:
 
                     LEFT JOIN `tabGeography L2` geo2
                         ON geo2.name = s.service_geo2
-
+                    LEFT JOIN `tabOrganisation` org
+                        ON org.name = s.ngo_org
                     
 
                     {where_clause}
@@ -100,7 +100,7 @@ class ServiceManager:
                     values,
                     as_dict=True,
                 )
-
+            frappe.local.lang = lang
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
@@ -146,10 +146,11 @@ class ServiceManager:
                     s.whatsapp_number,
                     s.eligibility_condition,
                     s.rating,
-                    s.ngo_org AS ngo_name,
+                    s.category_l1 AS l1_name,
+                    s.category_l2 AS l2_name,
+                    org.org_name AS ngo_name
 
-                    l2.parent_category AS l1_name,
-                    s.service_category AS l2_name
+                    
 
                 FROM `tabService` s
 
@@ -159,8 +160,10 @@ class ServiceManager:
                 LEFT JOIN `tabGeography L2` geo2
                     ON geo2.name = s.service_geo2
 
-                LEFT JOIN `tabCategory` l2
-                    ON l2.name = s.service_category
+                LEFT JOIN `tabOrganisation` org
+                    ON org.name = s.ngo_org    
+
+                
 
                 WHERE s.name = %s
                 """,
@@ -207,8 +210,8 @@ class ServiceManager:
             "email_id":row["email"],
             "whatsapp_mobile_number":row["whatsapp_number"],
             "service_category": {
-                "l1": {"name": row["l1_name"]},
-                "l2": {"name": row["l2_name"]},
+                "l1": {"name":row["l1_name"],"display_name": frappe._(row["l1_name"])},
+                "l2": {"name": row["l2_name"],"display_name": frappe._(row["l2_name"])},
             },
         }
 

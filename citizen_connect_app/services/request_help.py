@@ -1,5 +1,6 @@
 import frappe
 
+from citizen_connect_app.models.request_help import RequestHelp
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -7,63 +8,106 @@ from samaaja.utils.result import Result
 class RequestHelpManager:
 
     @staticmethod
-    def create(data: dict, request_type: str, attachment=None) -> Result:
+    def create(request_data: dict, request_type: str, attachment=None) -> Result:
         try:
+            # Validate request data using Pydantic model
+            request_help = RequestHelp(**request_data)
+
             if frappe.session.user == "Guest":
-                full_name = data.get("full_name")
-                email = data.get("email")
-                mobile_num = data.get("mobile_num")
+                full_name = request_help.full_name
+                email = request_help.email
+                mobile_num = request_help.mobile_num
+                user_id = None
+
             else:
-                user = frappe.get_doc("User",  frappe.session.user)
-                profile_name = frappe.db.get_value("User Profile", {"user":user.name},"name")
+                user = frappe.get_doc("User", frappe.session.user)
+
+                profile_name = frappe.db.get_value(
+                    "User Profile",
+                    {"user": user.name},
+                    "name"
+                )
+
                 if not profile_name:
                     return Result.bad_request("Profile not found")
-                profile = frappe.get_doc("User Profile", profile_name)
+
+                profile = frappe.get_doc(
+                    "User Profile",
+                    profile_name
+                )
+
                 full_name = user.first_name
                 email = user.email
+                user_id = user.name
 
                 if profile.phone:
                     mobile_num = profile.phone
                 else:
-                    if not data.get("mobile_num"):
-                        return Result.bad_request("mobile number is required")
-                    mobile_num = data.get("mobile_num")
-                    profile.phone = mobile_num
-                    profile.save(ignore_permissions=True)                   
-        
-            
+                    if not request_help.mobile_num:
+                        return Result.bad_request(
+                            "mobile number is required"
+                        )
 
-            filters = {
-                "mobile_num": mobile_num
-            }
+                    mobile_num = request_help.mobile_num
+
+                    profile.phone = mobile_num
+                    profile.save(ignore_permissions=True)
 
             if request_type == "service":
-                if not data.get("service_name"):
-                    return Result.bad_request("Service Name is required")
 
-                filters["service_name"] = data.get("service_name")
+                if not request_help.service_name:
+                    return Result.bad_request(
+                        "Service Name is required"
+                    )
+
+                case_type = "Service Request"
+
+                filters = {
+                    "mobile_no": mobile_num,
+                    "type": case_type,
+                    "service_id": request_help.service_name,
+                }
 
             elif request_type == "scheme":
-                if not data.get("scheme_name"):
-                    return Result.bad_request("Scheme Name is required")
 
-                filters["scheme_name"] = data.get("scheme_name")
+                if not request_help.scheme_name:
+                    return Result.bad_request(
+                        "Scheme Name is required"
+                    )
 
-            if frappe.db.exists("Request Help", filters):
+                case_type = "Scheme Request"
+
+                filters = {
+                    "mobile_no": mobile_num,
+                    "type": case_type,
+                    "scheme_id": request_help.scheme_name,
+                }
+
+            else:
+                return Result.bad_request(
+                    "Invalid request type"
+                )
+
+            if frappe.db.exists("Case", filters):
                 return Result.bad_request(
                     f"You have already submitted a request for this {request_type}."
                 )
 
-            request = frappe.new_doc("Request Help")
+            case = frappe.new_doc("Case")
 
-            request.service_name = data.get("service_name")
-            request.scheme_name = data.get("scheme_name")
-            request.full_name = full_name
-            request.email = email
-            request.mobile_num = mobile_num
-            request.age = data.get("age")
-            request.gender = data.get("gender")
-            request.situation_desc = data.get("situation_desc")
+            case.type = case_type
+            case.user_id = user_id
+            case.user_name = full_name
+            case.email_id = email
+            case.mobile_no = mobile_num
+            case.age = request_help.age
+            case.gender = request_help.gender
+            case.description = request_help.description
+
+            if request_type == "service":
+                case.service_id = request_help.service_name
+            else:
+                case.scheme_id = request_help.scheme_name
 
             if attachment:
                 file_doc = frappe.get_doc(
@@ -74,15 +118,22 @@ class RequestHelpManager:
                         "is_private": 0,
                     }
                 )
-                file_doc.save(ignore_permissions=True)
-                request.attachment = file_doc.file_url
 
-            request.save(ignore_permissions=True)
+                file_doc.save(ignore_permissions=True)
+
+                case.append(
+                    "media",
+                    {
+                        "media": file_doc.file_url
+                    }
+                )
+
+            case.save(ignore_permissions=True)
 
             return Result.success(
                 "Request submitted successfully",
                 data={
-                    "name": request.name,
+                    "name": case.name,
                     "status": "New",
                 },
             )

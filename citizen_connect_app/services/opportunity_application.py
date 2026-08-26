@@ -52,13 +52,16 @@ class OpportunityApplicationManager:
                     profile.phone = phone
                     profile.save(ignore_permissions=True)
 
-            if not frappe.db.exists(
-                "Opportunity Discovery",
-                {
-                    "name": data.opportunity_id,
-                    "status": "Active",
-                },
-            ):
+            opportunity = frappe.db.get_value(
+                    "Opportunity Discovery",
+                     {
+                         "name": data.opportunity_id,
+                         "status": "Active",
+                     },
+                     ["name", "category_l1"],
+                     as_dict=True,
+            )
+            if not opportunity:
                 return Result.not_found("Volunteer opportunity not found.")
 
             if frappe.session.user == "Guest":
@@ -110,6 +113,7 @@ class OpportunityApplicationManager:
                 application.attachment = file_doc.file_url
 
             application.save(ignore_permissions=True)
+            
 
             return Result.success(
                 message="Application submitted successfully.",

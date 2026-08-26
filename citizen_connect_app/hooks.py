@@ -133,6 +133,9 @@ app_license = "mit"
 # has_permission = {
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
+permission_query_conditions = {
+    "Case": "citizen_connect_app.services.permission_manager.case_query"
+}
 
 # Document Events
 # ---------------

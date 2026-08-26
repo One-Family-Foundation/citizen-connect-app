@@ -26,7 +26,7 @@ class OpportunityManager:
 
         o.category_l1 AS category_l1_name,
         o.category_l2 AS category_l2_name,
-
+        o.language,
         c.name AS country,
         g1.geo_l1,
         g2.geo_2,
@@ -247,6 +247,7 @@ class OpportunityManager:
                 l1=row["category_l1_name"],
                 l2=row["category_l2_name"],
             ),
+            language=row["language"],
         )
 
     @staticmethod
@@ -287,4 +288,5 @@ class OpportunityManager:
                 l1=row["category_l1_name"],
                 l2=row["category_l2_name"],
             ),
+            language=row["language"],
         )
