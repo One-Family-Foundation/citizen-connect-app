@@ -10,6 +10,13 @@ frappe.ui.form.on("Crisis", {
                     }
                 };
             }
+        frm.set_query("category", function () {
+                return {
+                    filters: {
+                        category_level: "L1"
+                    }
+                };
+            });    
 
             return {
                 filters: {

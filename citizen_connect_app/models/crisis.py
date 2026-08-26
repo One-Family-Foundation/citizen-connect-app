@@ -23,7 +23,7 @@ class ResourceRequirement(BaseModel):
     qunatity_recieved: Optional[int] = None
     unit: Optional[str] = None
     priority: Optional[str] = None
-    is_verified: Optional[bool] = None
+    is_active: Optional[bool] = None
 
 
 class EmergencyContact(BaseModel):
@@ -44,24 +44,30 @@ class DonationDetails(BaseModel):
     ngo: Optional[str] = None
     is_verified: Optional[bool] = None
     total_donation_target: Optional[int] = None
+    currency:Optional[str]=None
 
 
 class CrisisVolunteerOpportunity(BaseModel):
     child_vol_opportunity: Optional[str] = None
     num_of_volunteer: Optional[int] = None
+    title: Optional[str] = None
+    start_date: Optional[date] = None
+    end_date: Optional[date] = None
+    volunteer_format: Optional[str] = None
 
 
 class ResourceDropoffLocation(BaseModel):
     person_name: Optional[str] = None
     phone_num: Optional[str] = None
     time: Optional[str] = None
-    location: Optional[str] = None
+    location_name: Optional[str] = None
+    location_address:Optional[str]=None
 
 
 class Crisis(BaseModel):
     id: str
     title: str
-
+    category:str
     media: list[CrisisMedia] = Field(default_factory=list)
 
     description: Optional[str] = None
@@ -104,9 +110,10 @@ class Crisis(BaseModel):
 class CrisisSummary(BaseModel):
     id: str
     title: str
-
+    category:str
+    media: list[CrisisMedia] = Field(default_factory=list)
     crisis_summary: Optional[str] = None
-
+    impact: list[CrisisImpact] = Field(default_factory=list)
     location: Location
 
     start_date: Optional[date] = None

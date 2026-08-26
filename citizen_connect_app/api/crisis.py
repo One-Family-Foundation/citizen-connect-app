@@ -12,6 +12,7 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 def get_list(
     limit=10,
     offset=0,
+    category=None,
     country=None,
     geography_l1=None,
     geography_l2=None,
@@ -21,6 +22,7 @@ def get_list(
         result = get_crisis_list(
             limit=limit,
             offset=offset,
+            category=category,
             country=country,
             geography_l1=geography_l1,
             geography_l2=geography_l2,

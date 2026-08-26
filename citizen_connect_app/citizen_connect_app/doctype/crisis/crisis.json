@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "title",
+  "category",
   "media",
   "description",
   "country",
@@ -21,12 +22,13 @@
   "crisis_summary",
   "donation_oppportunity",
   "volunteer_opportunity",
-  "verification_status",
   "resourc_dropoff_location_section",
   "person_name",
   "phone_num",
   "time",
-  "location"
+  "location_name",
+  "location_address",
+  "verification_status"
  ],
  "fields": [
   {
@@ -150,21 +152,33 @@
    "reqd": 1
   },
   {
-   "fieldname": "location",
-   "fieldtype": "Small Text",
-   "label": "Location",
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "label": "Category",
+   "options": "Category",
    "reqd": 1
   },
   {
    "fieldname": "verification_status",
    "fieldtype": "Text",
    "label": "Verification Status"
+  },
+  {
+   "fieldname": "location_name",
+   "fieldtype": "Small Text",
+   "label": "Location Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_address",
+   "fieldtype": "Text",
+   "label": "Location Address"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-20 08:27:10.424934",
+ "modified": "2026-08-26 13:33:43.603584",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Crisis",

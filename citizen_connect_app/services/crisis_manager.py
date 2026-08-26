@@ -12,7 +12,7 @@ MIN_LIMIT = 1
 MAX_LIMIT = 100
 DEFAULT_LIMIT = 10
 DEFAULT_OFFSET = 0
- 
+MEDIA_BASE_URL = frappe.utils.get_url()
 
 CHILD_TABLES = {
     "media": {
@@ -34,8 +34,9 @@ CHILD_TABLES = {
             "qunatity_recieved",
             "unit",
             "priority",
-            "is_verified",
+            "is_active",
         ],
+        
     },
     "emergency_contacts": {
         "doctype": "Emergency Contacts",
@@ -57,6 +58,7 @@ CHILD_TABLES = {
             "ngo",
             "is_verified",
             "total_donation_target",
+            "currency",
         ],
     },
     "volunteer_opportunity": {
@@ -66,33 +68,126 @@ CHILD_TABLES = {
     },
 }
  
- 
-def _fetch_child_rows_for_parents(crisis_ids, doctype, parentfield, fields):
-    """Fetch one child table's rows for many parents at once, grouped by parent id."""
-    grouped = {crisis_id: [] for crisis_id in crisis_ids}
- 
+
+def _fetch_child_rows_for_parents(
+    crisis_ids, doctype, parentfield, fields
+):
+
+
+    grouped = {
+        crisis_id: []
+        for crisis_id in crisis_ids
+    }
+
     if not crisis_ids:
         return grouped
- 
+
     rows = frappe.get_all(
         doctype,
         filters={
             "parent": ["in", crisis_ids],
             "parenttype": "Crisis",
             "parentfield": parentfield,
+            **({"is_active": 1} if doctype == "Resource Requirement" else {}),
+            **({"is_verified": 1} if doctype == "Donation Details" else {}),
         },
         fields=["parent"] + fields,
         order_by="idx",
     )
- 
+
+    # Fetch Organisation names for Donation Details
+    organisation_map = {}
+
+    if doctype == "Donation Details":
+        ngo_ids = [
+            row["ngo"]
+            for row in rows
+            if row.get("ngo")
+        ]
+
+        if ngo_ids:
+            organisations = frappe.get_all(
+                "Organisation",
+                filters={
+                    "name": ["in", ngo_ids]
+                },
+                fields=["name", "org_name"],
+            )
+
+            organisation_map = {
+                organisation["name"]: organisation["org_name"]
+                for organisation in organisations
+            }
+
     for row in rows:
-        grouped[row.parent].append({field: row[field] for field in fields})
- 
+        item = {
+            field: row[field]
+            for field in fields
+        }
+
+        if doctype == "Donation Details" and item.get("ngo"):
+            item["ngo"] = organisation_map.get(
+                item["ngo"],
+                item["ngo"],
+            )
+
+        # Fetch Opportunity Discovery details
+        if (
+            doctype == "Child Volunteer Opportunity"
+            and item.get("child_vol_opportunity")
+        ):
+            opportunity = frappe.db.get_value(
+                "Opportunity Discovery",
+                item["child_vol_opportunity"],
+                [
+                    "title",
+                    "start_date",
+                    "end_date",
+                    "volunteer_format",
+                ],
+                as_dict=True,
+            )
+
+            item["title"] = (
+                opportunity.get("title")
+                if opportunity
+                else None
+            )
+
+            item["start_date"] = (
+                opportunity.get("start_date")
+                if opportunity
+                else None
+            )
+
+            item["end_date"] = (
+                opportunity.get("end_date")
+                if opportunity
+                else None
+            )
+
+            item["volunteer_format"] = (
+                opportunity.get("volunteer_format")
+                if opportunity
+                else None
+            )
+
+        # Media URL
+        if doctype == "Media" and item.get("media"):
+            if not item["media"].startswith(
+                ("http://", "https://")
+            ):
+                item["media"] = (
+                    f"{MEDIA_BASE_URL}{item['media']}"
+                )
+
+        grouped[row.parent].append(item)
+
     return grouped
  
  
 def _attach_child_tables(crisis_rows, crisis_ids):
-    """Mutates crisis_rows in place, attaching every child table by key."""
+    
     for key, spec in CHILD_TABLES.items():
         grouped = _fetch_child_rows_for_parents(
             crisis_ids,
@@ -128,11 +223,11 @@ CRISIS_BASE_QUERY = """
     SELECT
         c.name AS id,
         c.title,
+        c.category,
         c.description,
         c.start_date,
         c.status,
         c.crisis_summary,
-        c.verification_status,
  
         c.person_name,
         c.phone_num,
@@ -159,6 +254,7 @@ CRISIS_BASE_QUERY = """
 def get_crisis_list(
     limit=DEFAULT_LIMIT,
     offset=DEFAULT_OFFSET,
+    category=None,
     country=None,
     geography_l1=None,
     geography_l2=None,
@@ -169,6 +265,7 @@ def get_crisis_list(
         offset = max(0, int(offset))
  
         where_clause, values = build_filters(
+            category=category,
             country=country,
             geography_l1=geography_l1,
             geography_l2=geography_l2,
@@ -211,6 +308,7 @@ def get_crisis_list(
             error_data={
                 "traceback": frappe.get_traceback(),
                 "filters": {
+                    "category":category,
                     "country": country,
                     "geography_l1": geography_l1,
                     "geography_l2": geography_l2,
@@ -258,6 +356,7 @@ def get_crisis(crisis_id) -> Result:
  
  
 def build_filters(
+    category=None,
     country=None,
     geography_l1=None,
     geography_l2=None,
@@ -281,6 +380,10 @@ def build_filters(
     if status:
         conditions.append("c.status = %s")
         values.append(status)
+
+    if category:
+        conditions.append("c.category = %s")
+        values.append(category)  
  
     where_clause = ""
  
