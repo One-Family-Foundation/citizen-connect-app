@@ -8,26 +8,30 @@
  "field_order": [
   "scheme_name",
   "status",
-  "category_l1",
-  "category_l2",
-  "description",
   "benefit",
-  "eligibility",
   "documents_required",
-  "application_url",
-  "country",
-  "geo_l1",
-  "geo_l2",
   "gender",
   "disable_relevant",
   "income_limit",
   "currency",
   "issuing_body",
   "is_active",
-  "rating",
   "is_verified",
   "total_users",
   "total_rating_sum",
+  "column_break_bfvg",
+  "rating",
+  "application_url",
+  "description",
+  "eligibility",
+  "category_section",
+  "category_l1",
+  "category_l2",
+  "location_section",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "ngo_table_section",
   "ngos"
  ],
  "fields": [
@@ -56,7 +60,6 @@
   {
    "fieldname": "eligibility",
    "fieldtype": "Long Text",
-   "in_list_view": 1,
    "label": "Eligibility",
    "reqd": 1
   },
@@ -180,12 +183,31 @@
    "label": "Status",
    "options": "Pending\nApproved\nRejected",
    "permlevel": 1
+  },
+  {
+   "fieldname": "column_break_bfvg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "category_section",
+   "fieldtype": "Section Break",
+   "label": "Category"
+  },
+  {
+   "fieldname": "location_section",
+   "fieldtype": "Section Break",
+   "label": "Location"
+  },
+  {
+   "fieldname": "ngo_table_section",
+   "fieldtype": "Section Break",
+   "label": "NGO Table"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-17 16:38:24.440333",
+ "modified": "2026-08-24 12:13:42.831617",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",
