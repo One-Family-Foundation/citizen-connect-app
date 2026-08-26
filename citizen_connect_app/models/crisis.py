@@ -112,6 +112,7 @@ class CrisisSummary(BaseModel):
     title: str
     category:str
     media: list[CrisisMedia] = Field(default_factory=list)
+    description:Optional[str] = None
     crisis_summary: Optional[str] = None
     impact: list[CrisisImpact] = Field(default_factory=list)
     location: Location
@@ -120,4 +121,4 @@ class CrisisSummary(BaseModel):
 
     status: str
 
-    verification_status: Optional[str] = None
+    
