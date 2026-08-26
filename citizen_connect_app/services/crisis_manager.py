@@ -200,16 +200,14 @@ def _attach_child_tables(crisis_rows, crisis_ids):
  
  
 def _extract_nested_location(crisis):
-    """Pulls the flat SQL columns for dropoff/location into their nested shape.
- 
-    Uses .pop(key, None) rather than bare pops so a column rename in the SQL
-    surfaces as a None value here instead of a hard KeyError deep in a request.
-    """
+   
     crisis["resource_dropoff_location"] = {
         "person_name": crisis.pop("person_name", None),
         "phone_num": crisis.pop("phone_num", None),
         "time": crisis.pop("time", None),
-        "location": crisis.pop("dropoff_location", None),
+        "location_name": crisis.pop("location_name", None),
+        "location_address": crisis.pop("location_address", None),
+
     }
  
     crisis["location"] = {
@@ -232,7 +230,9 @@ CRISIS_BASE_QUERY = """
         c.person_name,
         c.phone_num,
         c.time,
-        c.location AS dropoff_location,
+        c.location_name,
+        c.location_address,
+        c.verification_status,
  
         country.country_name AS country,
         g1.geo_l1 AS geography_l1,

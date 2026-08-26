@@ -39,13 +39,13 @@ class ServiceManager:
                 filters.append("s.category_l1 = %s")
                 values.append(category_l1)
             if country:
-                filters.append("geo1.country_name = %s")
+                filters.append("s.service_country = %s")
                 values.append(country)
             if geo1:
                 filters.append("geo1.geo_l1 = %s")
                 values.append(geo1)
             if geo2:
-                filters.append("geo2.geo_2 = %s")
+                filters.append("geo2.geo_l2 = %s")
                 values.append(geo2)
 
             where_clause = ""
@@ -62,7 +62,7 @@ class ServiceManager:
                         s.description,
                         s.service_country,
                         geo1.geo_l1 AS service_geo1,
-                        geo2.geo_2 AS service_geo2,
+                        geo2.geo_l2 AS service_geo2,
                         s.cost_model,
                         s.cost_details,
                         s.sponsorship_information,
@@ -132,7 +132,7 @@ class ServiceManager:
                     s.description,
                     s.service_country,
                     geo1.geo_l1 AS service_geo1,
-                    geo2.geo_2 AS service_geo2,
+                    geo2.geo_l2 AS service_geo2,
                     s.cost_model,
                     s.cost_details,
                     s.sponsorship_information,

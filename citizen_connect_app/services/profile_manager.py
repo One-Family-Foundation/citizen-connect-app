@@ -56,6 +56,9 @@ def update_profile(profile_data: dict) -> Result:
         update_data = profile_data.model_dump(
             exclude_unset=True
         )
+        print("========== UPDATE PROFILE ==========")
+        print("UPDATE DATA:", update_data)
+        print("PHONE BEFORE:", profile.phone)
 
         if "location" in update_data:
             location = profile_data.location
@@ -78,9 +81,14 @@ def update_profile(profile_data: dict) -> Result:
                 profile.geo_l2 = location_result.data.geo2
 
         for field, value in update_data.items():
-            setattr(profile, field, value)
+            if field == "phone":
+                 profile.phone = value
+            else:     
+                setattr(profile, field, value)
 
+        print("PHONE AFTER SET:", profile.phone)
         profile.save(ignore_permissions=True)
+        print("PHONE AFTER SAVE:", profile.phone)
 
         return Result.success(
             message="Profile updated successfully.",
@@ -155,6 +163,7 @@ def get_profile(user_id: str) -> Result:
                 "id": profile.name,
                 "user": user.name,
                 "name": user.full_name,
+                "phone":profile.phone,
                 "role": profile.user_type or "Citizen",
                 "profile_image": profile.profile_photo,
                 "org_name": profile.org_name,
