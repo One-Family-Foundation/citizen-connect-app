@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.crisis.get?crisis_id=ag285kkajq
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.crisis.get?crisis_id=gia2eemcq5"
   params:
     - name: crisis_id
-      value: ag285kkajq
+      value: gia2eemcq5
       type: query
   auth: inherit
 

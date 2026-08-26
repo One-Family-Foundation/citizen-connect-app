@@ -5,7 +5,18 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.crisis.get_list
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.crisis.get_list?country=India&category=Bio Diversity"
+  params:
+    - name: country
+      value: India
+      type: query
+    - name: category
+      value: Bio Diversity
+      type: query
+    - name: status
+      value: in-active
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

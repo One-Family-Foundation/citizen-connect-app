@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.scheme_request.create?full_name=john&email=itsvivekg10@gmail.com&mobile_num=+91 983772737&scheme_name=&age=&gender=&description=
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.scheme_request.create?full_name=john&email=itsvivekg10@gmail.com&mobile_num=+91 983772737&scheme_name=cb2qq247pj&age=22&gender=Male&description=i need help in filling form"
   params:
     - name: full_name
       value: john
@@ -17,16 +17,16 @@ http:
       value: +91 983772737
       type: query
     - name: scheme_name
-      value: ""
+      value: cb2qq247pj
       type: query
     - name: age
-      value: ""
+      value: "22"
       type: query
     - name: gender
-      value: ""
+      value: Male
       type: query
     - name: description
-      value: ""
+      value: i need help in filling form
       type: query
   auth: inherit
 
