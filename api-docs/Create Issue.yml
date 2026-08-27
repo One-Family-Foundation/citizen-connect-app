@@ -5,29 +5,31 @@ info:
 
 http:
   method: POST
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.post.create"
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.issue.create_issue"
+  headers:
+    - name: Cookie
+      value: sid=e6ed5a8652d4e589e1955ed9e2c838340f7508c64dd159aa8f69476
   body:
     type: multipart-form
     data:
-      - name: files
-        type: file
-        value:
-          - /Users/ankitsaxena/Downloads/ATEC_Proposal.pdf
-        contentType: application/pdf
+      - name: title
+        type: text
+        value: this is high issue
       - name: description
         type: text
         value: This is my third post from bruno
       - name: category
         type: text
-        value: '{"l1":"Healthcare"}'
+        value: '{"l1":"Care, Family & Ageing Services"}'
+      - name: urgency
+        type: text
+        value: High
       - name: location
         type: text
-        value: |-
-          {
-          "country": "India",
-          "geo1": "Maharashtra",
-          "geo2": "Pune"
-          }
+        value: '{"country":"India","geo1":"Maharashtra","geo2":"Pune"}'
+      - name: allow_contact
+        type: text
+        value: "true"
   auth: inherit
 
 settings:
