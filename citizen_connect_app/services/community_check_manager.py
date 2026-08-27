@@ -83,7 +83,6 @@ def create(community_check_data: dict) -> Result:
         }
         frappe.get_doc(doc_data).insert(ignore_permissions=True)
 
-
         return Result.success(
             message="Community check created successfully.",
         

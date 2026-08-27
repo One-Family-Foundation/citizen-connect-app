@@ -1,0 +1,19 @@
+info:
+  name: Get Crisis
+  type: http
+  seq: 24
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.crisis.get?crisis_id=gia2eemcq5"
+  params:
+    - name: crisis_id
+      value: gia2eemcq5
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

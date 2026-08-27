@@ -11,7 +11,7 @@ def create_rating(category: str, item_id: str, rating) -> Result:
         if not user or user == "Guest":
             return Result.failure("Login required to rate.")
 
-        allowed_categories = ["Scheme", "Service"]
+        allowed_categories = ["Scheme", "Service", "Opportunity Discovery"]
 
         if category not in allowed_categories:
             return Result.failure(
@@ -54,7 +54,7 @@ def create_rating(category: str, item_id: str, rating) -> Result:
         total_users += 1
         total_rating_sum += rating
 
-        new_rating = total_rating_sum / total_users
+        new_rating = round(total_rating_sum / total_users , 1)
 
         item_doc.total_users = total_users
         item_doc.total_rating_sum = total_rating_sum

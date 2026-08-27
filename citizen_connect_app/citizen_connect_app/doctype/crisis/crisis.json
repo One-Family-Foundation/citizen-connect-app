@@ -1,0 +1,205 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-19 12:14:43.716530",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "title",
+  "category",
+  "media",
+  "description",
+  "country",
+  "geo_l1",
+  "geo_l2",
+  "start_date",
+  "impact",
+  "resources_needed",
+  "emergency_contacts",
+  "status",
+  "collaborators",
+  "crisis_summary",
+  "donation_oppportunity",
+  "volunteer_opportunity",
+  "resourc_dropoff_location_section",
+  "person_name",
+  "phone_num",
+  "time",
+  "location_name",
+  "location_address",
+  "verification_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Title",
+   "length": 120,
+   "reqd": 1
+  },
+  {
+   "fieldname": "media",
+   "fieldtype": "Table",
+   "label": "Media",
+   "options": "Media",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Long Text",
+   "in_list_view": 1,
+   "label": "Description",
+   "reqd": 1
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Country",
+   "options": "Country",
+   "reqd": 1
+  },
+  {
+   "fieldname": "geo_l1",
+   "fieldtype": "Link",
+   "label": "Geo L1",
+   "options": "Geography L1"
+  },
+  {
+   "fieldname": "geo_l2",
+   "fieldtype": "Link",
+   "label": "Geo L2",
+   "options": "Geography L2"
+  },
+  {
+   "fieldname": "start_date",
+   "fieldtype": "Date",
+   "label": "Start Date",
+   "reqd": 1
+  },
+  {
+   "fieldname": "resources_needed",
+   "fieldtype": "Table",
+   "label": "Resources Needed",
+   "options": "Resource Requirement",
+   "reqd": 1
+  },
+  {
+   "fieldname": "emergency_contacts",
+   "fieldtype": "Table",
+   "label": "Emergency Contacts",
+   "options": "Emergency Contacts"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nIn-Active"
+  },
+  {
+   "fieldname": "collaborators",
+   "fieldtype": "Table",
+   "label": "Collaborators",
+   "options": "User Child Table"
+  },
+  {
+   "fieldname": "crisis_summary",
+   "fieldtype": "Text",
+   "label": "Crisis Summary",
+   "reqd": 1
+  },
+  {
+   "fieldname": "donation_oppportunity",
+   "fieldtype": "Table",
+   "label": "Donation Opportunity",
+   "options": "Donation Details"
+  },
+  {
+   "fieldname": "volunteer_opportunity",
+   "fieldtype": "Table",
+   "label": "Volunteer Opportunity",
+   "options": "Child Volunteer Opportunity"
+  },
+  {
+   "fieldname": "impact",
+   "fieldtype": "Table",
+   "label": "Impact",
+   "options": "Crisis Impact"
+  },
+  {
+   "fieldname": "resourc_dropoff_location_section",
+   "fieldtype": "Section Break",
+   "label": "Resourc Dropoff Location"
+  },
+  {
+   "fieldname": "person_name",
+   "fieldtype": "Data",
+   "label": "Person Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone_num",
+   "fieldtype": "Phone",
+   "label": "Phone Number",
+   "reqd": 1
+  },
+  {
+   "fieldname": "time",
+   "fieldtype": "Data",
+   "label": "Time",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "verification_status",
+   "fieldtype": "Text",
+   "label": "Verification Status"
+  },
+  {
+   "fieldname": "location_name",
+   "fieldtype": "Small Text",
+   "label": "Location Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "location_address",
+   "fieldtype": "Text",
+   "label": "Location Address"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-08-26 13:33:43.603584",
+ "modified_by": "Administrator",
+ "module": "Citizen Connect App",
+ "name": "Crisis",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

@@ -5,24 +5,21 @@ info:
 
 http:
   method: POST
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.rating.create?category=service&item_id=su2gdsb6rv&rating=5
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.rate.create"
   headers:
     - name: Content-Type
       value: application/x-www-form-urlencoded
     - name: Cookie
-      value: sid=YOUR_SID
-  params:
-    - name: category
-      value: service
-      type: query
-    - name: item_id
-      value: su2gdsb6rv
-      type: query
-    - name: rating
-      value: "5"
-      type: query
+      value: sid=6fd916cebd5b952d4ab50d580b665b4fc1f652f7cc084c9416e9b03e
   body:
     type: form-urlencoded
+    data:
+      - name: category
+        value: Scheme
+      - name: item_id
+        value: cb2qq247pj
+      - name: rating
+        value: "3"
   auth: inherit
 
 settings:

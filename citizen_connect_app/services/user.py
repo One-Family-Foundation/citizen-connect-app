@@ -64,7 +64,7 @@ class UserManager:
                     if location.geo2:
                         geo_l2 = frappe.db.get_value(
                             "Geography L2",
-                            {"geo_2": location.geo2},
+                            {"geo_l2": location.geo2},
                             "name"
                         )
                     if not geo_l2:
@@ -130,17 +130,54 @@ class UserManager:
             if not otp_result.success:
                 return otp_result
 
-            user_name = frappe.db.get_value("User", {"email": email}, "name")
-            if not user_name:
+            user = frappe.db.get_value("User", {"email": email}, ["name", "first_name"],as_dict=True)
+            if not user:
                 return Result.not_found(message="User not found.")
+
+            user_name = user.name
 
             frappe.local.login_manager.user = user_name
             frappe.local.login_manager.post_login()
+            profile = frappe.db.get_value(
+                "User Profile",
+                {"user": user_name},
+                [
+                    "phone",
+                   "country",
+                   "geo_l1",
+                   "geo_l2"
+                ]
+            )
+            phone = profile[0] if profile else None
+            country = profile[1] if profile else None
+            geo_l1 = profile[2] if profile else None
+            geo_l2 = profile[3] if profile else None
+            geo_l1_name = None
+            if geo_l1:
+               geo_l1_name = frappe.db.get_value(
+                   "Geography L1",
+                    geo_l1,
+                   "geo_l1"
+                )
+            geo_l2_name = None
+            if geo_l2:
+               geo_l2_name = frappe.db.get_value(
+                   "Geography L2",
+                    geo_l2,
+                   "geo_l2"
+                )    
 
             return Result.success(
                 message="Login successful.",
                 data={
                     "user_id": user_name,
+                    "full_name": user.first_name,
+                    "phone": phone,
+                    "location": {
+                        "country": country,
+                        "geo_l1": geo_l1_name,
+                        "geo_l2": geo_l2_name,
+                    },
                     "sid": frappe.session.sid,
                 },
             )

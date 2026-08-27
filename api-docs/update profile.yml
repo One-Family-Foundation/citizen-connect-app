@@ -5,35 +5,31 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.profile.update?profile_photo=&alternative_email=&phone=&user_type=&country=&geo_l1=&geo_l2=&org_name=
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.profile.update"
   headers:
     - name: Cookie
-      value: sid=
-  params:
-    - name: profile_photo
-      value: ""
-      type: query
-    - name: alternative_email
-      value: ""
-      type: query
-    - name: phone
-      value: ""
-      type: query
-    - name: user_type
-      value: ""
-      type: query
-    - name: country
-      value: ""
-      type: query
-    - name: geo_l1
-      value: ""
-      type: query
-    - name: geo_l2
-      value: ""
-      type: query
-    - name: org_name
-      value: ""
-      type: query
+      value: sid=46b39509b87621b212d8936f3b9099a74d3a1dd023214569267acee3
+  body:
+    type: multipart-form
+    data:
+      - name: alternative_email
+        type: text
+        value: vivek11@gmail.com
+      - name: phone
+        type: text
+        value: +91 9513225128
+      - name: user_type
+        type: text
+        value: Citizen
+      - name: country
+        type: text
+        value: India
+      - name: geo_l1
+        type: text
+        value: Maharashtra
+      - name: geo_l2
+        type: text
+        value: Pune
   auth: inherit
 
 settings:

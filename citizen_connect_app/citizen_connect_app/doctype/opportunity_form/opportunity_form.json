@@ -36,14 +36,14 @@
   {
    "fieldname": "email",
    "fieldtype": "Data",
-   "label": "Email"
+   "label": "Email",
+   "reqd": 1
   },
   {
    "fieldname": "phone",
    "fieldtype": "Phone",
    "in_list_view": 1,
-   "label": "Phone",
-   "reqd": 1
+   "label": "Phone"
   },
   {
    "fieldname": "age",
@@ -78,7 +78,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-05 21:41:10.421768",
+ "modified": "2026-08-21 12:22:36.873229",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Form",

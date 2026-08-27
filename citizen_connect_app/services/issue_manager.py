@@ -65,7 +65,7 @@ def create(issue_data: dict) -> Result:
                "type": "Issue",
                "title":issue.title,
                 "user_id": user_id,
-                "issue_category": issue.category.l1 if issue.category else None,
+                "category": issue.category.l1 if issue.category else None,
                 "urgency": issue.urgency,
                 "description": issue.description,
                 "country": location.country,
@@ -84,7 +84,7 @@ def create(issue_data: dict) -> Result:
             "description": doc.description,
             "type": doc.type,
             "urgency": doc.urgency,
-            "category": doc.issue_category,
+            "category": doc.category,
             "location": {
                 "country": doc.country,
                 "geo_l1": doc.geo_l1,

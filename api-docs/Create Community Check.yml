@@ -9,17 +9,12 @@ http:
   body:
     type: multipart-form
     data:
-      - name: files
-        type: file
-        value:
-          - /Users/ankitsaxena/Downloads/ATEC_Proposal.pdf
-        contentType: application/pdf
       - name: additional_observations
         type: text
         value: Water supply and electricity are working properly. Roads are in good condition.
       - name: electricity
         type: text
-        value: 24h Available
+        value: Available
       - name: location
         type: text
         value: |-
@@ -49,9 +44,9 @@ http:
       - name: confidence_level
         type: text
         value: Very Confident
-      - name: category
+      - name: water_supply
         type: text
-        value: '{"l1":"Healthcare"}'
+        value: Available
   auth: inherit
 
 settings:

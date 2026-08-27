@@ -29,14 +29,14 @@ class LocationManager:
             )
             geo_l2_records = frappe.get_all(
                 "Geography L2", 
-                fields=["name", "geo_2", "geo_l1"]
+                fields=["name", "geo_l2", "geo_l1"]
             )
 
             l2_by_l1 = {}
             for l2 in geo_l2_records:
                 l2_by_l1.setdefault(l2.geo_l1, []).append({
                     "id": l2.name,
-                    "name": l2.geo_2
+                    "name": l2.geo_l2
                 })
 
             l1_by_country = {}

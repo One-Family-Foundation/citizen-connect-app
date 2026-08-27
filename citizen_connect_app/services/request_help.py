@@ -10,14 +10,17 @@ class RequestHelpManager:
     @staticmethod
     def create(request_data: dict, request_type: str, attachment=None) -> Result:
         try:
-            # Validate request data using Pydantic model
-            request_help = RequestHelp(**request_data)
-
             if frappe.session.user == "Guest":
+                request_help = RequestHelp(**request_data)
+
+                if not request_help.full_name or request_help.email:
+                    return Result.bad_request("fullname and email are mandatory")
+
                 full_name = request_help.full_name
                 email = request_help.email
                 mobile_num = request_help.mobile_num
                 user_id = None
+                
 
             else:
                 user = frappe.get_doc("User", frappe.session.user)
@@ -36,25 +39,24 @@ class RequestHelpManager:
                     profile_name
                 )
 
-                full_name = user.first_name
-                email = user.email
-                user_id = user.name
+                request_data["full_name"] = user.first_name
+                request_data["email"] = user.email
 
                 if profile.phone:
-                    mobile_num = profile.phone
-                else:
-                    if not request_help.mobile_num:
-                        return Result.bad_request(
-                            "mobile number is required"
-                        )
+                    request_data["mobile_num"] = profile.phone
 
-                    mobile_num = request_help.mobile_num
+                request_help = RequestHelp(**request_data)
 
+                full_name = request_help.full_name
+                email = request_help.email
+                mobile_num = request_help.mobile_num
+                user_id = user.name
+
+                if not profile.phone:
                     profile.phone = mobile_num
                     profile.save(ignore_permissions=True)
 
             if request_type == "service":
-
                 if not request_help.service_name:
                     return Result.bad_request(
                         "Service Name is required"
@@ -62,35 +64,18 @@ class RequestHelpManager:
 
                 case_type = "Service Request"
 
-                filters = {
-                    "mobile_no": mobile_num,
-                    "type": case_type,
-                    "service_id": request_help.service_name,
-                }
 
             elif request_type == "scheme":
-
                 if not request_help.scheme_name:
                     return Result.bad_request(
                         "Scheme Name is required"
                     )
 
-                case_type = "Scheme Request"
-
-                filters = {
-                    "mobile_no": mobile_num,
-                    "type": case_type,
-                    "scheme_id": request_help.scheme_name,
-                }
+                case_type = "Scheme Request"        
 
             else:
                 return Result.bad_request(
                     "Invalid request type"
-                )
-
-            if frappe.db.exists("Case", filters):
-                return Result.bad_request(
-                    f"You have already submitted a request for this {request_type}."
                 )
 
             case = frappe.new_doc("Case")

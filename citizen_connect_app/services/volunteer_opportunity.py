@@ -29,7 +29,7 @@ class OpportunityManager:
         o.language,
         c.name AS country,
         g1.geo_l1,
-        g2.geo_2,
+        g2.geo_l2,
 
         o.volunteer_format,
         o.expected_time,
@@ -40,8 +40,9 @@ class OpportunityManager:
         org.name AS ngo_id,
         org.org_name AS ngo_name,
         org.phone,
+        org.email,
 
-        o.rating_uimw AS rating,
+        o.rating AS rating,
         o.status,
 
         o.creation,
@@ -187,7 +188,7 @@ class OpportunityManager:
             values.append(geo1)
 
         if geo2:
-            filters.append("g2.geo_2=%s")
+            filters.append("g2.geo_l2=%s")
             values.append(geo2)
 
         if volunteer_format:
@@ -233,7 +234,7 @@ class OpportunityManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             volunteer_format=row["volunteer_format"],
             start_date=row["start_date"],
@@ -260,6 +261,7 @@ class OpportunityManager:
                 id=row["ngo_id"],
                 name=row["ngo_name"],
                 phone=row["phone"],
+                email=row["email"],
             )
         skills = OpportunityManager._get_skills(row["id"])
 
@@ -272,7 +274,7 @@ class OpportunityManager:
             location=Location(
                 country=row["country"],
                 geo1=row["geo_l1"],
-                geo2=row["geo_2"],
+                geo2=row["geo_l2"],
             ),
             volunteer_format=row["volunteer_format"],
             expected_time=row["expected_time"],
