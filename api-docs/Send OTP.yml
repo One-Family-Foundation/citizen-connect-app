@@ -5,10 +5,10 @@ info:
 
 http:
   method: POST
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.auth.send_otp?email=saxenankit3@gmail.com"
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.auth.send_otp?email=vivek1112@gmail.com"
   params:
     - name: email
-      value: saxenankit3@gmail.com
+      value: vivek1112@gmail.com
       type: query
   auth: inherit
 

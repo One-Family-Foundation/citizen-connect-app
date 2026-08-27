@@ -10,11 +10,8 @@ http:
     type: json
     data: |-
       {
-        "full_name":"Ankit",
-      "email":"saxenankit3@gmail.com",
-      "mobile_no":"+91-8787676545",
-      "location":
-        {"country":"India","geo1":"Maharashtra","geo2":"Pune"}
+        "full_name":"vivek",
+      "email":"vivek1112@gmail.com"
       }
   auth: inherit
 

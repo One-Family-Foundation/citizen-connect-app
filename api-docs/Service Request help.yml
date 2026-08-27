@@ -21,6 +21,8 @@ http:
       value: I need help with this service
     - name: full_name
       value: vivek
+  body:
+    type: form-urlencoded
   auth: inherit
 
 settings:

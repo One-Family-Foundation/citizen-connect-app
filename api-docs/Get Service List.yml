@@ -5,7 +5,12 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service.get_list
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.service.get_list"
+  params:
+    - name: country
+      value: India
+      type: query
+      disabled: true
   auth: inherit
 
 settings:

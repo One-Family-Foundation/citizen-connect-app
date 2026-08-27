@@ -4,8 +4,26 @@ info:
   seq: 11
 
 http:
-  method: GET
+  method: POST
   url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_application.apply"
+  headers:
+    - name: Cookie
+      value: sid=e6ed5a8652d4e589e1955ed9e2c838340f7508c64dd159aa8f694766
+  body:
+    type: form-urlencoded
+    data:
+      - name: opportunity_id
+        value: p4iuubeoif
+      - name: age
+        value: "22"
+      - name: gender
+        value: Male
+      - name: description
+        value: i want to be volunter
+      - name: age
+        value: "22"
+      - name: gender
+        value: Male
   auth: inherit
 
 settings:

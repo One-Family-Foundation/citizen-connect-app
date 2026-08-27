@@ -9,11 +9,6 @@ http:
   body:
     type: multipart-form
     data:
-      - name: files
-        type: file
-        value:
-          - /Users/ankitsaxena/Downloads/ATEC_Proposal.pdf
-        contentType: application/pdf
       - name: description
         type: text
         value: This is my third post from bruno

@@ -20,7 +20,7 @@ http:
         value: This is my third post from bruno
       - name: category
         type: text
-        value: '{"l1":"Care, Family & Ageing Services"}'
+        value: '{"l1":"Digital Access & Trust"}'
       - name: urgency
         type: text
         value: High

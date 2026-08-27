@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_opportunity.get?opportunity_id=o1i0fjudr4"
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_opportunity.get?opportunity_id=p4iuubeoif"
   params:
     - name: opportunity_id
-      value: o1i0fjudr4
+      value: p4iuubeoif
       type: query
   auth: inherit
 
