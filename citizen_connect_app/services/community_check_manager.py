@@ -81,12 +81,11 @@ def create(community_check_data: dict) -> Result:
             "geo_l2": location.geo2,
             "media":saved_files
         }
-
         frappe.get_doc(doc_data).insert(ignore_permissions=True)
 
-
         return Result.success(
-            message="Community check created successfully."
+            message="Community check created successfully.",
+        
         )
 
     except Exception as e:

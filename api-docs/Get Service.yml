@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service.get?service_id=iqhrur9mr1
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service.get?service_id=m8qb12jion
   params:
     - name: service_id
-      value: iqhrur9mr1
+      value: m8qb12jion
       type: query
   auth: inherit
 
