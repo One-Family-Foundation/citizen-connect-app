@@ -1,33 +1,28 @@
 info:
   name: Scheme Request Help
   type: http
-  seq: 22
+  seq: 23
 
 http:
   method: GET
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.scheme_request.create?full_name=john&email=itsvivekg10@gmail.com&mobile_num=+91 983772737&scheme_name=cb2qq247pj&age=22&gender=Male&description=i need help in filling form"
-  params:
-    - name: full_name
-      value: john
-      type: query
-    - name: email
-      value: itsvivekg10@gmail.com
-      type: query
-    - name: mobile_num
-      value: +91 983772737
-      type: query
-    - name: scheme_name
-      value: cb2qq247pj
-      type: query
-    - name: age
-      value: "22"
-      type: query
-    - name: gender
-      value: Male
-      type: query
-    - name: description
-      value: i need help in filling form
-      type: query
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.scheme_request.create"
+  body:
+    type: form-urlencoded
+    data:
+      - name: full_name
+        value: john
+      - name: email
+        value: itsvivekg10@gmail.com
+      - name: mobile_num
+        value: "9555225128"
+      - name: scheme_name
+        value: cb2qq247pj
+      - name: age
+        value: "22"
+      - name: gender
+        value: Male
+      - name: description
+        value: I need help in this scheme
   auth: inherit
 
 settings:

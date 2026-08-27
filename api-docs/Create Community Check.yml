@@ -1,11 +1,14 @@
 info:
   name: Create Community Check
   type: http
-  seq: 16
+  seq: 17
 
 http:
   method: POST
   url: "{{BASE_URL}}/api/method/citizen_connect_app.api.community_check.create_community_check"
+  headers:
+    - name: Cookie
+      value: sid=e6ed5a8652d4e589e1955ed9e2c838340f7508c64dd159aa8f694766
   body:
     type: multipart-form
     data:

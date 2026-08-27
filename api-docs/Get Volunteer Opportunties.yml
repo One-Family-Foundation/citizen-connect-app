@@ -5,7 +5,29 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_opportunity.get_list"
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_opportunity.get_list?category_l1=&category_l1=&country=&geo1=&geo2=&volunteer_format=&compensation_type="
+  params:
+    - name: category_l1
+      value: ""
+      type: query
+    - name: category_l1
+      value: ""
+      type: query
+    - name: country
+      value: ""
+      type: query
+    - name: geo1
+      value: ""
+      type: query
+    - name: geo2
+      value: ""
+      type: query
+    - name: volunteer_format
+      value: ""
+      type: query
+    - name: compensation_type
+      value: ""
+      type: query
   auth: inherit
 
 settings:

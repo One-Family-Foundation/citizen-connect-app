@@ -4,25 +4,28 @@ info:
   seq: 21
 
 http:
-  method: POST
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service_request.create
+  method: GET
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.service_request.create"
   headers:
-    - name: email
-      value: itsvivekg10@gmail.com
-    - name: mobile_num
-      value: +91    9876543210
-    - name: service_name
-      value: su2gdsb6rv
-    - name: age
-      value: "21"
-    - name: gender
-      value: Male
-    - name: description
-      value: I need help with this service
-    - name: full_name
-      value: vivek
+    - name: Content-Type
+      value: application/x-www-form-urlencoded
   body:
     type: form-urlencoded
+    data:
+      - name: full_name
+        value: vivek
+      - name: email
+        value: itsvivekg10@gmail.com
+      - name: mobile_num
+        value: "95555225128"
+      - name: service_name
+        value: trg27mr11t
+      - name: age
+        value: "22"
+      - name: gender
+        value: Male
+      - name: description
+        value: i need help in this service
   auth: inherit
 
 settings:

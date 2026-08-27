@@ -5,12 +5,24 @@ info:
 
 http:
   method: GET
-  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.service.get_list"
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.service.get_list?category_l1=&category_l2=&geo1=&geo2="
   params:
     - name: country
       value: India
       type: query
       disabled: true
+    - name: category_l1
+      value: ""
+      type: query
+    - name: category_l2
+      value: ""
+      type: query
+    - name: geo1
+      value: ""
+      type: query
+    - name: geo2
+      value: ""
+      type: query
   auth: inherit
 
 settings:
