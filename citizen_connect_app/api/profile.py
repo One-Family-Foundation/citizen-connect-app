@@ -1,5 +1,4 @@
 import frappe
-
 from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.profile_manager import (
     update_profile ,get_profile
@@ -43,9 +42,9 @@ def update(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(user_id=None):
+def get(user_id=None , lang = "en"):
     try:
-        result = get_profile(user_id)
+        result = get_profile(user_id, lang)
 
         return result.to_custom_response()
 

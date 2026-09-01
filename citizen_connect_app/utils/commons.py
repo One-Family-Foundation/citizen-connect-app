@@ -2,7 +2,26 @@
 import frappe
 from samaaja.utils.result import Result
 from citizen_connect_app.models.utils import Location
+from urllib.parse import quote
 
+def create_media_url(media_url: str) -> str|None:
+    media_base_url = frappe.utils.get_url().rstrip("/")
+    if not media_url:
+        return None
+    if not media_url.startswith(("http://", "https://")):
+       media_url = f"{media_base_url}/{quote(media_url.lstrip('/'), safe='/')}"
+
+    return media_url
+
+def localized(name: str | None, lang: str | None):
+    if not name:
+        return None
+
+    return {
+        "name": name,
+        "display_name": frappe._(name, lang=lang),
+    }
+    
 def resolve_location(location:Location)->Result:
     country = None
     geo_l1 = None

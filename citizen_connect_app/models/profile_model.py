@@ -1,16 +1,30 @@
+        
 from typing import Optional, Annotated
-
-from pydantic import BaseModel, Field, EmailStr, field_validator
-
-from citizen_connect_app.models.utils import Location
-
+from citizen_connect_app.models.utils import Item,Category, Location
+from pydantic import (
+    BaseModel,
+    Field,
+    EmailStr,
+    field_validator,
+)
 
 class UserProfile(BaseModel):
+
     profile_photo: Optional[str] = None
+
     alternative_email: Optional[EmailStr] = None
-    phone: Optional[Annotated[str, Field(min_length=6, max_length=15)]] = None
+
+    phone: Optional[
+        Annotated[
+            str,
+            Field(min_length=6, max_length=15)
+        ]
+    ] = None
+
     user_type: Optional[str] = None
+
     location: Optional[Location] = None
+
     org_name: Optional[str] = None
 
     @field_validator("alternative_email", mode="before")
@@ -68,3 +82,44 @@ class UserProfile(BaseModel):
             return None
 
         return value
+
+
+class ProfileBadge(BaseModel):
+    id: str
+    title: Item | None = None
+    icon: Optional[str] = None
+
+
+class ProfileUserInfo(BaseModel):
+    id: str
+    user: str
+    full_name: Optional[str] = None
+    type: Optional[str] = "Citizen"
+    profile_image: Optional[str] = None
+    org_name: Optional[str] = None
+    location: Location | None = None
+    interests: list[Category] = Field(default_factory=list)
+
+class ProfileStats(BaseModel):
+    actions: int = 0
+    resolved: int = 0
+    posts: int = 0
+    rank: int = 0
+
+
+class ProfileLeaderboard(BaseModel):
+    rank: int = 0
+
+
+class ProfileActivityCounts(BaseModel):
+    cases: int = 0
+    actions: int = 0
+    posts: int = 0
+
+
+class UserProfileResponse(BaseModel):
+    user_info: ProfileUserInfo
+    stats: ProfileStats
+    badges: list[ProfileBadge] = Field(default_factory=list)
+    leaderboard: ProfileLeaderboard
+    activity_counts: ProfileActivityCounts

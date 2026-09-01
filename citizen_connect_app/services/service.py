@@ -104,7 +104,7 @@ class ServiceManager:
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
-                service = ServiceManager._create_service(row)
+                service = ServiceManager._to_service(row,lang)
                 service_list.append(service)
 
             return Result.success(
@@ -122,7 +122,7 @@ class ServiceManager:
             raise
 
     @staticmethod
-    def get(service_id: str) -> Result:
+    def get(service_id: str,lang="en") -> Result:
         try:
             service = frappe.db.sql(
                 """
@@ -175,7 +175,7 @@ class ServiceManager:
                 return Result.not_found(message="Service not found.")
 
             row = service[0]
-            service_data = ServiceManager._create_service(row)
+            service_data = ServiceManager._to_service(row,lang)
 
             return Result.success(
                 message="Service fetched successfully.",
@@ -185,7 +185,7 @@ class ServiceManager:
             ErrorLogger.log(e)
             raise
     @staticmethod
-    def _create_service(row, lang=None) -> dict:
+    def _to_service(row, lang=None) -> dict:
         return {
             "id": row["id"],
             "title": row["title"],
@@ -216,7 +216,7 @@ class ServiceManager:
         }
 
     @staticmethod
-    def get_categories() -> Result:
+    def get_categories(lang:str) -> Result:
         cache = frappe.cache()
 
         try:
@@ -252,17 +252,18 @@ class ServiceManager:
                     categories[l1_id] = {
                         "id": l1_id,
                         "name": row["l1_name"],
+                        "display_name": frappe._(row["l1_name"], lang=lang),
                         "children": [],
                     }
 
                 if row["l2_id"]:
                     categories[l1_id]["children"].append(
-                        {"id": row["l2_id"], "name": row["l2_name"]}
+                        {"id": row["l2_id"], "name": row["l2_name"], "display_name": frappe._(row["l2_name"], lang=lang)}
                     )
 
             response = {"categories": list(categories.values())}
             cache.set_value(
-                ServiceManager.CATEGORIES_CACHE_KEY,
+                ServiceManager.CATEGORIES_CACHE_KEY+lang,
                 response,
                 expires_in_sec=3600,
             )

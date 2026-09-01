@@ -3,10 +3,14 @@ import frappe
 from pydantic import ValidationError
 
 from samaaja.utils.result import Result
-from citizen_connect_app.models.profile_model import UserProfile
+from citizen_connect_app.models.profile_model import (UserProfile , UserProfileResponse)
 from citizen_connect_app.utils.commons import resolve_location
 from citizen_connect_app.utils.error_logger import ErrorLogger
-
+from citizen_connect_app.services.issue_manager import count_issue
+from citizen_connect_app.services.community_check_manager import count_community
+from citizen_connect_app.services.post_manager import count_user_post
+from citizen_connect_app.services.opportunity_application import count_volunteer_actions
+from citizen_connect_app.utils.commons import create_media_url
 
 def update_profile(profile_data: dict) -> Result:
     try:
@@ -56,9 +60,7 @@ def update_profile(profile_data: dict) -> Result:
         update_data = profile_data.model_dump(
             exclude_unset=True
         )
-        print("========== UPDATE PROFILE ==========")
-        print("UPDATE DATA:", update_data)
-        print("PHONE BEFORE:", profile.phone)
+    
 
         if "location" in update_data:
             location = profile_data.location
@@ -86,9 +88,7 @@ def update_profile(profile_data: dict) -> Result:
             else:     
                 setattr(profile, field, value)
 
-        print("PHONE AFTER SET:", profile.phone)
         profile.save(ignore_permissions=True)
-        print("PHONE AFTER SAVE:", profile.phone)
 
         return Result.success(
             message="Profile updated successfully.",
@@ -120,12 +120,9 @@ def update_profile(profile_data: dict) -> Result:
                 "traceback": frappe.get_traceback()
             },
         )
-def get_profile(user_id: str) -> Result:
-    """
-    Fetch public profile.
-    Guest users can access this profile.
-    """
 
+
+def get_profile(user_id: str, lang: str = "en") -> Result:
     try:
         if not user_id:
             return Result.bad_request(
@@ -158,133 +155,170 @@ def get_profile(user_id: str) -> Result:
             profile_name
         )
 
+        profile_image = create_media_url(user.user_image) if user.user_image else None
+
+        user_badges = frappe.get_all(
+            "User Badge",
+            filters={
+                "user": user.name,
+            },
+            fields=["badge","badge_count"],
+            distinct=True,
+        )
+
+        badges = []
+
+        for user_badge in user_badges:
+            badge = frappe.db.get_value(
+                "Badge",
+                user_badge.badge,
+                ["name", "title", "icon", "description"],
+                as_dict=True,
+            )
+
+            if badge:
+                badge_icon = create_media_url(badge.icon)
+                badges.append({
+                    "id": badge.name,
+                    "title":{
+                        "name": badge.title,
+                    },
+                    "icon": badge_icon,
+                })
+
+        geo1_name = None
+        geo2_name = None
+
+        if profile.geo_l1:
+            geo1_name = frappe.db.get_value(
+                "Geography L1",
+                profile.geo_l1,
+                "geo_l1",
+            )
+
+        if profile.geo_l2:
+            geo2_name = frappe.db.get_value(
+                "Geography L2",
+                profile.geo_l2,
+                "geo_l2",
+            )
+
+        case_actions = frappe.db.count(
+            "Case",
+            filters={
+                "type": ["in", ["Issue", "Community Check"]],
+                "user_id": user.name,
+            }
+        )
+
+        resolved_counts = frappe.db.count(
+            "Case",
+            filters={
+                "type": ["in", ["Issue", "Community Check"]],
+                "user_id": user.name,
+                "workflow_state": "Closed",
+            }
+        )
+
+        volunteer_result = count_volunteer_actions(
+            user.name
+        )
+
+        opportunity_actions = volunteer_result.data or 0
+        post_result = count_user_post(
+            user.name
+        )
+
+        post_count = post_result.data or 0
+
+        actions = (
+            case_actions
+            + opportunity_actions
+        )
+
+        top_categories = frappe.get_all(
+            "User Category Statistics",
+            filters={
+                "user": user.name
+            },
+            fields=[
+                "category_l1",
+                "count"
+            ],
+            order_by="count desc",
+            limit_page_length=3,
+        )
+
+        categories = []
+
+        for item in top_categories:
+            category_name = frappe.db.get_value(
+                "Category",
+                item.category_l1,
+                "name"
+            )
+
+            if category_name:
+                categories.append(
+                    {
+                        "l1":{
+                            "name": category_name
+                        }
+                    }
+                )
+
         profile_data = {
             "user_info": {
                 "id": profile.name,
                 "user": user.name,
-                "name": user.full_name,
-                "phone":profile.phone,
-                "role": profile.user_type or "Citizen",
-                "profile_image": profile.profile_photo,
+                "full_name": user.full_name,
+                "phone": profile.phone,
+                "type": profile.user_type,
+                "profile_image": profile_image,
                 "org_name": profile.org_name,
 
                 "location": {
-                    "country": profile.country,
-                    "geo1": profile.geo_l1,
-                    "geo2": profile.geo_l2,
+                    "country": {
+                        "name": profile.country
+                    },
+                    "geo1": {
+                        "name": geo1_name
+                    },
+                    "geo2": {
+                        "name": geo2_name
+                    },
                 },
 
-                # Dummy data
-                "interests": [
-                    "Cleanliness Drives",
-                    "Fundraising",
-                    "Youth Counseling",
-                ],
+                "interests": categories,
             },
 
-            # Dummy statistics
             "stats": {
-                "actions": 24,
-                "resolved": 10,
-                "posts": 8,
-                "rank": "#8",
+                "actions": actions,
+                "resolved": resolved_counts,
+                "posts": post_count,
+                "rank": 0,
             },
 
-            # Dummy badges
-            "badges": [
-                {
-                    "id": "community_starter",
-                    "title": "Community Starter",
-                    "icon": "add-circle-outline",
-                },
-                {
-                    "id": "first_action",
-                    "title": "First Action",
-                    "icon": "leaf-outline",
-                },
-                {
-                    "id": "water_champion",
-                    "title": "Water Champion",
-                    "icon": "water-outline",
-                },
-                {
-                    "id": "active_volunteer",
-                    "title": "Active Volunteer",
-                    "icon": "heart-handshake-outline",
-                },
-            ],
+            "badges": badges,
 
             "leaderboard": {
-                "rank": 8,
-                "message": "You're #8 this month",
+                "rank": 8
             },
 
             "activity_counts": {
-                "cases": 3,
-                "actions": 2,
-                "posts": 2,
+                "cases": case_actions,
+                "actions": opportunity_actions,
+                "posts": post_count,
             },
-
-            # Dummy cases
-            "cases": [
-                {
-                    "id": "CASE-001",
-                    "title": "Broken Street Light @ MG Road",
-                    "status": "In Progress",
-                    "type": "case",
-                },
-                {
-                    "id": "CASE-002",
-                    "title": "Water Leakage Near Ward 4 Park",
-                    "status": "Resolved",
-                    "type": "case",
-                },
-                {
-                    "id": "CASE-003",
-                    "title": "Request for Anganwadi Teacher",
-                    "status": "Pending Review",
-                    "type": "case",
-                },
-            ],
-
-            # Dummy actions
-            "actions": [
-                {
-                    "id": "ACT-001",
-                    "title": "Tree Plantation Drive",
-                    "category": "Biodiversity & Ecosystems",
-                    "likes": 128,
-                    "comments": 14,
-                    "date": "Apr 2",
-                    "status": "Completed",
-                },
-                {
-                    "id": "ACT-002",
-                    "title": "Water Quality Survey",
-                    "category": "Water Quality & Conservation",
-                    "likes": 128,
-                    "comments": 14,
-                    "date": "Apr 2",
-                    "status": "Completed",
-                },
-            ],
-
-            # Dummy posts
-            "posts": [
-                {
-                    "id": "POST-001",
-                    "title": "Cleanliness drive at Ward 4 was a success!",
-                    "likes": 128,
-                    "comments": 14,
-                    "date": "Apr 2",
-                    "status": "Published",
-                },
-            ],
         }
+        profile_response = UserProfileResponse.model_validate(
+            profile_data,
+            context={"lang": lang}
+        )
 
         return Result.success(
             message="Profile fetched successfully.",
-            data=profile_data,
+            data=profile_response.model_dump(),
         )
 
     except Exception as e:
@@ -292,7 +326,9 @@ def get_profile(user_id: str) -> Result:
 
         return Result.failure(
             message="Failed to fetch profile.",
-            data={"error": str(e)},
+            data={
+                "error": str(e)
+            },
             error_data={
                 "traceback": frappe.get_traceback()
             },

@@ -7,7 +7,7 @@ class LocationManager:
     CACHE_KEY = "locations_api_v1"
 
     @staticmethod
-    def get_list():
+    def get_list(lang:str="en") -> Result:
         cache = frappe.cache()
         try:
             cached_data = cache.get_value(LocationManager.CACHE_KEY)
@@ -36,7 +36,8 @@ class LocationManager:
             for l2 in geo_l2_records:
                 l2_by_l1.setdefault(l2.geo_l1, []).append({
                     "id": l2.name,
-                    "name": l2.geo_l2
+                    "name": l2.geo_l2,
+                    "display_name": frappe._(l2.geo_l2, lang=lang)
                 })
 
             l1_by_country = {}
@@ -44,6 +45,7 @@ class LocationManager:
                 l1_by_country.setdefault(l1.country_name, []).append({
                     "id": l1.name,
                     "name": l1.geo_l1,
+                    "display_name": frappe._(l1.geo_l1, lang=lang),
                     "geo_l2": l2_by_l1.get(l1.name, [])
                 })
 
@@ -52,6 +54,7 @@ class LocationManager:
                 {
                     "id": country.name,
                     "name": country.country_name,
+                    "display_name": frappe._(country.country_name, lang=lang),
                     "geo_l1": l1_by_country.get(country.name, [])
                 }
                 for country in countries
@@ -62,7 +65,7 @@ class LocationManager:
                 "locations":locations
             }
             cache.set_value(
-                LocationManager.CACHE_KEY,
+                LocationManager.CACHE_KEY+lang,
                 response,
                 expires_in_sec=3600
             )

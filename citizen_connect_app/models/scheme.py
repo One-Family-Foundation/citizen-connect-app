@@ -14,7 +14,7 @@ class Scheme(BaseModel):
     documents_required: Optional[str] = None
     application_url: Optional[HttpUrl] = None
 
-    location: Location
+    location: dict
 
     gender: Optional[str] = None
     disabled_relevant: Optional[bool] = None
@@ -29,7 +29,7 @@ class Scheme(BaseModel):
     creation: datetime
     modified: datetime
 
-    scheme_category: Category
+    scheme_category: dict
 
     ngos: list[NGO] = Field(default_factory=list)
 
@@ -39,7 +39,7 @@ class SchemeSummary(BaseModel):
     description: Optional[str] = None
     
 
-    location: Location
+    location: dict
 
     gender: Optional[str] = None
     disabled_relevant: Optional[bool] = None
@@ -54,4 +54,4 @@ class SchemeSummary(BaseModel):
     creation: datetime
     modified: datetime
 
-    scheme_category: Category
+    scheme_category: dict

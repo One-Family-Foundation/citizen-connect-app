@@ -1,12 +1,14 @@
 import frappe
 from frappe import _
 from pydantic import ValidationError
-
+from urllib.parse import quote
 from citizen_connect_app.models.user import User
 from citizen_connect_app.services.otp_service import OTPService
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.error_logger import ErrorLogger
-
+from citizen_connect_app.models.user import UserSummary
+from citizen_connect_app.models.utils import Location
+from citizen_connect_app.models.utils import MediaResponse
 
 class UserManager:
 
@@ -119,6 +121,92 @@ class UserManager:
             return Result.failure(
                 message="Registration failed. Please check your location details and try again."
             )
+
+
+    @staticmethod
+    def get_user_summaries(
+        emails: list[str],
+        lang: str | None = None,
+    ) -> list[UserSummary]:
+        try:
+            emails = list({
+                email.strip().lower()
+                for email in emails
+                if email
+            })
+
+            if not emails:
+                return []
+
+            users = frappe.db.get_all(
+                "User",
+                filters={"name": ["in", emails]},
+                fields=["name", "full_name", "user_image"],
+            )
+
+            profiles = frappe.db.get_all(
+                "User Profile",
+                filters={"user": ["in", emails]},
+                fields=["user", "user_type", "country", "geo_l1", "geo_l2"],
+            )
+
+            users_by_email = {
+                user.name: user
+                for user in users
+            }
+
+            profiles_by_email = {
+                profile.user: profile
+                for profile in profiles
+            }
+
+            media_base_url = frappe.utils.get_url().rstrip("/")
+
+            user_summaries = []
+
+            for email in emails:
+                user = users_by_email.get(email)
+
+                if not user:
+                    continue
+
+                profile = profiles_by_email.get(email)
+
+                media_url = user.user_image
+
+                
+                if media_url and not media_url.startswith(("http://", "https://")):
+                    media_url = f"{media_base_url}/{quote(media_url.lstrip('/'), safe='/')}"
+
+                user_summaries.append(
+                    UserSummary(
+                        full_name=user.full_name,
+                        email=user.name,
+                        location={
+                            "country": {
+                                "name": profile.country if profile else None
+                            },
+                            "geo1": {
+                                "name": profile.geo_l1 if profile.geo_l1 else None
+                            },
+                            "geo2": {
+                                "name": profile.geo_l2 if profile.geo_l2 else None
+                            }
+                        },
+                        type=profile.user_type if profile else None,
+                        profile_picture=(
+                            MediaResponse(media=media_url)
+                            if media_url
+                            else None
+                        ),
+                    )
+                )
+
+            return user_summaries
+
+        except Exception as e:
+            ErrorLogger.log(e)
+            return []
 
     @staticmethod
     def login(email, otp):

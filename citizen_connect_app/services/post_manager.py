@@ -5,6 +5,7 @@ from citizen_connect_app.models.post import Post, PostResponse , MediaResponse
 from citizen_connect_app.models.utils import Location
 from pydantic import ValidationError
 from citizen_connect_app.utils.commons  import resolve_location
+from citizen_connect_app.services.user import UserManager
 
 logger = frappe.logger(
     "citizen_connect_app",
@@ -58,7 +59,7 @@ def create_post(post_data: dict) -> Result:
             "country": location.country,
             "geography_l1": location.geo1,
             "geography_l2": location.geo2 ,
-            "category_l1": post.category.l1 if post.category else None,
+            "category_l1": post.category.l1,
             "user": frappe.session.user,
             "media": saved_files,
         }).insert(ignore_permissions=True)
@@ -75,6 +76,7 @@ def get_list(
     country=None,
     geography_l1=None,
     geography_l2=None,
+    lang="en"
 ) -> Result:
     try:
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
@@ -148,8 +150,31 @@ def get_list(
 
         for post in post_rows:
             post["media"] = media_map.get(post["id"], [])
-        posts = [PostResponse(**row).model_dump() for row in post_rows]
+        
+        user_summaries = UserManager.get_user_summaries([post["user"] for post in post_rows], lang=lang)
+        
+        user_summaries_by_email = {user.email: user for user in user_summaries}
 
+        posts = []
+
+        for row in post_rows:
+            data = {
+                **row,
+                "location": {
+                    "country": {"name": row["country"]} if row["country"] else None,
+                    "geo1": {"name": row["geography_l1"]} if row["geography_l1"] else None,
+                    "geo2": {"name": row["geography_l2"]} if row["geography_l2"] else None,
+                },
+                "category": {
+                    "l1": {"name": row["category_l1"]} if row["category_l1"] else None,
+                    "l2": None,
+                },
+                "user": user_summaries_by_email.get(row["user"]),
+            }
+
+            posts.append(
+                PostResponse.model_validate(data,context={"lang": lang}).model_dump()
+            )
         return Result.success(
             message="Posts fetched successfully.",
             data=posts,
@@ -191,4 +216,57 @@ def build_filters(
     if conditions:
         where_clause = "WHERE " + " AND ".join(conditions)
 
-    return where_clause, values        
+    return where_clause, values  
+
+def count_user_post(user_id: str) -> Result:
+    post_count = frappe.db.count(
+        "Post",
+        {
+            "user": user_id
+        }
+    )
+
+    return Result.success(
+        message="Post count fetched successfully.",
+        data=post_count,
+    )
+def get_user_post(
+    user_id: str,
+    limit=DEFAULT_LIMIT,
+    offset=DEFAULT_OFFSET,
+) -> Result:
+    try:
+        if not user_id:
+            return Result.bad_request(
+                message="user_id is required."
+            )
+
+        limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
+        offset = max(0, int(offset))
+
+        posts = frappe.get_all(
+            "Post",
+            filters={
+                "user": user_id,
+            },
+            fields=[
+                "description",
+                "creation",
+            ],
+            order_by="creation DESC",
+            limit_page_length=limit,
+            limit_start=offset,
+        )
+
+        return Result.success(
+            message="User posts fetched successfully.",
+            data=posts,
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Failed to get user posts.",
+            data={"error": str(e)},
+            error_data={"traceback": frappe.get_traceback()},
+        )

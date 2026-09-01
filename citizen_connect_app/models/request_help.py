@@ -11,7 +11,7 @@ class RequestHelp(BaseModel):
 
     full_name: str = Field(..., min_length=3, max_length=120)
 
-    email: EmailStr
+    email_id: EmailStr
 
     mobile_num: str = Field(..., min_length=6, max_length=15)
 

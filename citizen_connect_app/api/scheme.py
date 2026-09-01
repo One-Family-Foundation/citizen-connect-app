@@ -6,7 +6,7 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 
 @frappe.whitelist(allow_guest=True)
 def get_list(
-    limit=10,
+    limit=5,
     offset=0,
     country=None,
     category_l1=None,
@@ -16,6 +16,7 @@ def get_list(
     gender=None,
     disabled=None,
     verified=None,
+    lang="en"
     
 ):
     try:
@@ -30,6 +31,7 @@ def get_list(
             gender=gender,
             disabled=disabled,
             verified=verified,
+            lang=lang
             
         ).to_custom_response()
 
@@ -44,9 +46,9 @@ def get_list(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(scheme_id):
+def get(scheme_id, lang="en"):
     try:
-        return SchemeManager.get(scheme_id).to_custom_response()
+        return SchemeManager.get(scheme_id, lang=lang).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)

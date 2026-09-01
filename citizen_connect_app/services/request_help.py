@@ -13,11 +13,11 @@ class RequestHelpManager:
             if frappe.session.user == "Guest":
                 request_help = RequestHelp(**request_data)
 
-                if not request_help.full_name or request_help.email:
+                if not request_help.full_name or not request_help.email_id:
                     return Result.bad_request("fullname and email are mandatory")
 
                 full_name = request_help.full_name
-                email = request_help.email
+                email = request_help.email_id
                 mobile_num = request_help.mobile_num
                 user_id = None
                 
@@ -40,7 +40,7 @@ class RequestHelpManager:
                 )
 
                 request_data["full_name"] = user.first_name
-                request_data["email"] = user.email
+                request_data["email_id"] = user.email
 
                 if profile.phone:
                     request_data["mobile_num"] = profile.phone
@@ -48,7 +48,7 @@ class RequestHelpManager:
                 request_help = RequestHelp(**request_data)
 
                 full_name = request_help.full_name
-                email = request_help.email
+                email = request_help.email_id
                 mobile_num = request_help.mobile_num
                 user_id = user.name
 
@@ -129,4 +129,45 @@ class RequestHelpManager:
             return Result.failure(
                 "Failed to create request",
                 error_data=str(e),
+            )
+
+    @staticmethod
+    def get_user_request_list(user_id: str) -> Result:
+        try:
+            if not user_id:
+               return Result.bad_request("user_id is required")
+
+            cases = frappe.db.sql(
+              """
+                SELECT
+                     CASE
+                        WHEN c.type = 'Scheme Request'
+                               THEN CONCAT('Scheme Request in ', s.scheme_name)
+                        WHEN c.type = 'Service Request'
+                             THEN CONCAT('Service Request in ', sv.title)
+                    END AS title,
+                    c.workflow_state
+                FROM `tabCase` c
+                LEFT JOIN `tabScheme` s
+                    ON s.name = c.scheme_id
+                LEFT JOIN `tabService` sv
+                    ON sv.name = c.service_id
+                WHERE c.user_id = %s
+                ORDER BY c.creation DESC
+                """,
+                (user_id,),
+                as_dict=True
+            )
+
+            return Result.success(
+                "Requests fetched successfully",
+                data=cases
+            )
+
+        except Exception as e:
+           ErrorLogger.log(e)
+
+           return Result.failure(
+              "Failed to fetch requests",
+              error_data=str(e)
             )

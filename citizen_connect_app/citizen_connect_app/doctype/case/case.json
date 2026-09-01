@@ -93,11 +93,6 @@
    "label": "User Name"
   },
   {
-   "fieldname": "email_id",
-   "fieldtype": "Data",
-   "label": "Email Id"
-  },
-  {
    "fieldname": "mobile_no",
    "fieldtype": "Phone",
    "label": "Mobile Number"
@@ -256,12 +251,17 @@
    "fieldtype": "Select",
    "label": "Gender",
    "options": "Male\nFemale\nNon-binary\nPrefer not to say"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email Id"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-17 13:21:38.625033",
+ "modified": "2026-08-31 16:17:46.809591",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",
