@@ -1,0 +1,22 @@
+info:
+  name: Get User Case List
+  type: http
+  seq: 28
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.case.get?user_id=vivek1112@gmail.com&status=Open"
+  params:
+    - name: user_id
+      value: vivek1112@gmail.com
+      type: query
+    - name: status
+      value: Open
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
