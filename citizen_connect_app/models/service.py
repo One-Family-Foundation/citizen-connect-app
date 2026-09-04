@@ -1,4 +1,4 @@
-from citizen_connect_app.models.utils import Location, Category
+from citizen_connect_app.models.utils import LocationResponse, CategoryResponse
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
@@ -8,7 +8,7 @@ class ServiceResponse(BaseModel):
     id: str
     title: str
     description: str
-    location: Location
+    location: LocationResponse
     cost_model: str
     cost_details: float
     sponsorship_information: str | None = None
@@ -19,7 +19,7 @@ class ServiceResponse(BaseModel):
     eligibility_condition: str | None = None
     rating: float
     ngo_name: str
-    service_category: Category
+    service_category: CategoryResponse
 
     def to_dict(self):
         return asdict(self)

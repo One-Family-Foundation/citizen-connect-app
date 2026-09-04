@@ -1,10 +1,7 @@
+from psycopg2.extensions import Int
 import frappe
 
-from citizen_connect_app.services.community_check_manager import (
-    get_user_community_check
-)
-from citizen_connect_app.services.issue_manager import get_user_issue_list
-from citizen_connect_app.services.request_help import RequestHelpManager
+
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -21,7 +18,6 @@ def get_user_case_list(
     limit=DEFAULT_LIMIT,
     offset=DEFAULT_OFFSET,
 ) -> Result:
-
     try:
         if not user_id:
             return Result.bad_request(
@@ -32,56 +28,156 @@ def get_user_case_list(
             "Open",
             "In Progress",
             "Closed",
-            "Resolved"
+            "Resolved",
         ]
 
         if status != "All" and status not in allowed_statuses:
             return Result.bad_request(
-                message="Invalid status. Allowed values are All, Open, In Progress, Closed, Resolved."
+                message=(
+                    "Invalid status. Allowed values are "
+                    "All, Open, In Progress, Closed, Resolved."
+                )
             )
 
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
         offset = max(0, int(offset))
 
-        requests = RequestHelpManager.get_user_request_list(user_id)
-        issues = get_user_issue_list(user_id)
-        community_checks = get_user_community_check(user_id)
+        cases = frappe.db.sql(
+            """
+            SELECT
+                c.type,
+                c.title,
+                c.workflow_state,
+                c.geo_l1,
+                c.geo_l2,
+                c.scheme_id,
+                c.service_id
+            FROM `tabCase` c
+            WHERE c.user_id = %s
+            ORDER BY c.creation DESC
+            """,
+            (user_id,),
+            as_dict=True,
+        )
 
         data = []
 
-        if requests.success:
-            data.extend(requests.data)
+        for case in cases:
 
-        if issues.success:
-            data.extend(issues.data)
+            # Issue
+            if case.type == "Issue":
+                data.append({
+                    "title": case.title,
+                    "workflow_state": case.workflow_state,
+                })
 
-        if community_checks.success:
-            data.extend(community_checks.data)
+            # Scheme Request
+            elif case.type == "Scheme Request":
+                scheme_name = None
+
+                if case.scheme_id:
+                    scheme_name = frappe.db.get_value(
+                        "Scheme",
+                        case.scheme_id,
+                        "scheme_name",
+                    )
+
+                data.append({
+                    "title": f"Scheme Request in {scheme_name}"
+                    if scheme_name
+                    else "Scheme Request",
+                    "workflow_state": case.workflow_state,
+                })
+
+            # Service Request
+            elif case.type == "Service Request":
+                service_title = None
+
+                if case.service_id:
+                    service_title = frappe.db.get_value(
+                        "Service",
+                        case.service_id,
+                        "title",
+                    )
+
+                data.append({
+                    "title": f"Service Request in {service_title}"
+                    if service_title
+                    else "Service Request",
+                    "workflow_state": case.workflow_state,
+                })
+
+            # Community Check
+            elif case.type == "Community Check":
+                location = None
+
+                if case.geo_l2:
+                    location = frappe.db.get_value(
+                        "Geography L2",
+                        case.geo_l2,
+                        "geo_l2",
+                    )
+
+                if not location and case.geo_l1:
+                    location = frappe.db.get_value(
+                        "Geography L1",
+                        case.geo_l1,
+                        "geo_l1",
+                    )
+
+                data.append({
+                    "title": (
+                        f"Community Check in {location}"
+                        if location
+                        else "Community Check"
+                    ),
+                    "workflow_state": case.workflow_state,
+                })
 
         # Filter by workflow state
         if status != "All":
             data = [
-                item for item in data
+                item
+                for item in data
                 if item.get("workflow_state") == status
             ]
 
-        
-       
-        paginated_data = data[offset : offset + limit]
+        # Pagination
+        paginated_data = data[offset:offset + limit]
 
         return Result.success(
-            message="User request list fetched successfully.",
+            message="User case list fetched successfully.",
             data={
-                "requests": paginated_data
-            }
+                "requests": paginated_data,
+                "total": len(data),
+            },
         )
 
     except Exception as e:
         ErrorLogger.log(e)
 
         return Result.failure(
-            message="Failed to fetch user request list.",
+            message="Failed to fetch user case list.",
             data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()}
+            error_data={
+                "traceback": frappe.get_traceback()
+            },
         )
-
+def get_user_case_count(user_id:str)->Int:
+    return frappe.db.count(
+        "Case",
+       filters= {
+            "user_id":user_id,
+            "type" : ["in", ["Issue", "Community Check"]]
+        }
+      )
+   
+def get_case_resolved_count(user_id:str)->Int:
+    return frappe.db.count(
+        "Case",
+        filters = {
+            "user_id":user_id,
+            "workflow_state": "Closed",
+            "type": ["in", ["Issue", "Community Check"]],
+        }
+    )

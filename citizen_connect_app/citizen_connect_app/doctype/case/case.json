@@ -61,6 +61,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.type==\"Issue\"",
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title"
@@ -230,12 +231,14 @@
    "label": "Request help"
   },
   {
+   "depends_on": "eval:doc.type==\"Service Request\";",
    "fieldname": "service_id",
    "fieldtype": "Link",
    "label": "Service Id",
    "options": "Service"
   },
   {
+   "depends_on": "eval:doc.type==\"Scheme Request\";",
    "fieldname": "scheme_id",
    "fieldtype": "Link",
    "label": "Scheme Id",
@@ -261,7 +264,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-31 16:17:46.809591",
+ "modified": "2026-09-01 12:59:14.167869",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",

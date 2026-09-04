@@ -1,7 +1,7 @@
 import frappe
 from citizen_connect_app.models.scheme import Scheme, SchemeSummary
 from citizen_connect_app.models.ngo import NGO
-from citizen_connect_app.models.utils import Location, Category
+from citizen_connect_app.models.utils import LocationResponse, CategoryResponse
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -18,6 +18,7 @@ class SchemeManager:
         s.name AS id,
         s.scheme_name,
         s.description,
+        s.status,
         s.benefit,
         s.eligibility,
         s.documents_required,
@@ -96,7 +97,8 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
-        lang="en"
+        lang="en",
+        status="Approved",
      
     ) -> Result:
         """Fetch a paginated, filterable list of schemes."""
@@ -113,7 +115,7 @@ class SchemeManager:
                 gender=gender,
                 disabled=disabled,
                 verified=verified,
-                
+                status=status,
             )
             values.extend([limit, offset])
 
@@ -191,6 +193,7 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
+        status="Approved",
         
     ):
         filters = ["s.is_active = 1"]
@@ -230,7 +233,9 @@ class SchemeManager:
         if verified is not None:
             filters.append("s.is_verified = %s")
             values.append(verified)
-
+        if status is not None:
+            filters.append("s.status = %s")
+            values.append(status)
       
 
         where_clause = ""

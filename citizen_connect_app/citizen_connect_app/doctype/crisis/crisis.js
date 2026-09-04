@@ -88,5 +88,34 @@ frappe.ui.form.on("Crisis", {
                 );
             }
         }
+        if (frm.doc.location_address) {
+            const len = frm.doc.location_address.trim().length;
+
+            if (len < 20 || len > 200) {
+                frappe.throw(
+                    __("location adress must be between 20 and 200 characters.")
+                );
+            }
+        }
+        if (frm.doc.location_name) {
+            const len = frm.doc.location_name.trim().length;
+
+            if (len < 20 || len > 200) {
+                frappe.throw(
+                    __("Location name must be between 20 and 200 characters.")
+                );
+            }
+        }
+        if (frm.doc.verification_status) {
+            const len = frm.doc.verification_status.trim().length;
+
+            if (len < 20 || len > 300) {
+                frappe.throw(
+                    __("Verification status must be between 20 and 300 characters.")
+                );
+            }
+        }
+        
     }
+    
 });

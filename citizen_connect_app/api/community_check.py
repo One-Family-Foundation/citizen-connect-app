@@ -26,6 +26,16 @@ def create_community_check():
             "location": json.loads(frappe.form_dict.get("location")),
             "files": [f for f in frappe.request.files.getlist("files") if f.filename]
         }
+        frappe.logger("citizen_connect_app").info(
+            f"RAW LOCATION: {frappe.form_dict.get('location')}"
+        )
+
+        frappe.logger("citizen_connect_app").info(
+            f"PARSED LOCATION: {data['location']}"
+        )
+        frappe.logger("citizen_connect_app").info(
+            f"RAW DESCRIPTION: {frappe.form_dict.get('description')}"
+        )
 
         return create(
             community_check_data=data

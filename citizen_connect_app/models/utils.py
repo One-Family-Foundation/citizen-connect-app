@@ -3,7 +3,7 @@ import frappe
 from pydantic import BaseModel, ValidationInfo, model_validator
 
 
-class Item(BaseModel):
+class ItemResponse(BaseModel):
     name: str
     display_name: str | None = None
 
@@ -14,16 +14,26 @@ class Item(BaseModel):
         return self
 
 
-class Category(BaseModel):
-    l1: Item | None = None
-    l2: Item | None = None
+class CategoryResponse(BaseModel):
+    l1: ItemResponse | None = None
+    l2: ItemResponse | None = None
 
 
-class Location(BaseModel):
-    country: Item | None = None
-    geo1: Item | None = None
-    geo2: Item | None = None
+class LocationResponse(BaseModel):
+    country: ItemResponse | None = None
+    geo1: ItemResponse | None = None
+    geo2: ItemResponse | None = None
+
 
 class MediaResponse(BaseModel):
     media: str
     caption: str | None = None
+
+class Category(BaseModel):
+    l1:str | None = None
+    l2:str | None = None 
+
+class Location(BaseModel):
+    country:str | None = None
+    geo1:str | None = None
+    geo2:str | None = None

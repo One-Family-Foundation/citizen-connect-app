@@ -2,7 +2,7 @@ from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field, field_validator
 from typing import Annotated
-from citizen_connect_app.models.utils import Location, Category, MediaResponse
+from citizen_connect_app.models.utils import Location, Category, MediaResponse, LocationResponse, CategoryResponse
 from citizen_connect_app.models.user import UserSummary
 
 class Post(BaseModel):
@@ -24,8 +24,8 @@ class Post(BaseModel):
 class PostResponse(BaseModel):
     id: str
     description: str
-    location: Location | None = None
-    category: Category | None = None
+    location: LocationResponse | None = None
+    category: CategoryResponse | None = None
     user: UserSummary
 
     media: list[MediaResponse] = Field(default_factory=list)

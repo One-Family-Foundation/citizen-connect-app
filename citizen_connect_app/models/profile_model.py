@@ -1,6 +1,6 @@
         
 from typing import Optional, Annotated
-from citizen_connect_app.models.utils import Item,Category, Location
+from citizen_connect_app.models.utils import ItemResponse,CategoryResponse, LocationResponse , Location
 from pydantic import (
     BaseModel,
     Field,
@@ -86,7 +86,7 @@ class UserProfile(BaseModel):
 
 class ProfileBadge(BaseModel):
     id: str
-    title: Item | None = None
+    title: ItemResponse | None = None
     icon: Optional[str] = None
 
 
@@ -94,11 +94,12 @@ class ProfileUserInfo(BaseModel):
     id: str
     user: str
     full_name: Optional[str] = None
+    alternative_email: Optional[EmailStr] = None
     type: Optional[str] = "Citizen"
     profile_image: Optional[str] = None
     org_name: Optional[str] = None
-    location: Location | None = None
-    interests: list[Category] = Field(default_factory=list)
+    location: LocationResponse | None = None
+    interests: list[CategoryResponse] = Field(default_factory=list)
 
 class ProfileStats(BaseModel):
     actions: int = 0

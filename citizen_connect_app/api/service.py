@@ -13,6 +13,8 @@ def get_list(
     geo1=None,
     geo2=None,
     lang="en",
+    service_status="Approved",
+    availability_status="Active",
 ):
     try:
         return ServiceManager.get_list(
@@ -24,6 +26,8 @@ def get_list(
             geo1=geo1,
             geo2=geo2,
             lang=lang,
+            service_status=service_status,
+            availability_status=availability_status,
         ).to_custom_response()
 
     except Exception as e:

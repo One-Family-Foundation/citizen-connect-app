@@ -184,15 +184,17 @@ class UserManager:
                         email=user.name,
                         location={
                             "country": {
-                                "name": profile.country if profile else None
-                            },
+                                "name": profile.country
+                            } if profile and profile.country else None,
+
                             "geo1": {
-                                "name": profile.geo_l1 if profile.geo_l1 else None
-                            },
+                                "name": profile.geo_l1
+                            } if profile and profile.geo_l1 else None,
+
                             "geo2": {
-                                "name": profile.geo_l2 if profile.geo_l2 else None
-                            }
-                        },
+                                "name": profile.geo_l2
+                            } if profile and profile.geo_l2 else None,
+                        } if profile else None,
                         type=profile.user_type if profile else None,
                         profile_picture=(
                             MediaResponse(media=media_url)

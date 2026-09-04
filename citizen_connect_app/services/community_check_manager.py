@@ -45,6 +45,8 @@ def create(community_check_data: dict) -> Result:
 
         if community_check.location:
             location_result = resolve_location(community_check.location)
+            logger.info(f"LOCATION INPUT: {community_check.location}")
+            logger.info(f"LOCATION RESULT: {location_result}")
 
             if location_result.is_bad_request:
                 return location_result
@@ -100,74 +102,6 @@ def create(community_check_data: dict) -> Result:
             data={"error": str(e)},
             error_data={"traceback": frappe.get_traceback()},
         )
-def count_community(user_id: str) -> Result:
-        community_count = frappe.db.count(
-             "Case",
-            {
-               "user_id": user_id,
-               "type": "Community Check",
-            }
-             )
 
-        return Result.success(
-             message="Community Check count fetched successfully.",
-             data=community_count,
-             )
-def get_user_community_check(user_id: str) -> Result:
-    try:
-        if not user_id:
-            return Result.bad_request(
-                message="user_id is required."
-            )
 
-        community_checks = frappe.db.get_all(
-            "Case",
-            filters={
-                "user_id": user_id,
-                "type": "Community Check",
-            },
-            fields=[
-                "geo_l1",
-                "geo_l2",
-                "workflow_state",
-            ],
-            order_by="creation desc",
-        )
-
-        data = []
-
-        for check in community_checks:
-            location = None
-
-            if check.geo_l2:
-                location = frappe.db.get_value(
-                    "Geography L2",
-                    check.geo_l2,
-                    "geo_l2"
-                )
-
-            if not location and check.geo_l1:
-                location = frappe.db.get_value(
-                    "Geography L1",
-                    check.geo_l1,
-                    "geo_l1"
-                )
-
-            data.append({
-                "title":f"Community Check in {location}",
-                "workflow_state": check.workflow_state,
-            })
-
-        return Result.success(
-            message="Community Check data fetched successfully.",
-            data=data,
-        )
-
-    except Exception as e:
-        ErrorLogger.log(e)
-
-        return Result.failure(
-            message="Failed to fetch Community Check data.",
-            data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()},
-        )
+         

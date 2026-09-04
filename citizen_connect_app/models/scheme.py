@@ -2,7 +2,7 @@ import frappe
 from typing import Optional
 from pydantic import BaseModel, HttpUrl , Field
 from datetime import datetime 
-from citizen_connect_app.models.utils import Category, Location
+from citizen_connect_app.models.utils import CategoryResponse, LocationResponse
 from citizen_connect_app.models.ngo import NGO
 
 class Scheme(BaseModel):

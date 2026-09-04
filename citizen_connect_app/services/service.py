@@ -18,6 +18,8 @@ class ServiceManager:
         geo1=None,
         geo2=None,
         lang="en",
+        service_status="Approved",
+        availability_status="Active",
     ) -> Result:
         try:
             # Validate pagination parameters
@@ -47,6 +49,12 @@ class ServiceManager:
             if geo2:
                 filters.append("geo2.geo_l2 = %s")
                 values.append(geo2)
+            if service_status:
+                filters.append("s.service_status = %s")
+                values.append(service_status)
+            if availability_status:
+                filters.append("s.availability_status = %s")
+                values.append(availability_status)
 
             where_clause = ""
             if filters:
@@ -191,9 +199,18 @@ class ServiceManager:
             "title": row["title"],
             "description": row["description"],
             "location": {
-                "country": row["service_country"],
-                "geo1": row["service_geo1"],
-                "geo2": row["service_geo2"],
+                "country": {
+                    "name": row["service_country"],
+                    "display_name": frappe._(row["service_country"], lang=lang),
+                },
+                "geo1": {
+                    "name": row["service_geo1"],
+                    "display_name": frappe._(row["service_geo1"], lang=lang),
+                },
+                "geo2": {
+                    "name": row["service_geo2"],
+                    "display_name": frappe._(row["service_geo2"], lang=lang),
+                },
             },
             "cost_model": row["cost_model"],
             "cost_details": row["cost_details"],

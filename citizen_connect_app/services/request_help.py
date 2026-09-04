@@ -88,11 +88,21 @@ class RequestHelpManager:
             case.age = request_help.age
             case.gender = request_help.gender
             case.description = request_help.description
-
+            
             if request_type == "service":
                 case.service_id = request_help.service_name
+                case.category = frappe.db.get_value(
+                    "Service",
+                     request_help.service_name,
+                     "category_l1"
+                )
             else:
                 case.scheme_id = request_help.scheme_name
+                case.category = frappe.db.get_value(
+                    "Scheme",
+                    request_help.scheme_name,
+                    "category_l1"
+                )
 
             if attachment:
                 file_doc = frappe.get_doc(
@@ -131,43 +141,4 @@ class RequestHelpManager:
                 error_data=str(e),
             )
 
-    @staticmethod
-    def get_user_request_list(user_id: str) -> Result:
-        try:
-            if not user_id:
-               return Result.bad_request("user_id is required")
-
-            cases = frappe.db.sql(
-              """
-                SELECT
-                     CASE
-                        WHEN c.type = 'Scheme Request'
-                               THEN CONCAT('Scheme Request in ', s.scheme_name)
-                        WHEN c.type = 'Service Request'
-                             THEN CONCAT('Service Request in ', sv.title)
-                    END AS title,
-                    c.workflow_state
-                FROM `tabCase` c
-                LEFT JOIN `tabScheme` s
-                    ON s.name = c.scheme_id
-                LEFT JOIN `tabService` sv
-                    ON sv.name = c.service_id
-                WHERE c.user_id = %s
-                ORDER BY c.creation DESC
-                """,
-                (user_id,),
-                as_dict=True
-            )
-
-            return Result.success(
-                "Requests fetched successfully",
-                data=cases
-            )
-
-        except Exception as e:
-           ErrorLogger.log(e)
-
-           return Result.failure(
-              "Failed to fetch requests",
-              error_data=str(e)
-            )
+    

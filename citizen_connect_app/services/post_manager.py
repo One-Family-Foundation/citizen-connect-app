@@ -4,7 +4,7 @@ from citizen_connect_app.utils.error_logger import ErrorLogger
 from citizen_connect_app.models.post import Post, PostResponse , MediaResponse
 from citizen_connect_app.models.utils import Location
 from pydantic import ValidationError
-from citizen_connect_app.utils.commons  import resolve_location
+from citizen_connect_app.utils.commons  import resolve_location,create_media_url
 from citizen_connect_app.services.user import UserManager
 
 logger = frappe.logger(
@@ -138,10 +138,7 @@ def get_list(
             )
 
             for row in media_rows:
-                media_url = row.media
-
-                if media_url and not media_url.startswith(("http://", "https://")):
-                    media_url = f"{media_base_url.rstrip('/')}/{media_url.lstrip('/')}"
+                media_url = create_media_url(row.media)
 
                 media_map.setdefault(row.parent, []).append({
                     "media": media_url,

@@ -157,13 +157,15 @@
    "fieldname": "category_l1",
    "fieldtype": "Link",
    "label": "Category L1",
-   "options": "Category"
+   "options": "Category",
+   "reqd": 1
   },
   {
    "fieldname": "category_l2",
    "fieldtype": "Link",
    "label": "Category L2",
-   "options": "Category"
+   "options": "Category",
+   "reqd": 1
   },
   {
    "fieldname": "total_users",
@@ -207,7 +209,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-24 12:13:42.831617",
+ "modified": "2026-09-01 12:23:55.206784",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",

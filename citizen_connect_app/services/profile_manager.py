@@ -10,6 +10,7 @@ from citizen_connect_app.services.issue_manager import count_issue
 from citizen_connect_app.services.community_check_manager import count_community
 from citizen_connect_app.services.post_manager import count_user_post
 from citizen_connect_app.services.opportunity_application import count_volunteer_actions
+from citizen_connect_app.services.case_manager import (get_user_case_count , get_case_resolved_count )
 from citizen_connect_app.utils.commons import create_media_url
 
 def update_profile(profile_data: dict) -> Result:
@@ -85,10 +86,14 @@ def update_profile(profile_data: dict) -> Result:
         for field, value in update_data.items():
             if field == "phone":
                  profile.phone = value
+            elif field == "profile_photo":
+                 user.user_image = value     
             else:     
                 setattr(profile, field, value)
 
         profile.save(ignore_permissions=True)
+        user.save(ignore_permissions=True)
+        
 
         return Result.success(
             message="Profile updated successfully.",
@@ -98,7 +103,7 @@ def update_profile(profile_data: dict) -> Result:
                 "full_name": user.full_name,
                 "email": user.email,
                 "phone": profile.phone or user.mobile_no,
-                "profile_photo": profile.profile_photo,
+                "profile_photo": user.user_image,
                 "alternative_email": profile.alternative_email,
                 "user_type": profile.user_type,
                 "location": {
@@ -203,22 +208,9 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
                 "geo_l2",
             )
 
-        case_actions = frappe.db.count(
-            "Case",
-            filters={
-                "type": ["in", ["Issue", "Community Check"]],
-                "user_id": user.name,
-            }
-        )
-
-        resolved_counts = frappe.db.count(
-            "Case",
-            filters={
-                "type": ["in", ["Issue", "Community Check"]],
-                "user_id": user.name,
-                "workflow_state": "Closed",
-            }
-        )
+        
+        case_actions = get_user_case_count(user.name) or 0
+        resolved_counts = get_case_resolved_count(user.name) or 0
 
         volunteer_result = count_volunteer_actions(
             user.name
@@ -272,6 +264,7 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
                 "id": profile.name,
                 "user": user.name,
                 "full_name": user.full_name,
+                "alternative_email": profile.alternative_email,
                 "phone": profile.phone,
                 "type": profile.user_type,
                 "profile_image": profile_image,
@@ -296,13 +289,13 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
                 "actions": actions,
                 "resolved": resolved_counts,
                 "posts": post_count,
-                "rank": 0,
+                "rank": 2,
             },
 
             "badges": badges,
 
             "leaderboard": {
-                "rank": 8
+                "rank": 2
             },
 
             "activity_counts": {

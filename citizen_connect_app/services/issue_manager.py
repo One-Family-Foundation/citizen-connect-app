@@ -132,35 +132,3 @@ def count_issue(user_id: str) -> Result:
         message="Issue count fetched successfully.",
         data=issue_count,
     )
-def get_user_issue_list(user_id: str) -> Result:
-    try:
-        if not user_id:
-            return Result.bad_request(
-                message="user_id is required."
-            )
-
-        issues = frappe.db.get_all(
-            "Case",
-            filters={
-                "user_id": user_id,
-                "type": "Issue",
-            },
-            fields=[
-                "title",
-                "workflow_state",
-            ],
-            order_by="creation desc",
-        )
-
-        return Result.success(
-            message="Issue list fetched successfully.",
-            data=issues,
-        )
-
-    except Exception as e:
-        ErrorLogger.log(e)
-        return Result.failure(
-            message="Failed to fetch issue list.",
-            data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()},
-        )
