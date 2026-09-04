@@ -6,8 +6,6 @@ from samaaja.utils.result import Result
 from citizen_connect_app.models.profile_model import (UserProfile , UserProfileResponse)
 from citizen_connect_app.utils.commons import resolve_location
 from citizen_connect_app.utils.error_logger import ErrorLogger
-from citizen_connect_app.services.issue_manager import count_issue
-from citizen_connect_app.services.community_check_manager import count_community
 from citizen_connect_app.services.post_manager import count_user_post
 from citizen_connect_app.services.opportunity_application import count_volunteer_actions
 from citizen_connect_app.services.case_manager import (get_user_case_count , get_case_resolved_count )
