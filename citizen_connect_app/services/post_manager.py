@@ -184,6 +184,172 @@ def get_list(
             data={"error": str(e)},
             error_data={"traceback": frappe.get_traceback()},
         )
+
+def delete_post(post_id: str) -> Result:
+    try:
+        if frappe.session.user == "Guest":
+            return Result.bad_request(
+                message="User must be logged in to delete a post."
+            )
+
+        if not post_id:
+            return Result.bad_request(
+                message="post_id is required."
+            )
+
+        post = frappe.db.get_value(
+            "Post",
+            post_id,
+            ["name", "user"],
+            as_dict=True
+        )
+
+        if not post:
+            return Result.bad_request(
+                message="Post not found."
+            )
+
+        if post.user != frappe.session.user:
+            return Result.bad_request(
+                message="You can only delete your own post."
+            )
+
+        media_rows = frappe.get_all(
+            "Media",
+            filters={
+                "parent": post_id,
+                "parenttype": "Post",
+                "parentfield": "media",
+            },
+            fields=["name", "media"],
+        )
+
+        for media in media_rows:
+            if media.media:
+                file_name = frappe.db.get_value(
+                    "File",
+                    {"file_url": media.media},
+                    "name"
+                )
+
+                if file_name:
+                    frappe.delete_doc(
+                        "File",
+                        file_name,
+                        ignore_permissions=True
+                    )
+
+        # Delete Post and its child Media records
+        frappe.delete_doc(
+            "Post",
+            post_id,
+            ignore_permissions=True
+        )
+
+        logger.info(
+            f"Post {post_id} deleted by user {frappe.session.user}"
+        )
+
+        return Result.success(
+            message="Post deleted successfully.",
+            data={"post_id": post_id}
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Failed to delete post.",
+            data={"error": str(e)},
+            error_data={
+                "traceback": frappe.get_traceback()
+            }
+        )
+
+def like_post(post_id: str) -> Result:
+    try:
+        if frappe.session.user == "Guest":
+            return Result.bad_request(
+                message="User must be logged in to like a post."
+            )
+
+        if not post_id:
+            return Result.bad_request(
+                message="post_id is required."
+            )
+
+        # Check if post exists
+        if not frappe.db.exists("Post", post_id):
+            return Result.bad_request(
+                message="Post not found."
+            )
+
+        user_id = frappe.session.user
+
+        # Check existing like
+        existing_like = frappe.db.get_value(
+            "Post Like",
+            {
+                "post_id": post_id,
+                "user_id": user_id
+            },
+            "name"
+        )
+
+        # If already liked -> dislike
+        if existing_like:
+            frappe.delete_doc(
+                "Post Like",
+                existing_like,
+                ignore_permissions=True
+            )
+
+            logger.info(
+                f"Post {post_id} disliked by user {user_id}"
+            )
+
+            return Result.success(
+                message="Post disliked successfully.",
+                data={
+                    "post_id": post_id,
+                    "user_id": user_id,
+                    "liked": False
+                }
+            )
+
+        # If not liked -> like
+        like = frappe.get_doc({
+            "doctype": "Post Like",
+            "post_id": post_id,
+            "user_id": user_id
+        })
+
+        like.insert(ignore_permissions=True)
+
+        logger.info(
+            f"Post {post_id} liked by user {user_id}"
+        )
+
+        return Result.success(
+            message="Post liked successfully.",
+            data={
+                "post_id": post_id,
+                "user_id": user_id,
+                "liked": True,
+                "like_id": like.name
+            }
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+
+        return Result.failure(
+            message="Failed to like/dislike post.",
+            data={"error": str(e)},
+            error_data={
+                "traceback": frappe.get_traceback()
+            }
+        )        
+
 def build_filters(
     category_l1=None,
     country=None,

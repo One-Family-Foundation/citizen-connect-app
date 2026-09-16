@@ -22,7 +22,13 @@ class OpportunityManager:
         o.name AS id,
         o.title,
         o.description,
-        o.crisis_link,
+        crisis.title AS crisis_link,
+        crisis.status AS crisis_status,
+        CASE
+            WHEN crisis.status = 'Active' THEN 1
+            ELSE 0
+        END AS is_active_crisis,
+
 
         o.category_l1 AS category_l1_name,
         o.category_l2 AS category_l2_name,
@@ -63,6 +69,9 @@ class OpportunityManager:
 
         LEFT JOIN `tabOrganisation` org
             ON org.name = o.ngo
+
+        LEFT JOIN `tabCrisis` crisis
+            ON crisis.name = o.crisis_link    
     """
 
     @staticmethod
@@ -106,8 +115,10 @@ class OpportunityManager:
                     {OpportunityManager._SELECT_FIELDS}
                 {OpportunityManager._JOINS}
                 {where_clause}
-                ORDER BY o.modified DESC
-                LIMIT %s OFFSET %s
+                ORDER BY
+                   is_active_crisis DESC,
+                   o.modified DESC
+                   LIMIT %s OFFSET %s
             """
 
             rows = frappe.db.sql(query, values, as_dict=True)
@@ -232,6 +243,11 @@ class OpportunityManager:
             id=row["id"],
             title=row["title"],
             description=row["description"],
+            active_crisis=(
+                "Active Crisis"
+                if row["is_active_crisis"]
+                else None
+            ),
             location={
                 "country":{
                     "name":row["country"],

@@ -4,6 +4,7 @@ from citizen_connect_app.services.profile_manager import (
     update_profile ,get_profile
 )
 from citizen_connect_app.utils.error_logger import ErrorLogger
+from citizen_connect_app.services.gamification_manager import (get_cached_user_rank)
 
 @frappe.whitelist()
 def update(

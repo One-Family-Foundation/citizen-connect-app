@@ -10,28 +10,33 @@ from citizen_connect_app.utils.commons import create_media_url
 from citizen_connect_app.models.gamificaiton import (IndividualLeaderboardItem , GeographyLeaderboardItem )
 
 
+INDIVIDUAL_RANK_CACHE_KEY = "individual_leaderboard_ranks"
 def get_individual_leaderboard(
     lang: str = "en",
+    limit: int = 10,
+    offset: int = 0,
 ) -> Result:
-
     try:
+        # Prevent invalid pagination values
+        limit = max(1, min(limit, 50))
+        offset = max(0, offset)
+
         users = frappe.get_all(
             "User",
             filters={
                 "enabled": 1,
+                "name": ["not in", ["Guest", "Administrator"]],
             },
             fields=[
                 "name",
                 "first_name",
                 "user_image",
             ],
-            
         )
-        
+
         leaderboard = []
-        
+
         for user in users:
-            
 
             case_actions = get_user_case_count(
                 user.name
@@ -49,7 +54,6 @@ def get_individual_leaderboard(
                 case_actions
                 + opportunity_actions
             )
-
 
             points = frappe.db.sql(
                 """
@@ -69,23 +73,21 @@ def get_individual_leaderboard(
                     "name",
                     "user_type",
                     "org_name",
-                    
                 ],
                 as_dict=True,
             )
 
             designation = None
 
-            if profile:
-                if profile.user_type:
-                    designation = profile.user_type
+            if profile and profile.user_type:
+                designation = profile.user_type
 
             profile_image = (
                 create_media_url(user.user_image)
-                if  user.user_image
+                if user.user_image
                 else None
             )
-            
+
             leaderboard.append({
                 "user_id": user.name,
                 "user_name": user.first_name,
@@ -104,19 +106,38 @@ def get_individual_leaderboard(
             reverse=True,
         )
 
-        # Add rank after sorting
+        # --------------------------------------------------
+        # Cache ranks for ALL users before pagination
+        # --------------------------------------------------
+        frappe.cache().delete(
+            INDIVIDUAL_RANK_CACHE_KEY
+        )
+
         for rank, item in enumerate(
             leaderboard,
             start=1
         ):
             item["rank"] = rank
 
+            frappe.cache().hset(
+                INDIVIDUAL_RANK_CACHE_KEY,
+                item["user_id"],
+                rank,
+            )
+
+        # --------------------------------------------------
+        # Apply pagination AFTER calculating rank
+        # --------------------------------------------------
+        paginated_leaderboard = leaderboard[
+            offset: offset + limit
+        ]
+
         leaderboard_response = [
             IndividualLeaderboardItem.model_validate(
                 item,
                 context={"lang": lang},
             )
-            for item in leaderboard
+            for item in paginated_leaderboard
         ]
 
         return Result.success(
@@ -141,9 +162,14 @@ def get_individual_leaderboard(
         )
 def get_geography_leaderboard(
     lang: str = "en",
+    limit: int = 10,
+    offset: int = 0,
 ) -> Result:
-
     try:
+        # Prevent invalid pagination values
+        limit = max(1, min(limit, 25))
+        offset = max(0, offset)
+
         users = frappe.db.sql(
             """
             SELECT
@@ -154,6 +180,7 @@ def get_geography_leaderboard(
                 ON u.name = up.user
             WHERE
                 u.enabled = 1
+                AND u.name NOT IN ('Guest', 'Administrator')
                 AND up.geo_l1 IS NOT NULL
             """,
             as_dict=True,
@@ -209,6 +236,7 @@ def get_geography_leaderboard(
 
             # Add user values to geography
             geography_map[geography_id]["actions"] += actions
+
             geography_map[geography_id]["points"] += (
                 points_map.get(user.user_id, 0)
             )
@@ -235,12 +263,18 @@ def get_geography_leaderboard(
 
         # Geography names
         for item in leaderboard:
-
             item["geography_name"] = frappe.db.get_value(
                 "Geography L1",
                 item["geography_id"],
                 "geo_l1",
             )
+
+        # --------------------------------------------------
+        # Apply pagination
+        # --------------------------------------------------
+        paginated_leaderboard = leaderboard[
+            offset: offset + limit
+        ]
 
         # Validate with Pydantic
         leaderboard_response = [
@@ -248,7 +282,7 @@ def get_geography_leaderboard(
                 item,
                 context={"lang": lang},
             )
-            for item in leaderboard
+            for item in paginated_leaderboard
         ]
 
         return Result.success(
@@ -260,7 +294,6 @@ def get_geography_leaderboard(
         )
 
     except Exception as e:
-
         ErrorLogger.log(e)
 
         return Result.failure(
@@ -272,3 +305,24 @@ def get_geography_leaderboard(
                 "traceback": frappe.get_traceback(),
             },
         )
+def get_cached_user_rank(user_email: str):
+    """Return cached rank for a user."""
+
+    rank = frappe.cache().hget(
+        INDIVIDUAL_RANK_CACHE_KEY,
+        user_email,
+    )
+
+    if rank is None:
+        return None
+
+    return int(rank)
+
+def set_user_rank(user_email: str, rank: int):
+    """Store user's rank in cache."""
+
+    frappe.cache().hset(
+        INDIVIDUAL_RANK_CACHE_KEY,
+        user_email,
+        rank,
+    )

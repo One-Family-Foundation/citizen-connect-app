@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2026-07-23 09:57:24.435918",
  "doctype": "DocType",
@@ -209,7 +210,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-01 12:23:55.206784",
+ "modified": "2026-09-11 14:04:41.798601",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Scheme",

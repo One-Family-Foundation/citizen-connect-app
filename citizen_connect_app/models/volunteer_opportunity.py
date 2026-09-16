@@ -42,6 +42,7 @@ class OpportunitySummary(BaseModel):
 
     title: str
     description: Optional[str] = None
+    active_crisis: str | None = None
 
     category: Optional[dict] = None
     language: Optional[str] = None

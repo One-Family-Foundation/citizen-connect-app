@@ -10,6 +10,7 @@ from citizen_connect_app.services.post_manager import count_user_post
 from citizen_connect_app.services.opportunity_application import count_volunteer_actions
 from citizen_connect_app.services.case_manager import (get_user_case_count , get_case_resolved_count )
 from citizen_connect_app.utils.commons import create_media_url
+from citizen_connect_app.services.gamification_manager import (get_cached_user_rank)
 
 def update_profile(profile_data: dict) -> Result:
     try:
@@ -26,13 +27,14 @@ def update_profile(profile_data: dict) -> Result:
             )
 
         user = frappe.get_doc("User", user_email)
+        uploaded_file = frappe.request.files.get("profile_photo")
 
         profile_name = frappe.db.get_value(
             "User Profile",
             {"user": user.name},
             "name",
         )
-
+       
         if not profile_name:
             return Result.bad_request(
                 message="User profile not found."
@@ -55,6 +57,20 @@ def update_profile(profile_data: dict) -> Result:
             "User Profile",
             profile_name
         )
+        if uploaded_file:
+            file_doc = frappe.get_doc({
+               "doctype": "File",
+               "file_name": uploaded_file.filename,
+               "attached_to_doctype": "User",
+               "attached_to_name": user.name,
+               "content": uploaded_file.read(),
+               "is_private": 0,
+            })
+
+            file_doc.insert(ignore_permissions=True)
+
+            profile.profile_photo = file_doc.file_url
+            user.user_image = file_doc.file_url
 
         update_data = profile_data.model_dump(
             exclude_unset=True
@@ -83,9 +99,7 @@ def update_profile(profile_data: dict) -> Result:
 
         for field, value in update_data.items():
             if field == "phone":
-                 profile.phone = value
-            elif field == "profile_photo":
-                 user.user_image = value     
+                 profile.phone = value   
             else:     
                 setattr(profile, field, value)
 
@@ -157,6 +171,7 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
             "User Profile",
             profile_name
         )
+        rank = get_cached_user_rank(user.name) or 0
 
         profile_image = create_media_url(user.user_image) if user.user_image else None
 
@@ -274,10 +289,10 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
                     },
                     "geo1": {
                         "name": geo1_name
-                    },
+                    }if geo1_name else None,
                     "geo2": {
                         "name": geo2_name
-                    },
+                    }if geo2_name else None,
                 },
 
                 "interests": categories,
@@ -287,13 +302,13 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
                 "actions": actions,
                 "resolved": resolved_counts,
                 "posts": post_count,
-                "rank": 2,
+                "rank": rank,
             },
 
             "badges": badges,
 
             "leaderboard": {
-                "rank": 2
+                "rank": rank
             },
 
             "activity_counts": {

@@ -168,7 +168,7 @@ def get_volunteer_actions(user_id: str) -> Result:
                 od.title,
                 od.category_l1,
                 od.category_l2,
-                od.status,
+                of.workflow_state AS status,
                 of.creation
             FROM `tabOpportunity Form` of
             INNER JOIN `tabOpportunity Discovery` od

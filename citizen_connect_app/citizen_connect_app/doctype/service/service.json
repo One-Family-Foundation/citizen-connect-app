@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2026-07-15 11:09:06.336874",
  "doctype": "DocType",
@@ -41,6 +42,7 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Title",
+   "length": 120,
    "reqd": 1
   },
   {
@@ -205,7 +207,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-21 10:48:38.902076",
+ "modified": "2026-09-14 15:37:30.562058",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

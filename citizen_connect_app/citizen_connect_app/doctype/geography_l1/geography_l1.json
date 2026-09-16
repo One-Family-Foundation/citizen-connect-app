@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2026-07-16 12:28:13.162047",
  "doctype": "DocType",
@@ -29,7 +30,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-07-16 14:22:47.859370",
+ "modified": "2026-09-15 12:45:44.476889",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Geography L1",

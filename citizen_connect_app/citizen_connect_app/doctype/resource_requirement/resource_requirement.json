@@ -49,6 +49,7 @@
   {
    "fieldname": "unit",
    "fieldtype": "Select",
+   "in_list_view": 1,
    "label": "Unit",
    "options": "Bottles\nPackets\nKits",
    "reqd": 1
@@ -57,6 +58,7 @@
    "default": "0",
    "fieldname": "is_active",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Is Active"
   }
  ],
@@ -64,7 +66,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-08-26 13:35:48.395926",
+ "modified": "2026-09-11 13:30:00.603905",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Resource Requirement",

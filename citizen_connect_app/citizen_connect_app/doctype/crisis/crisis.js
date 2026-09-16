@@ -24,6 +24,7 @@ frappe.ui.form.on("Crisis", {
                 }
             };
         });
+        
 
         // Show only Geography L2 for selected Geography L1
         frm.set_query("geo_l2", function () {

@@ -13,7 +13,7 @@ class RequestHelp(BaseModel):
 
     email_id: EmailStr
 
-    mobile_num: str = Field(..., min_length=6, max_length=15)
+    mobile_num:Optional[str] = Field(None, min_length=6, max_length=15)
 
     gender: Optional[str] = None
 

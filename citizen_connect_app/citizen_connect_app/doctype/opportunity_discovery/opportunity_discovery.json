@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2026-08-03 11:04:53.659558",
  "doctype": "DocType",
@@ -42,8 +43,9 @@
   },
   {
    "fieldname": "crisis_link",
-   "fieldtype": "Data",
-   "label": "Crisis Link"
+   "fieldtype": "Link",
+   "label": "Crisis Link",
+   "options": "Crisis"
   },
   {
    "fieldname": "description",
@@ -121,7 +123,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nIn-active",
+   "options": "Active\nInactive",
    "reqd": 1
   },
   {
@@ -188,7 +190,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-21 15:23:13.762699",
+ "modified": "2026-09-15 12:47:28.715113",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",
