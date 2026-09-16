@@ -1,0 +1,26 @@
+info:
+  name: Delete Post
+  type: http
+  seq: 31
+
+http:
+  method: DELETE
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.post.delete"
+  headers:
+    - name: Content-Type
+      value: application/json
+    - name: Cookie
+      value: sid=66befe2135f1022555704805e9a828e561ae65fcc352d4dfe2dfc381
+  body:
+    type: json
+    data: |-
+      {
+        "post_id": "eca6g6q9t9"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

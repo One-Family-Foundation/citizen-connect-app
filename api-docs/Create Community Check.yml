@@ -9,7 +9,7 @@ http:
   body:
     type: multipart-form
     data:
-      - name: additional_observations
+      - name: description
         type: text
         value: Water supply and electricity are working properly. Roads are in good condition.
       - name: electricity
@@ -47,6 +47,11 @@ http:
       - name: water_supply
         type: text
         value: Available
+      - name: files
+        type: file
+        value:
+          - C:\Users\lenovo\Downloads\file_example_MP4_640_3MG.mp4
+        contentType: video/mp4
   auth: inherit
 
 settings:
