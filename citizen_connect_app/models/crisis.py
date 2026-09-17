@@ -102,7 +102,7 @@ class Crisis(BaseModel):
         default_factory=list
     )
 
-    verification_status: Optional[str] = None
+    
 
     resource_dropoff_location: Optional[ResourceDropoffLocation] = None
 

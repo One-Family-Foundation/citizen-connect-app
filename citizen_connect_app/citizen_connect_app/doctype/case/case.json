@@ -253,7 +253,7 @@
    "fieldname": "gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale\nNon-binary\nPrefer not to say"
+   "options": "\nMale\nFemale\nNon-binary\nPrefer not to say"
   },
   {
    "fieldname": "email_id",
@@ -264,7 +264,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-01 12:59:14.167869",
+ "modified": "2026-09-16 12:18:17.355899",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",

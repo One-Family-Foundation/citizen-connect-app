@@ -3,6 +3,8 @@ frappe.ui.form.on("Service", {
     refresh(frm) {
         frm.set_df_property("rating", "read_only", 1);
 
+        toggle_sponsorship_information(frm)
+
         // Category L1
         frm.set_query("category_l1", function () {
             return {
@@ -64,6 +66,10 @@ frappe.ui.form.on("Service", {
             };
         });
     },
+    cost_model(frm) {
+        toggle_sponsorship_information(frm);
+    },
+
 
     category_l1(frm) {
         frm.set_value("category_l2", "");
@@ -230,4 +236,14 @@ frappe.ui.form.on("Service", {
         }
     }
 });
+function toggle_sponsorship_information(frm) {
+    const is_paid = frm.doc.cost_model === "Paid";
 
+    frm.toggle_display("sponsorship_information", is_paid);
+    frm.toggle_display("cost_details", is_paid);
+
+    if (!is_paid) {
+        frm.set_value("sponsorship_information", "");
+        frm.set_value("cost_details", "");
+    }
+}

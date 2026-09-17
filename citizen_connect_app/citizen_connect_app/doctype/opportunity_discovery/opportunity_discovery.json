@@ -15,8 +15,8 @@
   "crisis_link",
   "volunteer_format",
   "expected_time",
-  "end_date",
   "start_date",
+  "end_date",
   "compensation_type",
   "ngo",
   "column_break_nqqi",
@@ -24,6 +24,7 @@
   "skills",
   "status",
   "language",
+  "number_of_volunteer",
   "location_section",
   "country",
   "geo_l1",
@@ -89,7 +90,7 @@
   {
    "fieldname": "expected_time",
    "fieldtype": "Data",
-   "label": "Expected Time",
+   "label": "Expected Time (e.g : 4\u20136 hours per week)",
    "length": 60,
    "reqd": 1
   },
@@ -185,12 +186,17 @@
    "fieldname": "opportunity_discovery_section",
    "fieldtype": "Section Break",
    "label": "Opportunity Discovery"
+  },
+  {
+   "fieldname": "number_of_volunteer",
+   "fieldtype": "Int",
+   "label": "Number of Volunteers"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-15 12:47:28.715113",
+ "modified": "2026-09-17 12:33:09.178565",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Discovery",
