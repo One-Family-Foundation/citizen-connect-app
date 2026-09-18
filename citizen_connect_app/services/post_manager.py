@@ -239,7 +239,6 @@ def delete_post(post_id: str) -> Result:
                         ignore_permissions=True
                     )
 
-        # Delete Post and its child Media records
         frappe.delete_doc(
             "Post",
             post_id,
@@ -277,7 +276,6 @@ def like_post(post_id: str) -> Result:
                 message="post_id is required."
             )
 
-        # Check if post exists
         if not frappe.db.exists("Post", post_id):
             return Result.bad_request(
                 message="Post not found."
@@ -285,7 +283,6 @@ def like_post(post_id: str) -> Result:
 
         user_id = frappe.session.user
 
-        # Check existing like
         existing_like = frappe.db.get_value(
             "Post Like",
             {
@@ -295,7 +292,6 @@ def like_post(post_id: str) -> Result:
             "name"
         )
 
-        # If already liked -> dislike
         if existing_like:
             frappe.delete_doc(
                 "Post Like",
@@ -316,7 +312,6 @@ def like_post(post_id: str) -> Result:
                 }
             )
 
-        # If not liked -> like
         like = frappe.get_doc({
             "doctype": "Post Like",
             "post_id": post_id,

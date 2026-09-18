@@ -7,6 +7,7 @@
  "engine": "InnoDB",
  "field_order": [
   "opportunity_id",
+  "opportunity_category_li",
   "user",
   "full_name",
   "email",
@@ -14,7 +15,8 @@
   "age",
   "gender",
   "description",
-  "attachment"
+  "attachment",
+  "ngo"
  ],
  "fields": [
   {
@@ -73,12 +75,26 @@
    "fieldtype": "Link",
    "label": "User",
    "options": "User"
+  },
+  {
+   "fetch_from": "opportunity_id.category_l1",
+   "fieldname": "opportunity_category_li",
+   "fieldtype": "Data",
+   "label": "Opportunity Category L1",
+   "read_only": 1
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "label": "NGO",
+   "options": "Organisation",
+   "reqd": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-21 12:22:36.873229",
+ "modified": "2026-09-17 18:29:39.137021",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Opportunity Form",

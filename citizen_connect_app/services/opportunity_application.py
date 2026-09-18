@@ -64,7 +64,7 @@ class OpportunityApplicationManager:
                          "name": data.opportunity_id,
                          "status": "Active",
                      },
-                     ["name", "category_l1"],
+                     ["name", "category_l1" ,"ngo"],
                      as_dict=True,
             )
             if not opportunity:
@@ -105,6 +105,7 @@ class OpportunityApplicationManager:
             application.age = data.age
             application.gender = data.gender
             application.description = data.description
+            application.ngo = opportunity.ngo
 
             if attachment:
                 file_doc = frappe.get_doc(
@@ -120,13 +121,6 @@ class OpportunityApplicationManager:
 
             application.save(ignore_permissions=True)
             frappe.db.commit()
-            if user and opportunity.category_l1:
-                update_user_category_statistics(
-                   user.name,
-                   opportunity.category_l1
-                )
-        
-        
             return Result.success(
                 message="Application submitted successfully.",
                 data={

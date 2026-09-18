@@ -43,7 +43,8 @@
   "issue_details_section",
   "urgency",
   "allocation_details_section",
-  "ngo_admin"
+  "ngo_admin",
+  "ngo"
  ],
  "fields": [
   {
@@ -259,12 +260,18 @@
    "fieldname": "email_id",
    "fieldtype": "Data",
    "label": "Email Id"
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "label": "NGO",
+   "options": "Organisation"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-16 12:18:17.355899",
+ "modified": "2026-09-17 18:43:42.031795",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",
