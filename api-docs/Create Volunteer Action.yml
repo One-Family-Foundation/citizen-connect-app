@@ -1,0 +1,36 @@
+info:
+  name: Create Volunteer Action
+  type: http
+  seq: 35
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_action.create"
+  body:
+    type: multipart-form
+    data:
+      - name: category
+        type: text
+        value: '{"l1":"Livelihoods","l2":"Worker environment & rights"}'
+      - name: description
+        type: text
+        value: this is new post from me
+      - name: files
+        type: text
+        value: ""
+      - name: location
+        type: text
+        value: '{"country":"India","geo1":"Maharashtra","geo2":"Pune"}'
+      - name: start_date
+        type: text
+        value: ""
+      - name: end_date
+        type: text
+        value: ""
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
