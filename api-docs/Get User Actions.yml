@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: ""
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_action.user_actions?user_id=vivek1112@gmail.com"
+  params:
+    - name: user_id
+      value: vivek1112@gmail.com
+      type: query
   auth: inherit
 
 settings:
