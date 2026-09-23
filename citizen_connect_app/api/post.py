@@ -7,6 +7,12 @@ import json
 @frappe.whitelist()
 def create():
     try:
+        category = frappe.form_dict.get("category")
+        if not category:
+            return custom_response(
+                status_code=400,
+                message="category is required."
+            )
         data = {
             "description": frappe.form_dict.get("description"),
             "location": json.loads(frappe.form_dict.get("location")),
