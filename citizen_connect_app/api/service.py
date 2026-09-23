@@ -13,6 +13,8 @@ def get_list(
     geo1=None,
     geo2=None,
     lang="en",
+    service_status="Approved",
+    availability_status="Active",
 ):
     try:
         return ServiceManager.get_list(
@@ -23,7 +25,9 @@ def get_list(
             country=country,
             geo1=geo1,
             geo2=geo2,
-            lang="hi",
+            lang=lang,
+            service_status=service_status,
+            availability_status=availability_status,
         ).to_custom_response()
 
     except Exception as e:
@@ -36,9 +40,9 @@ def get_list(
         )
 
 @frappe.whitelist(allow_guest=True)
-def get(service_id):
+def get(service_id, lang="en"):
     try:
-        return ServiceManager.get(service_id).to_custom_response()
+        return ServiceManager.get(service_id, lang=lang).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)
@@ -50,9 +54,9 @@ def get(service_id):
         )
 
 @frappe.whitelist(allow_guest=True)
-def get_categories():
+def get_categories(lang="en"):
     try:
-        return ServiceManager.get_categories().to_custom_response()
+        return ServiceManager.get_categories(lang=lang).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)

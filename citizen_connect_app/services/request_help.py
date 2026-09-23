@@ -13,11 +13,11 @@ class RequestHelpManager:
             if frappe.session.user == "Guest":
                 request_help = RequestHelp(**request_data)
 
-                if not request_help.full_name or request_help.email:
+                if not request_help.full_name or not request_help.email_id:
                     return Result.bad_request("fullname and email are mandatory")
 
                 full_name = request_help.full_name
-                email = request_help.email
+                email = request_help.email_id
                 mobile_num = request_help.mobile_num
                 user_id = None
                 
@@ -40,7 +40,7 @@ class RequestHelpManager:
                 )
 
                 request_data["full_name"] = user.first_name
-                request_data["email"] = user.email
+                request_data["email_id"] = user.email
 
                 if profile.phone:
                     request_data["mobile_num"] = profile.phone
@@ -48,7 +48,7 @@ class RequestHelpManager:
                 request_help = RequestHelp(**request_data)
 
                 full_name = request_help.full_name
-                email = request_help.email
+                email = request_help.email_id
                 mobile_num = request_help.mobile_num
                 user_id = user.name
 
@@ -88,11 +88,27 @@ class RequestHelpManager:
             case.age = request_help.age
             case.gender = request_help.gender
             case.description = request_help.description
-
+            
             if request_type == "service":
                 case.service_id = request_help.service_name
+                service_data = frappe.db.get_value(
+                    "Service",
+                    request_help.service_name,
+                    ["category_l1", "ngo_org" , "cost_model", "is_financial_support"],
+                    as_dict=True,
+                )
+                if service_data:
+                   case.category = service_data.category_l1
+                   case.ngo = service_data.ngo_org
+                   if service_data.is_financial_support:
+                       case.is_financial_support_need = request_help.is_financial_support_need
             else:
                 case.scheme_id = request_help.scheme_name
+                case.category = frappe.db.get_value(
+                    "Scheme",
+                    request_help.scheme_name,
+                    "category_l1"
+                )
 
             if attachment:
                 file_doc = frappe.get_doc(
@@ -130,3 +146,5 @@ class RequestHelpManager:
                 "Failed to create request",
                 error_data=str(e),
             )
+
+    

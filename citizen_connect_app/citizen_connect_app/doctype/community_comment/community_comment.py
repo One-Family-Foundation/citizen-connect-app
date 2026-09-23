@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class SchemeRequestHelp(Document):
+class CommunityComment(Document):
 	pass

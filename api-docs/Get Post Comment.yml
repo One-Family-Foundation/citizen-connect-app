@@ -1,0 +1,19 @@
+info:
+  name: Get Post Comment
+  type: http
+  seq: 34
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.comment.get?post_id=0sctd4hemd"
+  params:
+    - name: post_id
+      value: 0sctd4hemd
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

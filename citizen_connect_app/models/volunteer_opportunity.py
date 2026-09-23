@@ -16,11 +16,11 @@ class Opportunity(BaseModel):
     description: Optional[str] = None
     skills: list[Skill] = []
 
-    category: Category
+    category: Optional[dict] = None
 
     crisis_link: Optional[str] = None
     language:Optional[str]=None
-    location: Location
+    location: Optional[dict] = None
 
     volunteer_format: Optional[str] = None
     expected_time: Optional[str] = None
@@ -42,10 +42,11 @@ class OpportunitySummary(BaseModel):
 
     title: str
     description: Optional[str] = None
+    active_crisis: str | None = None
 
-    category: Category
+    category: Optional[dict] = None
     language: Optional[str] = None
-    location: Location
+    location: Optional[dict] = None
 
     volunteer_format: Optional[str] = None
 

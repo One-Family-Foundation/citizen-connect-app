@@ -1,0 +1,24 @@
+info:
+  name: Like Post
+  type: http
+  seq: 32
+
+http:
+  method: POST
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.post.like?post_id=0sctd4hemd"
+  params:
+    - name: post_id
+      value: 0sctd4hemd
+      type: query
+  body:
+    type: form-urlencoded
+    data:
+      - name: post_id
+        value: 0sctd4hemd
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

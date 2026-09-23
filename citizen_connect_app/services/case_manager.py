@@ -1,0 +1,183 @@
+from psycopg2.extensions import Int
+import frappe
+
+
+from citizen_connect_app.utils.error_logger import ErrorLogger
+from samaaja.utils.result import Result
+
+
+MIN_LIMIT = 1
+MAX_LIMIT = 100
+DEFAULT_LIMIT = 10
+DEFAULT_OFFSET = 0
+
+@staticmethod
+def get_user_case_list(
+    user_id: str,
+    status: str = "All",
+    limit=DEFAULT_LIMIT,
+    offset=DEFAULT_OFFSET,
+) -> Result:
+    try:
+        if not user_id:
+            return Result.bad_request(
+                message="user_id is required."
+            )
+
+        allowed_statuses = [
+            "Open",
+            "In Progress",
+            "Closed",
+            "Resolved",
+        ]
+
+        if status != "All" and status not in allowed_statuses:
+            return Result.bad_request(
+                message=(
+                    "Invalid status. Allowed values are "
+                    "All, Open, In Progress, Closed, Resolved."
+                )
+            )
+
+        limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
+        offset = max(0, int(offset))
+
+        cases = frappe.db.sql(
+            """
+            SELECT
+                c.type,
+                c.title,
+                c.workflow_state,
+                c.geo_l1,
+                c.geo_l2,
+                c.scheme_id,
+                c.service_id
+            FROM `tabCase` c
+            WHERE c.user_id = %s
+            ORDER BY c.creation DESC
+            """,
+            (user_id,),
+            as_dict=True,
+        )
+
+        data = []
+
+        for case in cases:
+
+            # Issue
+            if case.type == "Issue":
+                data.append({
+                    "title": case.title,
+                    "workflow_state": case.workflow_state,
+                })
+
+            # Scheme Request
+            elif case.type == "Scheme Request":
+                scheme_name = None
+
+                if case.scheme_id:
+                    scheme_name = frappe.db.get_value(
+                        "Scheme",
+                        case.scheme_id,
+                        "scheme_name",
+                    )
+
+                data.append({
+                    "title": f"Scheme Request in {scheme_name}"
+                    if scheme_name
+                    else "Scheme Request",
+                    "workflow_state": case.workflow_state,
+                })
+
+            # Service Request
+            elif case.type == "Service Request":
+                service_title = None
+
+                if case.service_id:
+                    service_title = frappe.db.get_value(
+                        "Service",
+                        case.service_id,
+                        "title",
+                    )
+
+                data.append({
+                    "title": f"Service Request in {service_title}"
+                    if service_title
+                    else "Service Request",
+                    "workflow_state": case.workflow_state,
+                })
+
+            # Community Check
+            elif case.type == "Community Check":
+                location = None
+
+                if case.geo_l2:
+                    location = frappe.db.get_value(
+                        "Geography L2",
+                        case.geo_l2,
+                        "geo_l2",
+                    )
+
+                if not location and case.geo_l1:
+                    location = frappe.db.get_value(
+                        "Geography L1",
+                        case.geo_l1,
+                        "geo_l1",
+                    )
+
+                data.append({
+                    "title": (
+                        f"Community Check in {location}"
+                        if location
+                        else "Community Check"
+                    ),
+                    "workflow_state": case.workflow_state,
+                })
+
+        # Filter by workflow state
+        if status != "All":
+            data = [
+                item
+                for item in data
+                if item.get("workflow_state") == status
+            ]
+
+        # Pagination
+        paginated_data = data[offset:offset + limit]
+
+        return Result.success(
+            message="User case list fetched successfully.",
+            data={
+                "requests": paginated_data,
+                "total": len(data),
+            },
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+
+        return Result.failure(
+            message="Failed to fetch user case list.",
+            data={"error": str(e)},
+            error_data={
+                "traceback": frappe.get_traceback()
+            },
+        )
+def get_user_case_count(user_id:str)->Int:
+    return frappe.db.count(
+        "Case",
+       filters= {
+            "user_id":user_id,
+            "type" : ["in", ["Issue", "Community Check"]]
+        }
+      )
+   
+def get_case_resolved_count(user_id:str)->Int:
+    return frappe.db.count(
+        "Case",
+        filters = {
+            "user_id":user_id,
+            "workflow_state": "Closed",
+            "type": ["in", ["Issue", "Community Check"]],
+        }
+    )

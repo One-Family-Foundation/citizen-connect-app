@@ -13,6 +13,8 @@
   "column_break_gpmo",
   "category",
   "description",
+  "section_break_oayh",
+  "is_financial_support_need",
   "request_help_section",
   "service_id",
   "scheme_id",
@@ -43,7 +45,8 @@
   "issue_details_section",
   "urgency",
   "allocation_details_section",
-  "ngo_admin"
+  "ngo_admin",
+  "ngo"
  ],
  "fields": [
   {
@@ -61,6 +64,7 @@
    "fieldtype": "Column Break"
   },
   {
+   "depends_on": "eval:doc.type==\"Issue\"",
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title"
@@ -91,11 +95,6 @@
    "fieldname": "user_name",
    "fieldtype": "Data",
    "label": "User Name"
-  },
-  {
-   "fieldname": "email_id",
-   "fieldtype": "Data",
-   "label": "Email Id"
   },
   {
    "fieldname": "mobile_no",
@@ -235,12 +234,14 @@
    "label": "Request help"
   },
   {
+   "depends_on": "eval:doc.type==\"Service Request\";",
    "fieldname": "service_id",
    "fieldtype": "Link",
    "label": "Service Id",
    "options": "Service"
   },
   {
+   "depends_on": "eval:doc.type==\"Scheme Request\";",
    "fieldname": "scheme_id",
    "fieldtype": "Link",
    "label": "Scheme Id",
@@ -255,13 +256,34 @@
    "fieldname": "gender",
    "fieldtype": "Select",
    "label": "Gender",
-   "options": "Male\nFemale\nNon-binary\nPrefer not to say"
+   "options": "\nMale\nFemale\nNon-binary\nPrefer not to say"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email Id"
+  },
+  {
+   "fieldname": "ngo",
+   "fieldtype": "Link",
+   "label": "NGO",
+   "options": "Organisation"
+  },
+  {
+   "fieldname": "section_break_oayh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_financial_support_need",
+   "fieldtype": "Check",
+   "label": "Financial Support Need"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-17 13:21:38.625033",
+ "modified": "2026-09-21 16:46:57.957045",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",

@@ -18,6 +18,8 @@ class ServiceManager:
         geo1=None,
         geo2=None,
         lang="en",
+        service_status="Approved",
+        availability_status="Active",
     ) -> Result:
         try:
             # Validate pagination parameters
@@ -47,6 +49,12 @@ class ServiceManager:
             if geo2:
                 filters.append("geo2.geo_l2 = %s")
                 values.append(geo2)
+            if service_status:
+                filters.append("s.service_status = %s")
+                values.append(service_status)
+            if availability_status:
+                filters.append("s.availability_status = %s")
+                values.append(availability_status)
 
             where_clause = ""
             if filters:
@@ -65,8 +73,8 @@ class ServiceManager:
                         geo2.geo_l2 AS service_geo2,
                         s.cost_model,
                         s.cost_details,
-                        s.sponsorship_information,
                         s.availability_status,
+                        s.is_financial_support,
                         s.service_channel,
                         s.service_status,
                         s.creation,
@@ -104,7 +112,7 @@ class ServiceManager:
             # Transform raw rows into domain objects
             service_list = []
             for row in services:
-                service = ServiceManager._create_service(row)
+                service = ServiceManager._to_service(row,lang)
                 service_list.append(service)
 
             return Result.success(
@@ -122,7 +130,7 @@ class ServiceManager:
             raise
 
     @staticmethod
-    def get(service_id: str) -> Result:
+    def get(service_id: str,lang="en") -> Result:
         try:
             service = frappe.db.sql(
                 """
@@ -135,8 +143,8 @@ class ServiceManager:
                     geo2.geo_l2 AS service_geo2,
                     s.cost_model,
                     s.cost_details,
-                    s.sponsorship_information,
                     s.availability_status,
+                    s.is_financial_support,
                     s.service_channel,
                     s.service_status,
                     s.creation,
@@ -175,7 +183,7 @@ class ServiceManager:
                 return Result.not_found(message="Service not found.")
 
             row = service[0]
-            service_data = ServiceManager._create_service(row)
+            service_data = ServiceManager._to_service(row,lang)
 
             return Result.success(
                 message="Service fetched successfully.",
@@ -185,20 +193,29 @@ class ServiceManager:
             ErrorLogger.log(e)
             raise
     @staticmethod
-    def _create_service(row, lang=None) -> dict:
+    def _to_service(row, lang=None) -> dict:
         return {
             "id": row["id"],
             "title": row["title"],
             "description": row["description"],
             "location": {
-                "country": row["service_country"],
-                "geo1": row["service_geo1"],
-                "geo2": row["service_geo2"],
+                "country": {
+                    "name": row["service_country"],
+                    "display_name": frappe._(row["service_country"], lang=lang),
+                },
+                "geo1": {
+                    "name": row["service_geo1"],
+                    "display_name": frappe._(row["service_geo1"], lang=lang),
+                },
+                "geo2": {
+                    "name": row["service_geo2"],
+                    "display_name": frappe._(row["service_geo2"], lang=lang),
+                },
             },
             "cost_model": row["cost_model"],
             "cost_details": row["cost_details"],
-            "sponsorship_information": row["sponsorship_information"],
             "availability_status": row["availability_status"],
+            "is_financial_support": row["is_financial_support"],
             "service_channel": row["service_channel"],
             "service_status": row["service_status"],
             "creation": row["creation"],
@@ -216,7 +233,7 @@ class ServiceManager:
         }
 
     @staticmethod
-    def get_categories() -> Result:
+    def get_categories(lang:str) -> Result:
         cache = frappe.cache()
 
         try:
@@ -252,17 +269,18 @@ class ServiceManager:
                     categories[l1_id] = {
                         "id": l1_id,
                         "name": row["l1_name"],
+                        "display_name": frappe._(row["l1_name"], lang=lang),
                         "children": [],
                     }
 
                 if row["l2_id"]:
                     categories[l1_id]["children"].append(
-                        {"id": row["l2_id"], "name": row["l2_name"]}
+                        {"id": row["l2_id"], "name": row["l2_name"], "display_name": frappe._(row["l2_name"], lang=lang)}
                     )
 
             response = {"categories": list(categories.values())}
             cache.set_value(
-                ServiceManager.CATEGORIES_CACHE_KEY,
+                ServiceManager.CATEGORIES_CACHE_KEY+lang,
                 response,
                 expires_in_sec=3600,
             )

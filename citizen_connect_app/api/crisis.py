@@ -17,6 +17,7 @@ def get_list(
     geography_l1=None,
     geography_l2=None,
     status="Active",
+    lang="en"
 ):
     try:
         result = get_crisis_list(
@@ -27,6 +28,7 @@ def get_list(
             geography_l1=geography_l1,
             geography_l2=geography_l2,
             status=status,
+            lang=lang
         )
 
         return result.to_custom_response()
@@ -42,7 +44,7 @@ def get_list(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(crisis_id=None):
+def get(crisis_id,lang="en"):
     try:
         if not crisis_id:
             return custom_response(

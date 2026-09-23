@@ -6,6 +6,7 @@ from citizen_connect_app.models.volunteer_opportunity import (
 )
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
+from citizen_connect_app.utils.commons import update_user_category_statistics
 
 
 class OpportunityApplicationManager:
@@ -63,7 +64,7 @@ class OpportunityApplicationManager:
                          "name": data.opportunity_id,
                          "status": "Active",
                      },
-                     ["name", "category_l1"],
+                     ["name", "category_l1" ,"ngo"],
                      as_dict=True,
             )
             if not opportunity:
@@ -104,6 +105,7 @@ class OpportunityApplicationManager:
             application.age = data.age
             application.gender = data.gender
             application.description = data.description
+            application.ngo = opportunity.ngo
 
             if attachment:
                 file_doc = frappe.get_doc(
@@ -119,8 +121,6 @@ class OpportunityApplicationManager:
 
             application.save(ignore_permissions=True)
             frappe.db.commit()
-        
-        
             return Result.success(
                 message="Application submitted successfully.",
                 data={
@@ -135,3 +135,53 @@ class OpportunityApplicationManager:
                 message="Failed to submit application.",
                 error_data=str(e),
             )
+def count_volunteer_actions(user_id: str) -> Result:
+    opportunity_actions = frappe.db.count(
+        "Opportunity Form",
+        {
+            "user": user_id,
+        },
+    )
+
+    return Result.success(
+        message="Volunteer action count fetched successfully.",
+        data=opportunity_actions,
+    )
+def get_volunteer_actions(user_id: str) -> Result:
+    try:
+        if not user_id:
+            return Result.bad_request(
+                message="user_id is required."
+            )
+
+        opportunities = frappe.db.sql(
+            """
+            SELECT
+                of.name AS application_id,
+                of.opportunity_id,
+                od.title,
+                od.category_l1,
+                od.category_l2,
+                of.workflow_state AS status,
+                of.creation
+            FROM `tabOpportunity Form` of
+            INNER JOIN `tabOpportunity Discovery` od
+                ON od.name = of.opportunity_id
+            WHERE of.user = %s
+            ORDER BY of.creation DESC
+            """,
+            (user_id,),
+            as_dict=True,
+        )
+
+        return Result.success(
+            message="User volunteer participation fetched successfully.",
+            data=opportunities,
+        )
+
+    except Exception as e:
+        ErrorLogger.log(e)
+        return Result.failure(
+            message="Failed to fetch user volunteer participation.",
+            error_data=str(e),
+        )

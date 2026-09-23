@@ -259,6 +259,7 @@ def get_crisis_list(
     geography_l1=None,
     geography_l2=None,
     status="Active",
+    lang="en"
 ) -> Result:
     try:
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))

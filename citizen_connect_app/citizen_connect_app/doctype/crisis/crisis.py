@@ -1,9 +1,6 @@
-# Copyright (c) 2026, One Family Foundation and contributors
-# For license information, please see license.txt
-
-# import frappe
+import frappe
 from frappe.model.document import Document
 
 
 class Crisis(Document):
-	pass
+    pass

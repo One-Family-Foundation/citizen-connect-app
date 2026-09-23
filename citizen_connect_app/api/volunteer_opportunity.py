@@ -16,6 +16,7 @@ def get_list(
     volunteer_format=None,
     compensation_type=None,
     status="Active",
+    lang="en"
 ):
     try:
         return OpportunityManager.get_list(
@@ -29,6 +30,7 @@ def get_list(
             volunteer_format=volunteer_format,
             compensation_type=compensation_type,
             status=status,
+            lang=lang
         ).to_custom_response()
 
     except Exception as e:
@@ -42,9 +44,9 @@ def get_list(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(opportunity_id):
+def get(opportunity_id,lang="en"):
     try:
-        return OpportunityManager.get(opportunity_id).to_custom_response()
+        return OpportunityManager.get(opportunity_id,lang=lang).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)

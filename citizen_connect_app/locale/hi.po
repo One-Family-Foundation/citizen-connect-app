@@ -1,0 +1,1741 @@
+# Hindi translations for Citizen Connect App.
+# Copyright (C) 2026 One Family Foundation
+# This file is distributed under the same license as the Citizen Connect App project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Citizen Connect App VERSION\n"
+"Report-Msgid-Bugs-To: tech@impactyaan.com\n"
+"POT-Creation-Date: 2026-08-31 03:01+0000\n"
+"PO-Revision-Date: 2026-08-31 03:01+0000\n"
+"Last-Translator: tech@impactyaan.com\n"
+"Language: hi\n"
+"Language-Team: tech@impactyaan.com\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.16.0\n"
+
+#. Option for the 'Electricity' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "24h Available"
+msgstr "24 घंटे उपलब्ध"
+
+#. Option for the 'Status' (Select) field in DocType 'Crisis'
+#. Option for the 'Status' (Select) field in DocType 'Opportunity Discovery'
+#. Option for the 'Availability Status' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Active"
+msgstr "सक्रिय"
+
+#. Label of the additional_observations (Text) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Additional Observations"
+msgstr "अतिरिक्त टिप्पणियाँ"
+
+#. Name of a role
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Administrator"
+msgstr "व्यवस्थापक"
+
+#. Label of the age (Int) field in DocType 'Case'
+#. Label of the age (Int) field in DocType 'Opportunity Form'
+#. Label of the age (Int) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Age"
+msgstr "आयु"
+
+#. Label of the agency_category (Select) field in DocType 'Emergency Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Agency Category"
+msgstr "एजेंसी श्रेणी"
+
+#. Label of the agency_name (Data) field in DocType 'Emergency Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Agency Name"
+msgstr "एजेंसी का नाम"
+
+#. Option for the 'Gender' (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "All"
+msgstr "सभी"
+
+#. Label of the allocation_details_section (Section Break) field in DocType
+#. 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Allocation Details"
+msgstr "आवंटन विवरण"
+
+#. Label of the alternative_email (Data) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Alternative Email"
+msgstr "वैकल्पिक ईमेल"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Ambulance"
+msgstr "एम्बुलेंस"
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:57
+msgid "An L1 category named '{0}' already exists."
+msgstr "'{0}' नाम की L1 श्रेणी पहले से मौजूद है।"
+
+#. Label of the application_url (Data) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Application URL"
+msgstr "एप्लिकेशन URL"
+
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.js:91
+msgid "Application URL must start with http:// or https://"
+msgstr "एप्लिकेशन URL http:// या https:// से शुरू होना चाहिए।"
+
+#. Option for the 'Status' (Select) field in DocType 'Scheme'
+#. Option for the 'Service Status' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Approved"
+msgstr "स्वीकृत"
+
+#. Label of the attachment (Attach) field in DocType 'Opportunity Form'
+#. Label of the attachment (Attach) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Attachment"
+msgstr "अनुलग्नक"
+
+#. Label of the availability_status (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Availability Status"
+msgstr "उपलब्धता स्थिति"
+
+#. Option for the 'Water Supply' (Select) field in DocType 'Case'
+#. Option for the 'Electricity' (Select) field in DocType 'Case'
+#. Option for the 'Water Supply' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Available"
+msgstr "उपलब्ध"
+
+#. Label of the basic_details_section (Section Break) field in DocType
+#. 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Basic Details"
+msgstr "मूल विवरण"
+
+#. Label of the benefit (Long Text) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Benefits"
+msgstr "लाभ"
+
+#. Option for the 'Unit' (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Bottles"
+msgstr "बोतलें"
+
+#. Label of the allow_contact (Check) field in DocType 'Issue'
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Can User Be Contacted"
+msgstr "क्या उपयोगकर्ता से संपर्क किया जा सकता है?"
+
+#. Label of the caption (Data) field in DocType 'Media'
+#: citizen_connect_app/citizen_connect_app/doctype/media/media.json
+msgid "Caption"
+msgstr "कैप्शन"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Case"
+msgstr "मामला"
+
+#. Label of the case_details_section (Section Break) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Case Details"
+msgstr "मामले का विवरण"
+
+#. Label of the case_location_section (Section Break) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Case Location"
+msgstr "मामले का स्थान"
+
+#. Label of the catalogue_name (Data) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Catalogue Name"
+msgstr "कैटलॉग का नाम"
+
+#. Label of the category (Link) field in DocType 'Case'
+#. Name of a DocType
+#. Label of the category (Link) field in DocType 'Category Child Table'
+#. Label of the category (Link) field in DocType 'Crisis'
+#. Label of the category_section (Section Break) field in DocType 'Scheme'
+#. Label of the category_l1 (Link) field in DocType 'User Category Statistics'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+#: citizen_connect_app/citizen_connect_app/doctype/category_child_table/category_child_table.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_category_statistics/user_category_statistics.json
+msgid "Category"
+msgstr "श्रेणी"
+
+#. Label of the category (Data) field in DocType 'Rating'
+#: citizen_connect_app/citizen_connect_app/doctype/rating/rating.json
+msgid "Category "
+msgstr "श्रेणी "
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:51
+msgid "Category '{0}' already exists under the selected parent."
+msgstr "चयनित पैरेंट के अंतर्गत '{0}' श्रेणी पहले से मौजूद है।"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/category_child_table/category_child_table.json
+msgid "Category Child Table"
+msgstr "श्रेणी चाइल्ड टेबल"
+
+#. Label of the category_l1 (Link) field in DocType 'Opportunity Discovery'
+#. Label of the category_l1 (Table MultiSelect) field in DocType 'Organisation'
+#. Label of the category_l1 (Link) field in DocType 'Post'
+#. Label of the category_l1 (Link) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Category L1"
+msgstr "श्रेणी L1"
+
+#. Label of the category_l2 (Link) field in DocType 'Opportunity Discovery'
+#. Label of the category_l2 (Table MultiSelect) field in DocType 'Organisation'
+#. Label of the category_l2 (Link) field in DocType 'Scheme'
+#. Label of the category_l2 (Link) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Category L2"
+msgstr "श्रेणी L2"
+
+#. Label of the category_level (Select) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Category Level"
+msgstr "श्रेणी स्तर"
+
+#. Label of the category_l1 (Link) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Category_L1"
+msgstr "Category_L1"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/child_volunteer_opportunity/child_volunteer_opportunity.json
+msgid "Child Volunteer Opportunity"
+msgstr "बाल स्वयंसेवी अवसर"
+
+#. Option for the 'User Type' (Select) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Citizen"
+msgstr "नागरिक"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/citizen_support_translations/citizen_support_translations.json
+msgid "Citizen Support Translations"
+msgstr "Citizen Support अनुवाद"
+
+#. Label of the collaborators (Table) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Collaborators"
+msgstr "सहयोगी"
+
+#. Option for the 'Type' (Select) field in DocType 'Case'
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Community Check"
+msgstr "सामुदायिक जाँच"
+
+#. Label of the community_check_details_section (Section Break) field in
+#. DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Community Check Details"
+msgstr "सामुदायिक जाँच का विवरण"
+
+#. Label of the compensation_type (Select) field in DocType 'Opportunity
+#. Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Compensation Type"
+msgstr "मुआवज़े का प्रकार"
+
+#. Label of the confidence_level (Select) field in DocType 'Case'
+#. Label of the confidence_level (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Confidence Level"
+msgstr "विश्वास स्तर"
+
+#. Label of the contact_details_section (Section Break) field in DocType
+#. 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Contact Details"
+msgstr "संपर्क विवरण"
+
+#. Label of the contact_number (Phone) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Contact Number"
+msgstr "संपर्क नंबर"
+
+#. Label of the contact_number (Data) field in DocType 'Emergency Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Contact number"
+msgstr "संपर्क नंबर"
+
+#. Label of the cost_details (Currency) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Cost"
+msgstr "लागत"
+
+#. Label of the cost_model (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Cost Model"
+msgstr "लागत मॉडल"
+
+#. Label of the count (Int) field in DocType 'User Category Statistics'
+#: citizen_connect_app/citizen_connect_app/doctype/user_category_statistics/user_category_statistics.json
+msgid "Count"
+msgstr "गणना"
+
+#. Label of the country (Link) field in DocType 'Case'
+#. Label of the country (Link) field in DocType 'Community Check'
+#. Label of the country (Link) field in DocType 'Crisis'
+#. Label of the country_name (Link) field in DocType 'Geography L1'
+#. Label of the country (Link) field in DocType 'Issue'
+#. Label of the country (Link) field in DocType 'Opportunity Discovery'
+#. Label of the country (Link) field in DocType 'Organisation'
+#. Label of the country (Link) field in DocType 'Post'
+#. Label of the country (Link) field in DocType 'Scheme'
+#. Label of the service_country (Link) field in DocType 'Service'
+#. Label of the country (Link) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l1/geography_l1.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Country"
+msgstr "देश"
+
+#. Option for the 'Type' (Select) field in DocType 'Case'
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Crisis"
+msgstr "संकट"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Crisis Impact"
+msgstr "संकट का प्रभाव"
+
+#. Label of the crisis_link (Data) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Crisis Link"
+msgstr "संकट लिंक"
+
+#. Label of the crisis_summary (Text) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Crisis Summary"
+msgstr "संकट का सारांश"
+
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.js:87
+msgid "Crisis Summary must be between 20 and 600 characters."
+msgstr "संकट का सारांश 20 से 600 अक्षरों के बीच होना चाहिए।"
+
+#. Option for the 'Urgency' (Select) field in DocType 'Case'
+#. Option for the 'Urgency' (Select) field in DocType 'Issue'
+#. Option for the 'Priority' (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Critical"
+msgstr "अत्यंत गंभीर"
+
+#. Label of the currency (Link) field in DocType 'Donation Details'
+#. Label of the currency (Link) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Currency"
+msgstr "मुद्रा"
+
+#. Label of the description (Text) field in DocType 'Case'
+#. Label of the description (Long Text) field in DocType 'Crisis'
+#. Label of the description (Long Text) field in DocType 'Donation Details'
+#. Label of the description (Long Text) field in DocType 'Issue'
+#. Label of the description (Text) field in DocType 'Opportunity Discovery'
+#. Label of the description (Long Text) field in DocType 'Organisation'
+#. Label of the description (Text) field in DocType 'Post'
+#. Label of the description (Long Text) field in DocType 'Scheme'
+#. Label of the description (Long Text) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Description"
+msgstr "विवरण"
+
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.js:78
+msgid "Description must be between 20 and 400 characters."
+msgstr "विवरण 20 से 400 अक्षरों के बीच होना चाहिए।"
+
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.js:76
+msgid "Description must be between 20 and 600 characters."
+msgstr "विवरण 20 से 600 अक्षरों के बीच होना चाहिए।"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Disaster Management"
+msgstr "आपदा प्रबंधन"
+
+#. Label of the documents_required (Long Text) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Documents Required"
+msgstr "आवश्यक दस्तावेज़"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+msgid "Donation Details"
+msgstr "दान का विवरण"
+
+#. Label of the donation_oppportunity (Table) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Donation Opportunity"
+msgstr "दान का अवसर"
+
+#. Label of the electricity (Select) field in DocType 'Case'
+#. Label of the electricity (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Electricity"
+msgstr "बिजली"
+
+#. Label of the eligibility (Long Text) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Eligibility"
+msgstr "पात्रता"
+
+#. Label of the eligibility_condition (Text) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Eligibility Condition"
+msgstr "पात्रता की शर्त"
+
+#. Label of the email (Data) field in DocType 'Opportunity Form'
+#. Label of the email (Data) field in DocType 'Organisation'
+#. Label of the email (Data) field in DocType 'Request Help'
+#. Label of the email (Data) field in DocType 'Scheme Request Help'
+#. Label of the email (Data) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Email"
+msgstr "ईमेल"
+
+#. Label of the email_id (Data) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Email Id"
+msgstr "ईमेल आईडी"
+
+#. Label of the emergency_contacts (Table) field in DocType 'Crisis'
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Emergency Contacts"
+msgstr "आपातकालीन संपर्क"
+
+#. Label of the end_date (Date) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "End Date"
+msgstr "समाप्ति तिथि"
+
+#. Label of the established (Date) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Established"
+msgstr "स्थापित"
+
+#. Label of the expected_time (Data) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Expected Time"
+msgstr "अपेक्षित समय"
+
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.js:86
+msgid "Expected Time must be between 3 and 30 characters."
+msgstr "अपेक्षित समय 3 से 30 अक्षरों के बीच होना चाहिए।"
+
+#. Label of the external_donation_link (Data) field in DocType 'Donation
+#. Details'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+msgid "External Donation Link"
+msgstr "बाहरी दान लिंक"
+
+#. Option for the 'Gender' (Select) field in DocType 'Case'
+#. Option for the 'Gender' (Select) field in DocType 'Opportunity Form'
+#. Option for the 'Gender' (Select) field in DocType 'Request Help'
+#. Option for the 'Gender' (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Female"
+msgstr "महिला"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Fire & Rescue"
+msgstr "अग्निशमन एवं बचाव"
+
+#. Option for the 'Cost Model' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Free"
+msgstr "निःशुल्क"
+
+#. Label of the full_name (Data) field in DocType 'Opportunity Form'
+#. Label of the full_name (Data) field in DocType 'Request Help'
+#. Label of the full_name (Data) field in DocType 'Scheme Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+msgid "Full Name"
+msgstr "पूरा नाम"
+
+#. Option for the 'Sanitation' (Select) field in DocType 'Case'
+#. Option for the 'Local Governance' (Select) field in DocType 'Case'
+#. Option for the 'Sanitation' (Select) field in DocType 'Community Check'
+#. Option for the 'Local Governance' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Functional"
+msgstr "कार्यशील"
+
+#. Label of the fund_name (Data) field in DocType 'Donation Details'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+msgid "Fund Name"
+msgstr "फंड का नाम"
+
+#. Option for the 'Impact Type' (Select) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Funds Raised"
+msgstr "एकत्रित धनराशि"
+
+#. Label of the gender (Select) field in DocType 'Case'
+#. Label of the gender (Select) field in DocType 'Opportunity Form'
+#. Label of the gender (Select) field in DocType 'Request Help'
+#. Label of the gender (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Gender"
+msgstr "लिंग"
+
+#. Label of the geo_l1 (Link) field in DocType 'Community Check'
+#. Label of the geo_l1 (Link) field in DocType 'Crisis'
+#. Label of the geo_l1 (Link) field in DocType 'Issue'
+#. Label of the geo_l1 (Link) field in DocType 'Opportunity Discovery'
+#. Label of the geo_l1 (Link) field in DocType 'Organisation'
+#. Label of the geo_l1 (Link) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Geo L1"
+msgstr "भौगोलिक L1"
+
+#. Label of the geo_l2 (Link) field in DocType 'Community Check'
+#. Label of the geo_l2 (Link) field in DocType 'Crisis'
+#. Label of the geo_l2 (Link) field in DocType 'Issue'
+#. Label of the geo_l2 (Link) field in DocType 'Opportunity Discovery'
+#. Label of the geo_l2 (Link) field in DocType 'Organisation'
+#. Label of the geo_l2 (Link) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Geo L2"
+msgstr "भौगोलिक L2"
+
+#. Label of the geography_l2 (Link) field in DocType 'Post'
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+msgid "Geography 2"
+msgstr "भूगोल 2"
+
+#. Label of the geo_l1 (Link) field in DocType 'Case'
+#. Name of a DocType
+#. Label of the geo_l1 (Data) field in DocType 'Geography L1'
+#. Label of the geo_l1 (Link) field in DocType 'Geography L2'
+#. Label of the geography_l1 (Link) field in DocType 'Post'
+#. Label of the geo_l1 (Link) field in DocType 'Scheme'
+#. Label of the service_geo1 (Link) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l1/geography_l1.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l2/geography_l2.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Geography L1"
+msgstr "भूगोल L1"
+
+#. Label of the geo_l2 (Link) field in DocType 'Case'
+#. Name of a DocType
+#. Label of the geo_l2 (Data) field in DocType 'Geography L2'
+#. Label of the geo_l2 (Link) field in DocType 'Scheme'
+#. Label of the service_geo2 (Link) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l2/geography_l2.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Geography L2"
+msgstr "भूगोल L2"
+
+#. Option for the 'Internet' (Select) field in DocType 'Case'
+#. Option for the 'Internet' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Good"
+msgstr "अच्छा"
+
+#. Option for the 'Roads' (Select) field in DocType 'Case'
+#. Option for the 'Roads' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Good Condition"
+msgstr "अच्छी स्थिति"
+
+#. Label of the healthcare (Select) field in DocType 'Case'
+#. Label of the healthcare (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Healthcare"
+msgstr "स्वास्थ्य सेवा"
+
+#. Option for the 'Urgency' (Select) field in DocType 'Case'
+#. Option for the 'Urgency' (Select) field in DocType 'Issue'
+#. Option for the 'Priority' (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "High"
+msgstr "उच्च"
+
+#. Option for the 'Volunteer format' (Select) field in DocType 'Opportunity
+#. Discovery'
+#. Option for the 'Service Channel' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Hybrid"
+msgstr "हाइब्रिड"
+
+#. Label of the id (Data) field in DocType 'Rating'
+#: citizen_connect_app/citizen_connect_app/doctype/rating/rating.json
+msgid "Id"
+msgstr "आईडी"
+
+#. Label of the photo (Attach) field in DocType 'Scheme Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+msgid "Image"
+msgstr "छवि"
+
+#. Label of the impact (Table) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Impact"
+msgstr "प्रभाव"
+
+#. Label of the impact_number (Int) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Impact Number"
+msgstr "प्रभाव संख्या"
+
+#. Label of the impact_title (Data) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Impact Title"
+msgstr "प्रभाव शीर्षक"
+
+#. Label of the impact_type (Select) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Impact Type"
+msgstr "प्रभाव प्रकार"
+
+#. Option for the 'Roads' (Select) field in DocType 'Case'
+#. Option for the 'Roads' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Impassable"
+msgstr "आवागमन योग्य नहीं"
+
+#. Option for the 'Status' (Select) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "In-Active"
+msgstr "निष्क्रिय"
+
+#. Option for the 'Status' (Select) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "In-active"
+msgstr "निष्क्रिय"
+
+#. Option for the 'Availability Status' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Inactive"
+msgstr "निष्क्रिय"
+
+#. Label of the income_limit (Int) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Income Limit"
+msgstr "आय सीमा"
+
+#. Label of the internet (Select) field in DocType 'Case'
+#. Label of the internet (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Internet"
+msgstr "इंटरनेट"
+
+#. Option for the 'Healthcare' (Select) field in DocType 'Case'
+#. Option for the 'Healthcare' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Irregular"
+msgstr "अनियमित"
+
+#. Label of the is_active (Check) field in DocType 'Organisation'
+#. Label of the is_active (Check) field in DocType 'Resource Requirement'
+#. Label of the is_active (Check) field in DocType 'User Child Table'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_child_table/user_child_table.json
+msgid "Is Active"
+msgstr "सक्रिय है"
+
+#. Label of the is_active (Check) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Is Active ?"
+msgstr "सक्रिय है?"
+
+#. Label of the is_group (Check) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Is Group"
+msgstr "समूह है"
+
+#. Label of the is_verified (Check) field in DocType 'Donation Details'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+msgid "Is Verified"
+msgstr "सत्यापित है"
+
+#. Label of the is_verified (Check) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Is Verified ?"
+msgstr "सत्यापित है?"
+
+#. Option for the 'Type' (Select) field in DocType 'Case'
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Issue"
+msgstr "समस्या"
+
+#. Label of the issue_category (Link) field in DocType 'Issue'
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Issue Category"
+msgstr "समस्या श्रेणी"
+
+#. Label of the issue_details_section (Section Break) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Issue Details"
+msgstr "समस्या का विवरण"
+
+#. Label of the issuing_body (Data) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Issuing Body "
+msgstr "जारी करने वाली संस्था "
+
+#. Option for the 'Unit' (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Kits"
+msgstr "किट"
+
+#. Option for the 'Category Level' (Select) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "L1"
+msgstr "L1"
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:20
+msgid "L1 categories cannot have a parent."
+msgstr "L1 श्रेणियों का कोई पैरेंट नहीं हो सकता।"
+
+#. Option for the 'Category Level' (Select) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "L2"
+msgstr "L2"
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:24
+msgid "L2 categories must have an L1 parent."
+msgstr "L2 श्रेणियों का L1 पैरेंट होना आवश्यक है।"
+
+#. Label of the language (Link) field in DocType 'Citizen Support Translations'
+#. Label of the language (Link) field in DocType 'Opportunity Discovery'
+#. Label of the language (Link) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/citizen_support_translations/citizen_support_translations.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Language"
+msgstr "भाषा"
+
+#. Label of the lft (Int) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Left"
+msgstr "बायाँ"
+
+#. Option for the 'Local Governance' (Select) field in DocType 'Case'
+#. Option for the 'Local Governance' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Limited"
+msgstr "सीमित"
+
+#. Label of the local_governance (Select) field in DocType 'Case'
+#. Label of the local_governance (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Local Governance"
+msgstr "स्थानीय शासन"
+
+#. Label of the location_section (Section Break) field in DocType 'Opportunity
+#. Discovery'
+#. Label of the location_section (Section Break) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Location"
+msgstr "स्थान"
+
+#. Label of the location_address (Text) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Location Address"
+msgstr "स्थान का पता"
+
+#. Label of the location_details_section (Section Break) field in DocType
+#. 'Organisation'
+#. 'Post'
+#. 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Location Details"
+msgstr "स्थान का विवरण"
+
+#. Label of the location_name (Small Text) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Location Name"
+msgstr "स्थान का नाम"
+
+#. Label of the logo (Attach Image) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Logo"
+msgstr "लोगो"
+
+#. Option for the 'Gender' (Select) field in DocType 'Case'
+#. Option for the 'Gender' (Select) field in DocType 'Opportunity Form'
+#. Option for the 'Gender' (Select) field in DocType 'Request Help'
+#. Option for the 'Gender' (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Male"
+msgstr "पुरुष"
+
+#. Label of the media (Table) field in DocType 'Case'
+#. Label of the media (Table) field in DocType 'Crisis'
+#. Name of a DocType
+#. Label of the media (Attach) field in DocType 'Media'
+#. Label of the media (Table) field in DocType 'Post'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/media/media.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+msgid "Media"
+msgstr "मीडिया"
+
+#. Label of the media (Table) field in DocType 'Community Check'
+#. Label of the media (Table) field in DocType 'Issue'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Media Files"
+msgstr "मीडिया फ़ाइलें"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Medical"
+msgstr "चिकित्सा"
+
+#. Option for the 'Urgency' (Select) field in DocType 'Case'
+#. Option for the 'Urgency' (Select) field in DocType 'Issue'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Medium"
+msgstr "मध्यम"
+
+#. Label of the mobile_no (Phone) field in DocType 'Case'
+#. Label of the mobile_num (Phone) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Mobile Number"
+msgstr "मोबाइल नंबर"
+
+#. Label of the ngo (Link) field in DocType 'Donation Details'
+#. Label of the ngo (Link) field in DocType 'Opportunity Discovery'
+#. Label of the ngo (Link) field in DocType 'Scheme NGO'
+#. Label of the ngo_org (Link) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_ngo/scheme_ngo.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "NGO"
+msgstr "गैर-सरकारी संगठन"
+
+#. Label of the ngo_admin (Link) field in DocType 'Case'
+#. Name of a role
+#. Name of a Workspace
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+#: citizen_connect_app/citizen_connect_app/workspace/ngo_admin/ngo_admin.json
+msgid "NGO Admin"
+msgstr "NGO व्यवस्थापक"
+
+#. Label of the ngo_admins_section (Section Break) field in DocType
+#. 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "NGO Admins"
+msgstr "NGO व्यवस्थापक"
+
+#. Label of the ngo_table_section (Section Break) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "NGO Table"
+msgstr "NGO टेबल"
+
+#. Label of the ngos (Table) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "NGOs"
+msgstr "NGO"
+
+#. Option for the 'Gender' (Select) field in DocType 'Case'
+#. Option for the 'Gender' (Select) field in DocType 'Opportunity Form'
+#. Option for the 'Gender' (Select) field in DocType 'Request Help'
+#. Option for the 'Gender' (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Non-binary"
+msgstr "नॉन-बाइनरी"
+
+#. Option for the 'Local Governance' (Select) field in DocType 'Case'
+#. Option for the 'Local Governance' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Non-functional"
+msgstr "गैर-कार्यशील"
+
+#. Option for the 'Water Supply' (Select) field in DocType 'Case'
+#. Option for the 'Electricity' (Select) field in DocType 'Case'
+#. Option for the 'Healthcare' (Select) field in DocType 'Case'
+#. Option for the 'Internet' (Select) field in DocType 'Case'
+#. Option for the 'Sanitation' (Select) field in DocType 'Case'
+#. Option for the 'Water Supply' (Select) field in DocType 'Community Check'
+#. Option for the 'Electricity' (Select) field in DocType 'Community Check'
+#. Option for the 'Healthcare' (Select) field in DocType 'Community Check'
+#. Option for the 'Internet' (Select) field in DocType 'Community Check'
+#. Option for the 'Sanitation' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "None"
+msgstr "कोई नहीं"
+
+#. Option for the 'Teacher at School' (Select) field in DocType 'Case'
+#. Option for the 'Teacher at School' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Not Present"
+msgstr "उपस्थित नहीं"
+
+#. Option for the 'Confidence Level' (Select) field in DocType 'Case'
+#. Option for the 'Confidence Level' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Not Sure"
+msgstr "निश्चित नहीं"
+
+#. Label of the num_of_volunteer (Int) field in DocType 'Child Volunteer
+#. Opportunity'
+#: citizen_connect_app/citizen_connect_app/doctype/child_volunteer_opportunity/child_volunteer_opportunity.json
+msgid "Number Of Volunteer"
+msgstr "स्वयंसेवकों की संख्या"
+
+#. Label of the old_parent (Link) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Old Parent"
+msgstr "पुराना पैरेंट"
+
+#. Option for the 'Volunteer format' (Select) field in DocType 'Opportunity
+#. Discovery'
+#. Option for the 'Service Channel' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "On-site"
+msgstr "स्थल पर"
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:16
+msgid "Only L1 and L2 categories are allowed."
+msgstr "केवल L1 और L2 श्रेणियाँ अनुमत हैं।"
+
+#. Label of a number card in the NGO Admin Workspace
+#: citizen_connect_app/citizen_connect_app/workspace/ngo_admin/ngo_admin.json
+msgid "Open Cases"
+msgstr "खुले मामले"
+
+#. Name of a DocType
+#. Label of the opportunity_discovery_section (Section Break) field in DocType
+#. 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Opportunity Discovery"
+msgstr "अवसर खोज"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+msgid "Opportunity Form"
+msgstr "अवसर फ़ॉर्म"
+
+#. Label of the opportunity_id (Link) field in DocType 'Opportunity Form'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+msgid "Opportunity Id"
+msgstr "अवसर आईडी"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Organisation"
+msgstr "संगठन"
+
+#. Label of the org_name (Data) field in DocType 'Organisation'
+#. Label of the org_name (Link) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Organisation Name"
+msgstr "संगठन का नाम"
+
+#. Option for the 'Unit' (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Packets"
+msgstr "पैकेट"
+
+#. Option for the 'Cost Model' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Paid"
+msgstr "सशुल्क"
+
+#. Label of the parent_category (Link) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Parent Category"
+msgstr "पैरेंट श्रेणी"
+
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.py:33
+msgid "Parent of an L2 category must be an L1 category."
+msgstr "L2 श्रेणी का पैरेंट L1 श्रेणी होना चाहिए।"
+
+#. Option for the 'Sanitation' (Select) field in DocType 'Case'
+#. Option for the 'Sanitation' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Partial"
+msgstr "आंशिक"
+
+#. Option for the 'Electricity' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Partial (<12h)"
+msgstr "आंशिक (<12 घंटे)"
+
+#. Option for the 'Water Supply' (Select) field in DocType 'Case'
+#. Option for the 'Electricity' (Select) field in DocType 'Case'
+#. Option for the 'Water Supply' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Partial(<12h)"
+msgstr "आंशिक (<12 घंटे)"
+
+#. Option for the 'Status' (Select) field in DocType 'Scheme'
+#. Option for the 'Service Status' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Pending"
+msgstr "लंबित"
+
+#. Option for the 'Impact Type' (Select) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "People"
+msgstr "लोग"
+
+#. Label of the person_name (Data) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Person Name"
+msgstr "व्यक्ति का नाम"
+
+#. Label of the phone (Phone) field in DocType 'Opportunity Form'
+#. Label of the phone (Phone) field in DocType 'Organisation'
+#. Label of the phone (Phone) field in DocType 'Scheme Request Help'
+#. Label of the phone (Phone) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Phone"
+msgstr "फ़ोन"
+
+#. Label of the phone_num (Phone) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Phone Number"
+msgstr "फ़ोन नंबर"
+
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.js:94
+msgid "Please enter a valid Application URL."
+msgstr "कृपया मान्य एप्लिकेशन URL दर्ज करें।"
+
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.js:16
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.js:21
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.js:17
+msgid "Please select Category L1 first."
+msgstr "कृपया पहले श्रेणी L1 चुनें।"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Police"
+msgstr "पुलिस"
+
+#. Option for the 'Roads' (Select) field in DocType 'Case'
+#. Option for the 'Roads' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Poor Condition"
+msgstr "खराब स्थिति"
+
+#. Option for the 'Internet' (Select) field in DocType 'Case'
+#. Option for the 'Internet' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Poor/Slow"
+msgstr "खराब/धीमा"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+msgid "Post"
+msgstr "पोस्ट"
+
+#. Option for the 'Gender' (Select) field in DocType 'Case'
+#. Option for the 'Gender' (Select) field in DocType 'Opportunity Form'
+#. Option for the 'Gender' (Select) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Prefer not to say"
+msgstr "बताना पसंद नहीं है"
+
+#. Option for the 'Teacher at School' (Select) field in DocType 'Case'
+#. Option for the 'Teacher at School' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Present"
+msgstr "उपस्थित"
+
+#. Label of the priority (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Priority"
+msgstr "प्राथमिकता"
+
+#. Option for the 'Compensation Type' (Select) field in DocType 'Opportunity
+#. Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Pro Bono"
+msgstr "निःशुल्क सेवा"
+
+#. Label of the profile_photo (Attach Image) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Profile Photo"
+msgstr "प्रोफ़ाइल फ़ोटो"
+
+#. Label of the qunatity_recieved (Int) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Quantity Recieved"
+msgstr "प्राप्त मात्रा"
+
+#. Label of the quantity_requirement (Int) field in DocType 'Resource
+#. Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Quantity Requirement"
+msgstr "आवश्यक मात्रा"
+
+#. Label of the rating (Int) field in DocType 'Opportunity Discovery'
+#. Name of a DocType
+#. Label of the rating (Rating) field in DocType 'Rating'
+#. Label of the rating (Int) field in DocType 'Scheme'
+#. Label of the rating (Int) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/rating/rating.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Rating"
+msgstr "रेटिंग"
+
+#. Label of the description (Text) field in DocType 'Opportunity Form'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+msgid "Reason To Be Volunteer"
+msgstr "स्वयंसेवक बनने का कारण"
+
+#. Label of the registered_address (Small Text) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Registered Address"
+msgstr "पंजीकृत पता"
+
+#. Label of the registration_number (Data) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Registration Number"
+msgstr "पंजीकरण संख्या"
+
+#. Option for the 'Healthcare' (Select) field in DocType 'Case'
+#. Option for the 'Healthcare' (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Regular"
+msgstr "नियमित"
+
+#. Option for the 'Status' (Select) field in DocType 'Scheme'
+#. Option for the 'Service Status' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Rejected"
+msgstr "अस्वीकृत"
+
+#. Label of the disable_relevant (Check) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Relevant for Disabled ?"
+msgstr "दिव्यांगजनों के लिए प्रासंगिक है?"
+
+#. Option for the 'Volunteer format' (Select) field in DocType 'Opportunity
+#. Discovery'
+#. Option for the 'Service Channel' (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Remote"
+msgstr "दूरस्थ"
+
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.js:72
+msgid "Removed L2 categories whose parent was deselected"
+msgstr "जिन L2 श्रेणियों के पैरेंट का चयन हटाया गया, उन्हें हटा दिया गया"
+
+#. Label of the request_description (Text) field in DocType 'Scheme Request
+#. Help'
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+msgid "Request Description"
+msgstr "अनुरोध का विवरण"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Request Help"
+msgstr "सहायता अनुरोध"
+
+#. Label of the request_help_section (Section Break) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Request help"
+msgstr "सहायता अनुरोध"
+
+#. Label of the resourc_dropoff_location_section (Section Break) field in
+#. DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Resourc Dropoff Location"
+msgstr "संसाधन जमा करने का स्थान"
+
+#. Label of the resource_name (Data) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Resource Name"
+msgstr "संसाधन का नाम"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Resource Requirement"
+msgstr "संसाधन की आवश्यकता"
+
+#. Option for the 'Impact Type' (Select) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Resources"
+msgstr "संसाधन"
+
+#. Label of the resources_needed (Table) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Resources Needed"
+msgstr "आवश्यक संसाधन"
+
+#. Label of the rgt (Int) field in DocType 'Category'
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+msgid "Right"
+msgstr "दायाँ"
+
+#. Label of the road (Select) field in DocType 'Case'
+#. Label of the road (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Roads"
+msgstr "सड़कें"
+
+#. Label of the sanitation (Select) field in DocType 'Case'
+#. Label of the sanitation (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Sanitation"
+msgstr "स्वच्छता"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Scheme"
+msgstr "योजना"
+
+#. Label of the scheme_id (Link) field in DocType 'Case'
+#. Label of the scheme_id (Link) field in DocType 'Scheme Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+msgid "Scheme Id"
+msgstr "योजना आईडी"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_ngo/scheme_ngo.json
+msgid "Scheme NGO"
+msgstr "योजना NGO"
+
+#. Label of the scheme_name (Link) field in DocType 'Request Help'
+#. Label of the scheme_name (Data) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Scheme Name"
+msgstr "योजना का नाम"
+
+#. Option for the 'Type' (Select) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Scheme Request"
+msgstr "योजना अनुरोध"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+msgid "Scheme Request Help"
+msgstr "योजना सहायता अनुरोध"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Service"
+msgstr "सेवा"
+
+#. Label of the service_channel (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Service Channel"
+msgstr "सेवा चैनल"
+
+#. Label of the service_id (Link) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Service Id"
+msgstr "सेवा आईडी"
+
+#. Label of the service_name (Link) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Service Name"
+msgstr "सेवा का नाम"
+
+#. Option for the 'Type' (Select) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Service Request"
+msgstr "सेवा अनुरोध"
+
+#. Label of the service_status (Select) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Service Status"
+msgstr "सेवा स्थिति"
+
+#. Label of the short_name (Data) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Short Name"
+msgstr "संक्षिप्त नाम"
+
+#. Label of the situation_desc (Long Text) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Situation Description"
+msgstr "स्थिति का विवरण"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/skill/skill.json
+msgid "Skill"
+msgstr "कौशल"
+
+#. Label of the skill_name (Data) field in DocType 'Skill'
+#: citizen_connect_app/citizen_connect_app/doctype/skill/skill.json
+msgid "Skill Name"
+msgstr "कौशल का नाम"
+
+#. Label of the skills (Table) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Skills"
+msgstr "कौशल"
+
+#. Option for the 'Teacher at School' (Select) field in DocType 'Case'
+#. Option for the 'Teacher at School' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Some Missing"
+msgstr "कुछ अनुपलब्ध"
+
+#. Option for the 'Confidence Level' (Select) field in DocType 'Case'
+#. Option for the 'Confidence Level' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Somewhat Confident"
+msgstr "कुछ हद तक आश्वस्त"
+
+#. Label of the sponsorship_information (Long Text) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Sponsorship Information"
+msgstr "प्रायोजन की जानकारी"
+
+#. Label of the start_date (Date) field in DocType 'Crisis'
+#. Label of the start_date (Date) field in DocType 'Opportunity Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Start Date"
+msgstr "आरंभ तिथि"
+
+#. Label of the status (Select) field in DocType 'Crisis'
+#. Label of the status (Select) field in DocType 'Opportunity Discovery'
+#. Label of the status (Select) field in DocType 'Scheme'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+msgid "Status"
+msgstr "स्थिति"
+
+#. Option for the 'Compensation Type' (Select) field in DocType 'Opportunity
+#. Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Stipend"
+msgstr "वजीफ़ा"
+
+#. Name of a role
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/category/category.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l1/geography_l1.json
+#: citizen_connect_app/citizen_connect_app/doctype/geography_l2/geography_l2.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/rating/rating.json
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme_request_help/scheme_request_help.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_category_statistics/user_category_statistics.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "System Manager"
+msgstr "सिस्टम प्रबंधक"
+
+#. Label of the teacher_at_school (Select) field in DocType 'Case'
+#. Label of the teacher_at_school (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Teacher at School"
+msgstr "विद्यालय में शिक्षक"
+
+#. Label of the time (Data) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Time"
+msgstr "समय"
+
+#. Label of the title (Data) field in DocType 'Case'
+#. Label of the title (Data) field in DocType 'Crisis'
+#. Label of the title (Data) field in DocType 'Opportunity Discovery'
+#. Label of the title (Data) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Title"
+msgstr "शीर्षक"
+
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.js:65
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.js:70
+msgid "Title must be between 5 and 120 characters."
+msgstr "शीर्षक 5 से 120 अक्षरों के बीच होना चाहिए।"
+
+#. Label of the total_donation_target (Int) field in DocType 'Donation Details'
+#: citizen_connect_app/citizen_connect_app/doctype/donation_details/donation_details.json
+msgid "Total Donation Target"
+msgstr "कुल दान लक्ष्य"
+
+#. Label of the total_rating_sum (Int) field in DocType 'Opportunity Discovery'
+#. Label of the total_rating_sum (Int) field in DocType 'Scheme'
+#. Label of the total_rating_sum (Int) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Total Rating Sum"
+msgstr "कुल रेटिंग योग"
+
+#. Label of the total_users (Int) field in DocType 'Opportunity Discovery'
+#. Label of the total_users (Int) field in DocType 'Scheme'
+#. Label of the total_users (Int) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.json
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Total Users"
+msgstr "कुल उपयोगकर्ता"
+
+#. Label of the translated_name (Data) field in DocType 'Citizen Support
+#. Translations'
+#: citizen_connect_app/citizen_connect_app/doctype/citizen_support_translations/citizen_support_translations.json
+msgid "Translated Name"
+msgstr "अनुवादित नाम"
+
+#. Label of the type (Select) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "Type"
+msgstr "प्रकार"
+
+#. Label of the unit (Select) field in DocType 'Resource Requirement'
+#: citizen_connect_app/citizen_connect_app/doctype/resource_requirement/resource_requirement.json
+msgid "Unit"
+msgstr "इकाई"
+
+#. Label of the urgency (Select) field in DocType 'Case'
+#. Label of the urgency (Select) field in DocType 'Issue'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+msgid "Urgency"
+msgstr "तात्कालिकता"
+
+#. Label of the user_id (Link) field in DocType 'Case'
+#. Label of the user (Link) field in DocType 'Opportunity Form'
+#. Label of the user (Link) field in DocType 'Post'
+#. Label of the user (Link) field in DocType 'User Category Statistics'
+#. Label of the user (Link) field in DocType 'User Child Table'
+#. Label of the user (Link) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_form/opportunity_form.json
+#: citizen_connect_app/citizen_connect_app/doctype/post/post.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_category_statistics/user_category_statistics.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_child_table/user_child_table.json
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "User"
+msgstr "उपयोगकर्ता"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/user_category_statistics/user_category_statistics.json
+msgid "User Category Statistics"
+msgstr "उपयोगकर्ता श्रेणी आँकड़े"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/user_child_table/user_child_table.json
+msgid "User Child Table"
+msgstr "उपयोगकर्ता चाइल्ड टेबल"
+
+#. Label of the user_details_section (Section Break) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "User Details"
+msgstr "उपयोगकर्ता विवरण"
+
+#. Label of the user_id (Link) field in DocType 'Community Check'
+#. Label of the user_id (Link) field in DocType 'Issue'
+#. Label of the user_id (Link) field in DocType 'Rating'
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+#: citizen_connect_app/citizen_connect_app/doctype/issue/issue.json
+#: citizen_connect_app/citizen_connect_app/doctype/rating/rating.json
+msgid "User Id"
+msgstr "उपयोगकर्ता आईडी"
+
+#. Label of the user_name (Data) field in DocType 'Case'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+msgid "User Name"
+msgstr "उपयोगकर्ता का नाम"
+
+#. Name of a DocType
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "User Profile"
+msgstr "उपयोगकर्ता प्रोफ़ाइल"
+
+#. Label of the user_type (Select) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "User Type"
+msgstr "उपयोगकर्ता प्रकार"
+
+#. Label of the verification_status (Text) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Verification Status"
+msgstr "सत्यापन स्थिति"
+
+#. Option for the 'Confidence Level' (Select) field in DocType 'Case'
+#. Option for the 'Confidence Level' (Select) field in DocType 'Community
+#. Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Very Confident"
+msgstr "पूरी तरह आश्वस्त"
+
+#. Option for the 'User Type' (Select) field in DocType 'User Profile'
+#: citizen_connect_app/citizen_connect_app/doctype/user_profile/user_profile.json
+msgid "Volunteer"
+msgstr "स्वयंसेवक"
+
+#. Label of the volunteer_opportunity (Table) field in DocType 'Crisis'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis/crisis.json
+msgid "Volunteer Opportunity"
+msgstr "स्वयंसेवी अवसर"
+
+#. Label of the child_vol_opportunity (Link) field in DocType 'Child Volunteer
+#. Opportunity'
+#: citizen_connect_app/citizen_connect_app/doctype/child_volunteer_opportunity/child_volunteer_opportunity.json
+msgid "Volunteer Opportunity "
+msgstr "स्वयंसेवी अवसर "
+
+#. Label of the volunteer_format (Select) field in DocType 'Opportunity
+#. Discovery'
+#: citizen_connect_app/citizen_connect_app/doctype/opportunity_discovery/opportunity_discovery.json
+msgid "Volunteer format"
+msgstr "स्वयंसेवी प्रारूप"
+
+#. Option for the 'Impact Type' (Select) field in DocType 'Crisis Impact'
+#: citizen_connect_app/citizen_connect_app/doctype/crisis_impact/crisis_impact.json
+msgid "Volunteers"
+msgstr "स्वयंसेवक"
+
+#. Label of the water_supply (Select) field in DocType 'Case'
+#. Label of the water_supply (Select) field in DocType 'Community Check'
+#: citizen_connect_app/citizen_connect_app/doctype/case/case.json
+#: citizen_connect_app/citizen_connect_app/doctype/community_check/community_check.json
+msgid "Water Supply"
+msgstr "जल आपूर्ति"
+
+#. Label of the website_url (Data) field in DocType 'Organisation'
+#: citizen_connect_app/citizen_connect_app/doctype/organisation/organisation.json
+msgid "Website URL"
+msgstr "वेबसाइट URL"
+
+#. Label of the whatsapp_number (Phone) field in DocType 'Service'
+#: citizen_connect_app/citizen_connect_app/doctype/service/service.json
+msgid "Whatsapp Number"
+msgstr "WhatsApp नंबर"
+
+#. Option for the 'Agency Category' (Select) field in DocType 'Emergency
+#. Contacts'
+#: citizen_connect_app/citizen_connect_app/doctype/emergency_contacts/emergency_contacts.json
+msgid "Women & Child"
+msgstr "महिला एवं बाल"
+
+#. Label of the workflow_state (Data) field in DocType 'Request Help'
+#: citizen_connect_app/citizen_connect_app/doctype/request_help/request_help.json
+msgid "Workflow state"
+msgstr "वर्कफ़्लो स्थिति"
+
+#: citizen_connect_app/services/otp_service.py:58
+msgid "Your OTP Code"
+msgstr "आपका OTP कोड"
+
+#: citizen_connect_app/services/otp_service.py:59
+msgid "Your OTP code is: {0}. It will expire in {1} minutes."
+msgstr "आपका OTP कोड है: {0}। यह {1} मिनट में समाप्त हो जाएगा।"
+
+#: citizen_connect_app/services/scheme.py:264
+#: citizen_connect_app/services/scheme.py:295
+msgid "category_l1_name"
+msgstr "category_l1_name"
+
+#: citizen_connect_app/services/scheme.py:265
+#: citizen_connect_app/services/scheme.py:296
+msgid "category_l2_name"
+msgstr "category_l2_name"
+
+#: citizen_connect_app/services/scheme.py:249
+#: citizen_connect_app/services/scheme.py:280
+msgid "country"
+msgstr "देश"
+
+#: citizen_connect_app/services/scheme.py:250
+#: citizen_connect_app/services/scheme.py:281
+msgid "geo_l1"
+msgstr "geo_l1"
+
+#: citizen_connect_app/services/scheme.py:251
+#: citizen_connect_app/services/scheme.py:282
+msgid "geo_l2"
+msgstr "geo_l2"
+
+#: citizen_connect_app/services/service.py:222
+#: citizen_connect_app/services/service.py:264
+msgid "l1_name"
+msgstr "l1_name"
+
+#: citizen_connect_app/services/service.py:223
+#: citizen_connect_app/services/service.py:270
+msgid "l2_name"
+msgstr "l2_name"
+
+#: citizen_connect_app/services/service.py:196
+msgid "service_country"
+msgstr "service_country"
+
+#: citizen_connect_app/services/service.py:200
+msgid "service_geo1"
+msgstr "service_geo1"
+
+#: citizen_connect_app/services/service.py:204
+msgid "service_geo2"
+msgstr "service_geo2"
+
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.js:79
+msgid "{0} cannot exceed {1} characters."
+msgstr "{0} {1} अक्षरों से अधिक नहीं हो सकता।"
+
+#: citizen_connect_app/citizen_connect_app/doctype/scheme/scheme.js:75
+msgid "{0} must be at least {1} characters long."
+msgstr "{0} कम से कम {1} अक्षरों का होना चाहिए।"
+

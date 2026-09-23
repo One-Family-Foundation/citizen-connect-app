@@ -1,3 +1,6 @@
+# from apps.citizen_connect_app.citizen_connect_app.services.permission_manager import (ngo_profile_query , case_query)
+
+
 app_name = "citizen_connect_app"
 app_title = "Citizen Connect App"
 app_publisher = "One Family Foundation"
@@ -136,7 +139,9 @@ after_migrate = "citizen_connect_app.utils.translations.install_custom_fields"
 # 	"Event": "frappe.desk.doctype.event.event.has_permission",
 # }
 permission_query_conditions = {
-    "Case": "citizen_connect_app.services.permission_manager.case_query"
+    "Case": "citizen_connect_app.services.permission_manager.case_query",
+    "Organisation" :"citizen_connect_app.services.permission_manager.ngo_profile_query"
+    
 }
 
 # Document Events

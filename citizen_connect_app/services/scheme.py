@@ -1,7 +1,7 @@
 import frappe
 from citizen_connect_app.models.scheme import Scheme, SchemeSummary
 from citizen_connect_app.models.ngo import NGO
-from citizen_connect_app.models.utils import Location, Category
+from citizen_connect_app.models.utils import LocationResponse, CategoryResponse
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 
@@ -18,6 +18,7 @@ class SchemeManager:
         s.name AS id,
         s.scheme_name,
         s.description,
+        s.status,
         s.benefit,
         s.eligibility,
         s.documents_required,
@@ -96,6 +97,8 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
+        lang="en",
+        status="Approved",
      
     ) -> Result:
         """Fetch a paginated, filterable list of schemes."""
@@ -112,7 +115,7 @@ class SchemeManager:
                 gender=gender,
                 disabled=disabled,
                 verified=verified,
-                
+                status=status,
             )
             values.extend([limit, offset])
 
@@ -132,7 +135,7 @@ class SchemeManager:
 
             scheme_list = []
             for row in scheme_rows:
-                scheme = SchemeManager._create_scheme_summary(row)
+                scheme = SchemeManager._create_scheme_summary(row,lang=lang)
                 scheme_list.append(scheme.model_dump())
 
             return Result.success(
@@ -150,7 +153,7 @@ class SchemeManager:
             raise
 
     @staticmethod
-    def get(scheme_id: str) -> Result:
+    def get(scheme_id: str, lang: str = "en") -> Result:
         """Fetch a single scheme by id."""
         try:
             query = f"""
@@ -166,7 +169,7 @@ class SchemeManager:
             if not scheme_rows:
                 return Result.not_found("Scheme not found.")
 
-            scheme = SchemeManager._create_scheme(scheme_rows[0])
+            scheme = SchemeManager._create_scheme(scheme_rows[0], lang=lang)
             ngos = SchemeManager._get_ngos_for_schemes([scheme_id])
             scheme.ngos = ngos.get(scheme_id, [])
 
@@ -190,6 +193,7 @@ class SchemeManager:
         gender=None,
         disabled=None,
         verified=None,
+        status="Approved",
         
     ):
         filters = ["s.is_active = 1"]
@@ -229,7 +233,9 @@ class SchemeManager:
         if verified is not None:
             filters.append("s.is_verified = %s")
             values.append(verified)
-
+        if status is not None:
+            filters.append("s.status = %s")
+            values.append(status)
       
 
         where_clause = ""
@@ -239,16 +245,16 @@ class SchemeManager:
         return where_clause, values
 
     @staticmethod
-    def _create_scheme_summary(row: dict) -> SchemeSummary:
+    def _create_scheme_summary(row: dict, lang: str = "en") -> SchemeSummary:
         return SchemeSummary(
             id=row["id"],
             scheme_name=row["scheme_name"],
             description=row["description"],
-            location=Location(
-                country=row["country"],
-                geo1=row["geo_l1"],
-                geo2=row["geo_l2"],
-            ),
+            location={
+                "country": { "name": row["country"], "display_name": frappe._(row["country"],lang )},
+                "geo1": { "name": row["geo_l1"], "display_name": frappe._(row["geo_l1"],lang ) },
+                "geo2": { "name": row["geo_l2"], "display_name": frappe._(row["geo_l2"],lang ) }
+            },
             disabled_relevant=row["disable_relevant"],
             currency=row["currency"],
             is_active=row["is_active"],
@@ -259,14 +265,14 @@ class SchemeManager:
             income_limit=row["income_limit"],
             issuing_body=row["issuing_body"],
             rating=row["rating"],
-            scheme_category=Category(
-                l1=row["category_l1_name"],
-                l2=row["category_l2_name"],
-            ),
+            scheme_category={
+                "l1": { "name": row["category_l1_name"], "display_name": frappe._(row["category_l1_name"],lang ) },
+                "l2": { "name": row["category_l2_name"], "display_name": frappe._(row["category_l2_name"],lang ) },
+            },
         )
 
     @staticmethod
-    def _create_scheme(row: dict) -> Scheme:
+    def _create_scheme(row: dict, lang: str = "en") -> Scheme:
         return Scheme(
             id=row["id"],
             scheme_name=row["scheme_name"],
@@ -275,11 +281,11 @@ class SchemeManager:
             eligibility=row["eligibility"],
             documents_required=row["documents_required"],
             application_url=row["application_url"],
-            location=Location(
-                country=row["country"],
-                geo1=row["geo_l1"],
-                geo2=row["geo_l2"],
-            ),
+            location={
+                "country": { "name": row["country"], "display_name": frappe._(row["country"],lang ) },
+                "geo1": { "name": row["geo_l1"], "display_name": frappe._(row["geo_l1"],lang ) },
+                "geo2": { "name": row["geo_l2"], "display_name": frappe._(row["geo_l2"],lang ) }
+            },
             gender=row["gender"],
             disabled_relevant=row["disable_relevant"],
             income_limit=row["income_limit"],
@@ -290,8 +296,8 @@ class SchemeManager:
             rating=row["rating"],
             creation=row["creation"],
             modified=row["modified"],
-            scheme_category=Category(
-                l1=row["category_l1_name"],
-                l2=row["category_l2_name"],
-            ),
+            scheme_category={
+                "l1": { "name": row["category_l1_name"], "display_name": frappe._(row["category_l1_name"],lang ) },
+                "l2": { "name": row["category_l2_name"], "display_name": frappe._(row["category_l2_name"],lang ) },
+            },
         )

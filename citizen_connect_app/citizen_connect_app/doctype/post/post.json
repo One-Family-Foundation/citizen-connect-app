@@ -14,7 +14,8 @@
   "location_details_section",
   "country",
   "geography_l1",
-  "geography_l2"
+  "geography_l2",
+  "like"
  ],
  "fields": [
   {
@@ -35,7 +36,8 @@
    "fieldname": "category_l1",
    "fieldtype": "Link",
    "label": "Category L1",
-   "options": "Category"
+   "options": "Category",
+   "reqd": 1
   },
   {
    "fieldname": "column_break_eyrl",
@@ -69,12 +71,18 @@
    "fieldtype": "Table",
    "label": "Media",
    "options": "Media"
+  },
+  {
+   "fieldname": "like",
+   "fieldtype": "Link",
+   "label": "Likes",
+   "options": "User"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-07 14:42:00.828137",
+ "modified": "2026-09-15 23:06:57.517782",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Post",

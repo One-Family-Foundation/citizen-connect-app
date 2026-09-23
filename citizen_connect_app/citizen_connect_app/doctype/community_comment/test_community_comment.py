@@ -13,9 +13,9 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
 
-class IntegrationTestRequestHelp(IntegrationTestCase):
+class IntegrationTestCommunityComment(IntegrationTestCase):
 	"""
-	Integration tests for RequestHelp.
+	Integration tests for CommunityComment.
 	Use this class for testing interactions between multiple components.
 	"""
 

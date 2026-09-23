@@ -16,6 +16,8 @@ def get_list(
     gender=None,
     disabled=None,
     verified=None,
+    lang="en",
+    status="Approved",
     
 ):
     try:
@@ -30,6 +32,8 @@ def get_list(
             gender=gender,
             disabled=disabled,
             verified=verified,
+            lang=lang,
+            status=status,
             
         ).to_custom_response()
 
@@ -44,9 +48,9 @@ def get_list(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(scheme_id):
+def get(scheme_id, lang="en"):
     try:
-        return SchemeManager.get(scheme_id).to_custom_response()
+        return SchemeManager.get(scheme_id, lang=lang).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)

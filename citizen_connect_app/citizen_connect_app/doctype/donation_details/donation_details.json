@@ -49,11 +49,13 @@
    "default": "0",
    "fieldname": "is_verified",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Is Verified"
   },
   {
    "fieldname": "total_donation_target",
    "fieldtype": "Int",
+   "in_list_view": 1,
    "label": "Total Donation Target",
    "non_negative": 1,
    "reqd": 1
@@ -61,6 +63,7 @@
   {
    "fieldname": "currency",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Currency",
    "options": "Currency"
   }
@@ -69,7 +72,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-08-26 15:48:28.284323",
+ "modified": "2026-09-11 13:32:43.356089",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Donation Details",

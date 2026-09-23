@@ -2,65 +2,46 @@
  "actions": [],
  "allow_bulk_edit": 1,
  "allow_rename": 1,
- "creation": "2026-07-27 15:58:19.361808",
+ "creation": "2026-09-16 09:18:56.160247",
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "scheme_id",
-  "full_name",
-  "email",
-  "phone",
-  "request_description",
-  "photo"
+  "post_id",
+  "user_id",
+  "comment"
  ],
  "fields": [
   {
-   "fieldname": "scheme_id",
+   "fieldname": "post_id",
    "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Scheme Id",
-   "options": "Scheme",
+   "label": "Post Id",
+   "options": "Post",
    "reqd": 1
   },
   {
-   "fieldname": "full_name",
-   "fieldtype": "Data",
+   "fieldname": "user_id",
+   "fieldtype": "Link",
    "in_list_view": 1,
-   "label": "Full Name",
+   "label": "User Id",
+   "options": "User",
    "reqd": 1
   },
   {
-   "fieldname": "email",
-   "fieldtype": "Data",
-   "label": "Email"
-  },
-  {
-   "fieldname": "phone",
-   "fieldtype": "Phone",
+   "fieldname": "comment",
+   "fieldtype": "Small Text",
    "in_list_view": 1,
-   "label": "Phone",
+   "label": "Comment ",
    "reqd": 1
-  },
-  {
-   "fieldname": "request_description",
-   "fieldtype": "Text",
-   "in_list_view": 1,
-   "label": "Request Description",
-   "reqd": 1
-  },
-  {
-   "fieldname": "photo",
-   "fieldtype": "Attach",
-   "label": "Image"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-12 09:25:07.563321",
+ "modified": "2026-09-16 09:23:30.847284",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
- "name": "Scheme Request Help",
+ "name": "Community Comment",
  "owner": "Administrator",
  "permissions": [
   {

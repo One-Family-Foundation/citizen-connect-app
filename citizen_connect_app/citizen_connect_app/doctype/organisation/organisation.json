@@ -1,6 +1,7 @@
 {
  "actions": [],
  "allow_bulk_edit": 1,
+ "allow_import": 1,
  "allow_rename": 1,
  "creation": "2026-07-14 15:59:27.803572",
  "doctype": "DocType",
@@ -88,8 +89,7 @@
   {
    "fieldname": "registration_number",
    "fieldtype": "Data",
-   "label": "Registration Number",
-   "reqd": 1
+   "label": "Registration Number"
   },
   {
    "fieldname": "established",
@@ -106,8 +106,7 @@
   {
    "fieldname": "logo",
    "fieldtype": "Attach Image",
-   "label": "Logo",
-   "reqd": 1
+   "label": "Logo"
   },
   {
    "default": "1",
@@ -163,7 +162,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-15 20:21:54.339377",
+ "modified": "2026-09-17 00:01:44.757553",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Organisation",

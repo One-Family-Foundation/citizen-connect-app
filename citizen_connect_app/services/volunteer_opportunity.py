@@ -22,7 +22,13 @@ class OpportunityManager:
         o.name AS id,
         o.title,
         o.description,
-        o.crisis_link,
+        crisis.title AS crisis_link,
+        crisis.status AS crisis_status,
+        CASE
+            WHEN crisis.status = 'Active' THEN 1
+            ELSE 0
+        END AS is_active_crisis,
+
 
         o.category_l1 AS category_l1_name,
         o.category_l2 AS category_l2_name,
@@ -63,6 +69,9 @@ class OpportunityManager:
 
         LEFT JOIN `tabOrganisation` org
             ON org.name = o.ngo
+
+        LEFT JOIN `tabCrisis` crisis
+            ON crisis.name = o.crisis_link    
     """
 
     @staticmethod
@@ -77,6 +86,7 @@ class OpportunityManager:
         volunteer_format=None,
         compensation_type=None,
         status="Active",
+        lang="en"
     ):
 
         try:
@@ -105,14 +115,16 @@ class OpportunityManager:
                     {OpportunityManager._SELECT_FIELDS}
                 {OpportunityManager._JOINS}
                 {where_clause}
-                ORDER BY o.modified DESC
-                LIMIT %s OFFSET %s
+                ORDER BY
+                   is_active_crisis DESC,
+                   o.modified DESC
+                   LIMIT %s OFFSET %s
             """
 
             rows = frappe.db.sql(query, values, as_dict=True)
 
             opportunities = [
-                OpportunityManager._create_summary(row).model_dump()
+                OpportunityManager._create_summary(row,lang).model_dump()
                 for row in rows
             ]
 
@@ -131,7 +143,7 @@ class OpportunityManager:
             raise
 
     @staticmethod
-    def get(opportunity_id):
+    def get(opportunity_id,lang="en"):
 
         try:
 
@@ -149,7 +161,7 @@ class OpportunityManager:
 
             return Result.success(
                 message="Volunteer opportunity fetched successfully.",
-                data=OpportunityManager._create(rows[0]).model_dump(),
+                data=OpportunityManager._create(rows[0],lang).model_dump(),
             )
 
         except Exception as e:
@@ -225,17 +237,31 @@ class OpportunityManager:
         return [ Skill(skill_name=row["skill_name"])for row in rows ]
     
     @staticmethod
-    def _create_summary(row):
+    def _create_summary(row,lang="en"):
 
         return OpportunitySummary(
             id=row["id"],
             title=row["title"],
             description=row["description"],
-            location=Location(
-                country=row["country"],
-                geo1=row["geo_l1"],
-                geo2=row["geo_l2"],
+            active_crisis=(
+                "Active Crisis"
+                if row["is_active_crisis"]
+                else None
             ),
+            location={
+                "country":{
+                    "name":row["country"],
+                    "display_name":frappe._(row["country"],lang)
+                },
+                "geo1":{
+                    "name":row["geo_l1"],
+                    "display_name":frappe._(row["geo_l1"],lang)
+                },
+                "geo2":{
+                    "name":row["geo_l2"],
+                    "display_name":frappe._(row["geo_l2"],lang)
+                }
+            },
             volunteer_format=row["volunteer_format"],
             start_date=row["start_date"],
             end_date=row["end_date"],
@@ -244,15 +270,15 @@ class OpportunityManager:
             status=row["status"],
             creation=row["creation"],
             modified=row["modified"],
-            category=Category(
-                l1=row["category_l1_name"],
-                l2=row["category_l2_name"],
-            ),
+            category={
+                "l1":{"name":row["category_l1_name"],"display_name":frappe._(row["category_l1_name"],lang)},
+                "l2":{"name":row["category_l2_name"],"display_name":frappe._(row["category_l2_name"],lang)}
+            },
             language=row["language"],
         )
 
     @staticmethod
-    def _create(row):
+    def _create(row,lang="en"):
 
         ngo = None
 
@@ -271,11 +297,20 @@ class OpportunityManager:
             description=row["description"],
             skills=skills,
             crisis_link=row["crisis_link"],
-            location=Location(
-                country=row["country"],
-                geo1=row["geo_l1"],
-                geo2=row["geo_l2"],
-            ),
+            location={
+                "country":{
+                    "name":row["country"],
+                    "display_name":frappe._(row["country"],lang)
+                },
+                "geo1":{
+                    "name":row["geo_l1"],
+                    "display_name":frappe._(row["geo_l1"],lang)
+                },
+                "geo2":{
+                    "name":row["geo_l2"],
+                    "display_name":frappe._(row["geo_l2"],lang)
+                }
+            },
             volunteer_format=row["volunteer_format"],
             expected_time=row["expected_time"],
             start_date=row["start_date"],
@@ -286,9 +321,9 @@ class OpportunityManager:
             status=row["status"],
             creation=row["creation"],
             modified=row["modified"],
-            category=Category(
-                l1=row["category_l1_name"],
-                l2=row["category_l2_name"],
-            ),
+            category={
+                "l1":{"name":row["category_l1_name"],"display_name":frappe._(row["category_l1_name"],lang)},
+                "l2":{"name":row["category_l2_name"],"display_name":frappe._(row["category_l2_name"],lang)}
+            },
             language=row["language"],
         )

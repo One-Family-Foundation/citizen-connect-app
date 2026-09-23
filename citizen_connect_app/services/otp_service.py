@@ -30,8 +30,8 @@ class OTPService:
     @staticmethod
     def _generate_otp():
         # 4-digit OTP: 1000-9999
-        return "1234"
-        #return str(secrets.randbelow(9000) + 1000)
+        # return "1234"
+         return str(secrets.randbelow(9000) + 1000)
 
     @staticmethod
     def send_otp(email):
@@ -67,7 +67,7 @@ class OTPService:
             )
         except Exception as e:
             ErrorLogger.log(e)
-            return Result.failure(message="Failed to send OTP.", data={"error": str(e)}, error_data={"traceback": frappe.get_traceback()})
+            return Result.failure(message="Failed to send OTP.", data={"error": str(e)})
 
 
     @staticmethod

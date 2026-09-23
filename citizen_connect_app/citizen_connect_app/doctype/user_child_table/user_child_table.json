@@ -23,6 +23,7 @@
    "default": "0",
    "fieldname": "is_active",
    "fieldtype": "Check",
+   "in_list_view": 1,
    "label": "Is Active"
   }
  ],
@@ -30,7 +31,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2026-08-13 13:05:22.054392",
+ "modified": "2026-09-11 13:31:19.468337",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "User Child Table",

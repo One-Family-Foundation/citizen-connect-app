@@ -1,6 +1,6 @@
+
 frappe.ui.form.on("Crisis", {
     refresh(frm) {
-
         // Show only Geography L1 for selected Country
         frm.set_query("geo_l1", function () {
             if (!frm.doc.country) {
@@ -10,17 +10,19 @@ frappe.ui.form.on("Crisis", {
                     }
                 };
             }
-        frm.set_query("category", function () {
-                return {
-                    filters: {
-                        category_level: "L1"
-                    }
-                };
-            });    
 
             return {
                 filters: {
                     country_name: frm.doc.country
+                }
+            };
+        });
+
+        // Show only Category L1
+        frm.set_query("category", function () {
+            return {
+                filters: {
+                    category_level: "L1"
                 }
             };
         });
@@ -41,6 +43,9 @@ frappe.ui.form.on("Crisis", {
                 }
             };
         });
+
+        // Show/hide Crisis Summary based on status
+        toggle_crisis_summary(frm);
     },
 
     // When Country changes, clear dependent fields
@@ -54,8 +59,12 @@ frappe.ui.form.on("Crisis", {
         frm.set_value("geo_l2", "");
     },
 
-    validate(frm) {
+    // When Status changes
+    status(frm) {
+        toggle_crisis_summary(frm);
+    },
 
+    validate(frm) {
         // Validate Title
         if (frm.doc.title) {
             const len = frm.doc.title.trim().length;
@@ -88,5 +97,60 @@ frappe.ui.form.on("Crisis", {
                 );
             }
         }
+
+        if (frm.doc.location_address) {
+            const len = frm.doc.location_address.trim().length;
+
+            if (len < 20 || len > 200) {
+                frappe.throw(
+                    __("Location address must be between 20 and 200 characters.")
+                );
+            }
+        }
+
+        if (frm.doc.location_name) {
+            const len = frm.doc.location_name.trim().length;
+
+            if (len < 20 || len > 200) {
+                frappe.throw(
+                    __("Location name must be between 20 and 200 characters.")
+                );
+            }
+        }
+
+        if (frm.doc.verification_status) {
+            const len = frm.doc.verification_status.trim().length;
+
+            if (len < 20 || len > 300) {
+                frappe.throw(
+                    __("Verification status must be between 20 and 300 characters.")
+                );
+            }
+        }
     }
 });
+
+
+// Show Crisis Summary only for Inactive crisis
+function toggle_crisis_summary(frm) {
+    const is_inactive = frm.doc.status === "Inactive";
+
+    frm.set_df_property(
+        "crisis_summary",
+        "hidden",
+        !is_inactive
+    );
+
+    // Make Crisis Summary mandatory only for Inactive crisis
+    frm.set_df_property(
+        "crisis_summary",
+        "reqd",
+        is_inactive
+    );
+
+    // Clear summary when crisis becomes Active
+    if (!is_inactive && frm.doc.crisis_summary) {
+        frm.set_value("crisis_summary", "");
+    }
+}
+

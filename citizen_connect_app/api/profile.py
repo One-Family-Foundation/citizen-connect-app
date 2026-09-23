@@ -1,10 +1,10 @@
 import frappe
-
 from samaaja.utils.custom_response import custom_response
 from citizen_connect_app.services.profile_manager import (
     update_profile ,get_profile
 )
 from citizen_connect_app.utils.error_logger import ErrorLogger
+from citizen_connect_app.services.gamification_manager import (get_cached_user_rank)
 
 @frappe.whitelist()
 def update(
@@ -43,9 +43,9 @@ def update(
 
 
 @frappe.whitelist(allow_guest=True)
-def get(user_id=None):
+def get(user_id=None , lang = "en"):
     try:
-        result = get_profile(user_id)
+        result = get_profile(user_id, lang)
 
         return result.to_custom_response()
 

@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class RequestHelp(Document):
+class PostLike(Document):
 	pass

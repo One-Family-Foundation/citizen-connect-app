@@ -1,0 +1,19 @@
+info:
+  name: Get User Actions
+  type: http
+  seq: 36
+
+http:
+  method: GET
+  url: "{{BASE_URL}}/api/method/citizen_connect_app.api.volunteer_action.user_actions?user_id=vivek1112@gmail.com"
+  params:
+    - name: user_id
+      value: vivek1112@gmail.com
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

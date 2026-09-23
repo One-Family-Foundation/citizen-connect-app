@@ -1,8 +1,7 @@
 from typing import Optional
 from pydantic import BaseModel, Field, EmailStr, field_validator
 from typing import Annotated
-from citizen_connect_app.models.utils import Location
-
+from citizen_connect_app.models.utils import Location, MediaResponse,LocationResponse
 
 class User(BaseModel):
     full_name: Annotated[str, Field(min_length=3, max_length=120)]
@@ -40,3 +39,10 @@ class User(BaseModel):
         if value is None:
             return value
         return value.strip()
+
+class UserSummary(BaseModel):
+    full_name: str | None = None
+    email: EmailStr
+    location: LocationResponse | None = None
+    type: str | None = None
+    profile_picture: MediaResponse | None = None

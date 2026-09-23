@@ -13,9 +13,9 @@ IGNORE_TEST_RECORD_DEPENDENCIES = []  # eg. ["User"]
 
 
 
-class IntegrationTestSchemeRequestHelp(IntegrationTestCase):
+class IntegrationTestPostLike(IntegrationTestCase):
 	"""
-	Integration tests for SchemeRequestHelp.
+	Integration tests for PostLike.
 	Use this class for testing interactions between multiple components.
 	"""
 

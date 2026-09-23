@@ -27,8 +27,7 @@
   "phone_num",
   "time",
   "location_name",
-  "location_address",
-  "verification_status"
+  "location_address"
  ],
  "fields": [
   {
@@ -96,7 +95,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nIn-Active"
+   "options": "Active\nInactive"
   },
   {
    "fieldname": "collaborators",
@@ -107,8 +106,7 @@
   {
    "fieldname": "crisis_summary",
    "fieldtype": "Text",
-   "label": "Crisis Summary",
-   "reqd": 1
+   "label": "Crisis Summary"
   },
   {
    "fieldname": "donation_oppportunity",
@@ -120,7 +118,8 @@
    "fieldname": "volunteer_opportunity",
    "fieldtype": "Table",
    "label": "Volunteer Opportunity",
-   "options": "Child Volunteer Opportunity"
+   "options": "Child Volunteer Opportunity",
+   "read_only": 1
   },
   {
    "fieldname": "impact",
@@ -131,7 +130,7 @@
   {
    "fieldname": "resourc_dropoff_location_section",
    "fieldtype": "Section Break",
-   "label": "Resourc Dropoff Location"
+   "label": "Resources Drop-off Location"
   },
   {
    "fieldname": "person_name",
@@ -149,6 +148,7 @@
    "fieldname": "time",
    "fieldtype": "Data",
    "label": "Time",
+   "length": 40,
    "reqd": 1
   },
   {
@@ -157,11 +157,6 @@
    "label": "Category",
    "options": "Category",
    "reqd": 1
-  },
-  {
-   "fieldname": "verification_status",
-   "fieldtype": "Text",
-   "label": "Verification Status"
   },
   {
    "fieldname": "location_name",
@@ -178,7 +173,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-08-26 13:33:43.603584",
+ "modified": "2026-09-22 12:18:46.277816",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Crisis",
@@ -199,7 +194,9 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "title"
 }

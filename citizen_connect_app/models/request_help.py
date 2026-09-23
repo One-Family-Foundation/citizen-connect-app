@@ -11,9 +11,9 @@ class RequestHelp(BaseModel):
 
     full_name: str = Field(..., min_length=3, max_length=120)
 
-    email: EmailStr
+    email_id: EmailStr
 
-    mobile_num: str = Field(..., min_length=6, max_length=15)
+    mobile_num:Optional[str] = Field(None, min_length=6, max_length=15)
 
     gender: Optional[str] = None
 
@@ -26,7 +26,7 @@ class RequestHelp(BaseModel):
     geo_l1: Optional[str] = None
 
     geo_l2: Optional[str] = None
-
+    is_financial_support_need: bool | None = None
     @model_validator(mode="after")
     def validate_request_type(self):
         if not self.service_name and not self.scheme_name:
