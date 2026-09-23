@@ -11,7 +11,7 @@ from citizen_connect_app.services.opportunity_application import count_volunteer
 from citizen_connect_app.services.case_manager import (get_user_case_count , get_case_resolved_count )
 from citizen_connect_app.utils.commons import create_media_url
 from citizen_connect_app.services.gamification_manager import (get_cached_user_rank)
-
+from citizen_connect_app.services.volunteer_action_manager import (get_user_actions)
 def update_profile(profile_data: dict) -> Result:
     try:
         if not frappe.session.user or frappe.session.user == "Guest":
@@ -235,12 +235,10 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
         )
 
         post_count = post_result.data or 0
-
-        actions = (
-            case_actions
-            + opportunity_actions
-        )
-
+        action_result = get_user_actions(user.name)
+        if action_result.success:
+           actions = action_result.data["counts"]["total"]
+        
         top_categories = frappe.get_all(
             "User Category Statistics",
             filters={

@@ -239,11 +239,11 @@ frappe.ui.form.on("Service", {
 function toggle_sponsorship_information(frm) {
     const is_paid = frm.doc.cost_model === "Paid";
 
-    frm.toggle_display("sponsorship_information", is_paid);
+    frm.toggle_display("is_financial_support", is_paid);
     frm.toggle_display("cost_details", is_paid);
 
     if (!is_paid) {
-        frm.set_value("sponsorship_information", "");
+        frm.set_value("is_financial_support", "");
         frm.set_value("cost_details", "");
     }
 }

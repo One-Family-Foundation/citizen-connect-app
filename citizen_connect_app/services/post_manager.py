@@ -81,13 +81,13 @@ def get_list(
     try:
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
         offset = max(0, int(offset))
+
         where_clause, values = build_filters(
             category_l1=category_l1,
             country=country,
             geography_l1=geography_l1,
             geography_l2=geography_l2,
         )
-
 
         query = f"""
             SELECT
@@ -96,33 +96,71 @@ def get_list(
                 p.user,
                 p.creation,
                 p.modified,
-
                 c.country_name AS country,
                 g1.geo_l1 AS geography_l1,
                 g2.geo_2 AS geography_l2,
                 p.category_l1
-
             FROM `tabPost` p
-
             LEFT JOIN `tabCountry` c
                 ON c.name = p.country
-
             LEFT JOIN `tabGeography L1` g1
                 ON g1.name = p.geography_l1
-
             LEFT JOIN `tabGeography L2` g2
                 ON g2.name = p.geography_l2
-               {where_clause}
-
+            {where_clause}
             ORDER BY p.creation DESC
             LIMIT %s OFFSET %s
         """
 
         values.extend([limit, offset])
-        media_base_url = frappe.utils.get_url()
-        post_rows = frappe.db.sql(query, tuple(values) , as_dict=True)
+
+        post_rows = frappe.db.sql(
+            query,
+            tuple(values),
+            as_dict=True
+        )
 
         post_ids = [post["id"] for post in post_rows]
+
+        # ---------------------------------------------------------
+        # Get like count and logged-in user's like status
+        # ---------------------------------------------------------
+
+        like_map = {}
+
+        if post_ids:
+            placeholders = ", ".join(["%s"] * len(post_ids))
+
+            like_rows = frappe.db.sql(
+                f"""
+                    SELECT
+                        post_id,
+                        COUNT(*) AS like_count,
+                        SUM(
+                            CASE
+                                WHEN user_id = %s THEN 1
+                                ELSE 0
+                            END
+                        ) AS liked_by_me
+                    FROM `tabPost Like`
+                    WHERE post_id IN ({placeholders})
+                    GROUP BY post_id
+                """,
+                tuple([frappe.session.user] + post_ids),
+                as_dict=True,
+            )
+
+            like_map = {
+                row["post_id"]: {
+                    "like_count": row["like_count"],
+                    "liked_by_me": bool(row["liked_by_me"]),
+                }
+                for row in like_rows
+            }
+
+        # ---------------------------------------------------------
+        # Get post media
+        # ---------------------------------------------------------
 
         media_map = {}
 
@@ -143,35 +181,84 @@ def get_list(
                 media_map.setdefault(row.parent, []).append({
                     "media": media_url,
                     "caption": row.caption,
-                })    
+                })
 
         for post in post_rows:
             post["media"] = media_map.get(post["id"], [])
-        
-        user_summaries = UserManager.get_user_summaries([post["user"] for post in post_rows], lang=lang)
-        
-        user_summaries_by_email = {user.email: user for user in user_summaries}
+
+        # ---------------------------------------------------------
+        # Get user summaries
+        # ---------------------------------------------------------
+
+        user_summaries = UserManager.get_user_summaries(
+            [post["user"] for post in post_rows],
+            lang=lang
+        )
+
+        user_summaries_by_email = {
+            user.email: user
+            for user in user_summaries
+        }
+
+        # ---------------------------------------------------------
+        # Build response
+        # ---------------------------------------------------------
 
         posts = []
 
         for row in post_rows:
+
+            like_data = like_map.get(
+                row["id"],
+                {
+                    "like_count": 0,
+                    "liked_by_me": False,
+                }
+            )
+
             data = {
                 **row,
+
+                "like_count": like_data["like_count"],
+                "liked_by_me": like_data["liked_by_me"],
+
                 "location": {
-                    "country": {"name": row["country"]} if row["country"] else None,
-                    "geo1": {"name": row["geography_l1"]} if row["geography_l1"] else None,
-                    "geo2": {"name": row["geography_l2"]} if row["geography_l2"] else None,
+                    "country": (
+                        {"name": row["country"]}
+                        if row["country"]
+                        else None
+                    ),
+                    "geo1": (
+                        {"name": row["geography_l1"]}
+                        if row["geography_l1"]
+                        else None
+                    ),
+                    "geo2": (
+                        {"name": row["geography_l2"]}
+                        if row["geography_l2"]
+                        else None
+                    ),
                 },
+
                 "category": {
-                    "l1": {"name": row["category_l1"]} if row["category_l1"] else None,
+                    "l1": (
+                        {"name": row["category_l1"]}
+                        if row["category_l1"]
+                        else None
+                    ),
                     "l2": None,
                 },
+
                 "user": user_summaries_by_email.get(row["user"]),
             }
 
             posts.append(
-                PostResponse.model_validate(data,context={"lang": lang}).model_dump()
+                PostResponse.model_validate(
+                    data,
+                    context={"lang": lang}
+                ).model_dump()
             )
+
         return Result.success(
             message="Posts fetched successfully.",
             data=posts,
@@ -179,12 +266,15 @@ def get_list(
 
     except Exception as e:
         ErrorLogger.log(e)
+
         return Result.failure(
             message="Failed to get post list.",
             data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()},
+            error_data={
+                "traceback": frappe.get_traceback()
+            },
         )
-
+        
 def delete_post(post_id: str) -> Result:
     try:
         if frappe.session.user == "Guest":
@@ -292,6 +382,7 @@ def like_post(post_id: str) -> Result:
             "name"
         )
 
+        # Unlike
         if existing_like:
             frappe.delete_doc(
                 "Post Like",
@@ -299,51 +390,58 @@ def like_post(post_id: str) -> Result:
                 ignore_permissions=True
             )
 
+            liked_by_me = False
+
             logger.info(
                 f"Post {post_id} disliked by user {user_id}"
             )
 
-            return Result.success(
-                message="Post disliked successfully.",
-                data={
-                    "post_id": post_id,
-                    "user_id": user_id,
-                    "liked": False
-                }
+        # Like
+        else:
+            like = frappe.get_doc({
+                "doctype": "Post Like",
+                "post_id": post_id,
+                "user_id": user_id
+            })
+
+            like.insert(ignore_permissions=True)
+
+            liked_by_me = True
+
+            logger.info(
+                f"Post {post_id} liked by user {user_id}"
             )
 
-        like = frappe.get_doc({
-            "doctype": "Post Like",
-            "post_id": post_id,
-            "user_id": user_id
-        })
-
-        like.insert(ignore_permissions=True)
-
-        logger.info(
-            f"Post {post_id} liked by user {user_id}"
+        # Get latest like count
+        like_count = frappe.db.count(
+            "Post Like",
+            {
+                "post_id": post_id
+            }
         )
 
         return Result.success(
-            message="Post liked successfully.",
+            message=(
+                "Post liked successfully."
+                if liked_by_me
+                else "Post disliked successfully."
+            ),
             data={
                 "post_id": post_id,
                 "user_id": user_id,
-                "liked": True,
-                "like_id": like.name
+                "liked_by_me": liked_by_me,
+                "like_count": like_count
             }
         )
 
-    except Exception as e:
-        ErrorLogger.log(e)
+    except Exception:
+        logger.exception(
+            f"Error while liking post {post_id}"
+        )
 
-        return Result.failure(
-            message="Failed to like/dislike post.",
-            data={"error": str(e)},
-            error_data={
-                "traceback": frappe.get_traceback()
-            }
-        )        
+        return Result.bad_request(
+            message="Unable to like post."
+        )
 
 def build_filters(
     category_l1=None,
@@ -408,6 +506,7 @@ def get_user_post(
                 "user": user_id,
             },
             fields=[
+                "name",
                 "description",
                 "creation",
             ],

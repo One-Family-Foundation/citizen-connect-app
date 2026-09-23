@@ -1,12 +1,12 @@
-    import frappe
+import frappe
 
-    from samaaja.utils.custom_response import custom_response
-    from citizen_connect_app.services.rating_manager import create_rating
-    from citizen_connect_app.utils.error_logger import ErrorLogger
+from samaaja.utils.custom_response import custom_response
+from citizen_connect_app.services.rating_manager import create_rating
+from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
-    @frappe.whitelist()
-    def create():
+@frappe.whitelist()
+def create():
         try:
             category = frappe.form_dict.get("category")
             item_id = frappe.form_dict.get("item_id")

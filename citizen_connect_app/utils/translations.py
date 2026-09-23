@@ -19,7 +19,7 @@ TRANSLATABLE_MASTERS = {
     "Badge": "title",
 }
 
-DEFAULT_LANGUAGES = ["hi"]
+DEFAULT_LANGUAGES = ["hi","fr"]
 MT_BATCH_SIZE = 50      # strings per machine-translation call
 INSERT_CHUNK = 500      # rows per commit
 SOURCE_LANG = "en"

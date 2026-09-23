@@ -13,6 +13,8 @@
   "column_break_gpmo",
   "category",
   "description",
+  "section_break_oayh",
+  "is_financial_support_need",
   "request_help_section",
   "service_id",
   "scheme_id",
@@ -266,12 +268,22 @@
    "fieldtype": "Link",
    "label": "NGO",
    "options": "Organisation"
+  },
+  {
+   "fieldname": "section_break_oayh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_financial_support_need",
+   "fieldtype": "Check",
+   "label": "Financial Support Need"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-17 18:43:42.031795",
+ "modified": "2026-09-21 16:46:57.957045",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",

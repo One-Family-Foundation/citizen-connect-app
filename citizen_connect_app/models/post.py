@@ -32,3 +32,5 @@ class PostResponse(BaseModel):
 
     creation: datetime
     modified: datetime
+    like_count: int = 0
+    liked_by_me: bool = False

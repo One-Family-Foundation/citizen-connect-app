@@ -14,11 +14,11 @@
   "category_l1",
   "category_l2",
   "description",
-  "sponsorship_information",
   "column_break_maqh",
   "ngo_org",
   "cost_model",
   "cost_details",
+  "is_financial_support",
   "rating",
   "service_channel",
   "eligibility_condition",
@@ -44,11 +44,6 @@
    "label": "Title",
    "length": 120,
    "reqd": 1
-  },
-  {
-   "fieldname": "sponsorship_information",
-   "fieldtype": "Long Text",
-   "label": "Sponsorship Information"
   },
   {
    "fieldname": "availability_status",
@@ -202,12 +197,18 @@
   {
    "fieldname": "column_break_eugo",
    "fieldtype": "Column Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_financial_support",
+   "fieldtype": "Check",
+   "label": "Do you offer financial support for this service"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-14 15:37:30.562058",
+ "modified": "2026-09-21 16:36:11.493520",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

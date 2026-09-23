@@ -15,8 +15,6 @@ logger = frappe.logger(
 )
 
 
-
-
 def create(community_check_data: dict) -> Result:
     try:
         try:
@@ -56,19 +54,38 @@ def create(community_check_data: dict) -> Result:
             location.geo2 = location_result.data.geo2
 
         user_id = None
+        user_name = None
+        email_id = None
+        mobile_no = None
 
         if frappe.session.user != "Guest":
-            user_id = frappe.session.user
-        elif community_check.user_id:
+             user = frappe.get_doc("User", frappe.session.user)
+
+             profile_name = frappe.db.get_value(
+                "User Profile",
+                {"user": user.name},
+                "name"
+             )
+             if profile_name:
+                profile = frappe.get_doc("User Profile", profile_name) 
+
+                user_id = user.name
+                user_name = user.first_name
+                email_id = user.email
+                mobile_no = profile.phone
+        else :
             user_id = community_check.user_id
 
         doc_data = {
             "doctype": "Case",
             "type": "Community Check",
             "user_id": user_id,
+            "user_name": user_name,
+            "email_id": email_id,
+            "mobile_no": mobile_no,
             "title":community_check.title,
             "description":community_check.description,
-            "category":"Infra Maintenance",
+            "category":"Infra & Housing",
             "water_supply": community_check.water_supply,
             "electricity": community_check.electricity,
             "road": community_check.road,

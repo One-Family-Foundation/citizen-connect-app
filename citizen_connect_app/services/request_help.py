@@ -94,12 +94,14 @@ class RequestHelpManager:
                 service_data = frappe.db.get_value(
                     "Service",
                     request_help.service_name,
-                    ["category_l1", "ngo_org"],
+                    ["category_l1", "ngo_org" , "cost_model", "is_financial_support"],
                     as_dict=True,
                 )
                 if service_data:
                    case.category = service_data.category_l1
                    case.ngo = service_data.ngo_org
+                   if service_data.is_financial_support:
+                       case.is_financial_support_need = request_help.is_financial_support_need
             else:
                 case.scheme_id = request_help.scheme_name
                 case.category = frappe.db.get_value(

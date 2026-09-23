@@ -118,6 +118,46 @@ def create_volunteer_action(volunteer_action_data: dict) -> Result:
             }
         )
 
+# def get_user_actions(
+#     user_id: str,
+#     limit=DEFAULT_LIMIT,
+#     offset=DEFAULT_OFFSET,
+# ) -> Result:
+#     try:
+#         if not user_id:
+#             return Result.bad_request(
+#                 message="user_id is required."
+#             )
+
+#         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
+#         offset = max(0, int(offset))
+
+#         actions = frappe.get_all(
+#             "Volunteer Action",
+#             filters={
+#                 "user": user_id,
+#             },
+#             fields=[
+#                 "description",
+#                 "creation",
+#             ],
+#             order_by="creation DESC",
+#             limit_page_length=limit,
+#             limit_start=offset,
+#         )
+
+#         return Result.success(
+#             message="User posts fetched successfully.",
+#             data=actions,
+#         )
+
+#     except Exception as e:
+#         ErrorLogger.log(e)
+#         return Result.failure(
+#             message="Failed to get user posts.",
+#             data={"error": str(e)},
+#             error_data={"traceback": frappe.get_traceback()},
+#         )
 def get_user_actions(
     user_id: str,
     limit=DEFAULT_LIMIT,
@@ -132,7 +172,8 @@ def get_user_actions(
         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
         offset = max(0, int(offset))
 
-        actions = frappe.get_all(
+        # Volunteer Actions
+        volunteer_actions = frappe.get_all(
             "Volunteer Action",
             filters={
                 "user": user_id,
@@ -142,19 +183,77 @@ def get_user_actions(
                 "creation",
             ],
             order_by="creation DESC",
-            limit_page_length=limit,
-            limit_start=offset,
         )
 
+        # Community Check + Report Issue
+        cases = frappe.get_all(
+            "Case",
+            filters={
+                "user_id": user_id,
+                "type": ["in", ["Community Check", "Issue"]],
+            },
+            fields=[
+                "type",
+                "description",
+                "creation",
+            ],
+            order_by="creation DESC",
+        )
+
+        community_checks = []
+        report_issues = []
+
+        for case in cases:
+            item = {
+                "description": case.description,
+                "creation": case.creation,
+            }
+
+            if case.type == "Community Check":
+                community_checks.append(item)
+
+            elif case.type == "Issue":
+                report_issues.append(item)
+
+        # Combine all actions
+        actions = volunteer_actions + community_checks + report_issues
+
+        # Latest first
+        actions.sort(
+            key=lambda x: x.get("creation"),
+            reverse=True,
+        )
+
+        # Counts
+        volunteer_action_count = len(volunteer_actions)
+        community_check_count = len(community_checks)
+        report_issue_count = len(report_issues)
+        total = len(actions)
+
+        # Pagination
+        paginated_actions = actions[
+            offset:offset + limit
+        ]
+
         return Result.success(
-            message="User posts fetched successfully.",
-            data=actions,
+            message="User actions fetched successfully.",
+            data={
+                "actions": paginated_actions,
+                "counts": {
+                    "volunteer_action": volunteer_action_count,
+                    "community_check": community_check_count,
+                    "report_issue": report_issue_count,
+                    "total": total,
+                },
+            },
         )
 
     except Exception as e:
         ErrorLogger.log(e)
+
         return Result.failure(
-            message="Failed to get user posts.",
-            data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()},
+            message="Failed to get user actions.",
+            data={
+                "error": str(e),
+            },
         )

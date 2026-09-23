@@ -130,7 +130,7 @@
   {
    "fieldname": "resourc_dropoff_location_section",
    "fieldtype": "Section Break",
-   "label": "Resourc Dropoff Location"
+   "label": "Resources Drop-off Location"
   },
   {
    "fieldname": "person_name",
@@ -173,7 +173,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-16 12:32:13.385783",
+ "modified": "2026-09-22 12:18:46.277816",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Crisis",

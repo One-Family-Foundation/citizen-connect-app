@@ -26,7 +26,7 @@ class RequestHelp(BaseModel):
     geo_l1: Optional[str] = None
 
     geo_l2: Optional[str] = None
-
+    is_financial_support_need: bool | None = None
     @model_validator(mode="after")
     def validate_request_type(self):
         if not self.service_name and not self.scheme_name:
