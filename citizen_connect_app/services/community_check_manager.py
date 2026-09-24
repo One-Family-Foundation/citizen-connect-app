@@ -54,35 +54,26 @@ def create(community_check_data: dict) -> Result:
             location.geo2 = location_result.data.geo2
 
         user_id = None
-        user_name = None
-        email_id = None
-        mobile_no = None
-
+        
         if frappe.session.user != "Guest":
-             user = frappe.get_doc("User", frappe.session.user)
+            user_id = frappe.session.user
 
-             profile_name = frappe.db.get_value(
-                "User Profile",
-                {"user": user.name},
-                "name"
-             )
-             if profile_name:
-                profile = frappe.get_doc("User Profile", profile_name) 
-
-                user_id = user.name
-                user_name = user.first_name
-                email_id = user.email
-                mobile_no = profile.phone
         else :
             user_id = community_check.user_id
+
+        user_profile = None
+        if user_id:
+             user_profile = frappe.db.get_value(
+                 "User Profile",
+                 {"user": user_id},
+                  "name"
+                 )   
 
         doc_data = {
             "doctype": "Case",
             "type": "Community Check",
             "user_id": user_id,
-            "user_name": user_name,
-            "email_id": email_id,
-            "mobile_no": mobile_no,
+            "user_profile":user_profile,
             "title":community_check.title,
             "description":community_check.description,
             "category":"Infra & Housing",
@@ -104,7 +95,7 @@ def create(community_check_data: dict) -> Result:
         if user_id:
             update_user_category_statistics(
                 user_id,
-                "Infra Maintenance"
+                "Infra & Housing"
             )
 
         return Result.success(
@@ -117,7 +108,6 @@ def create(community_check_data: dict) -> Result:
         return Result.failure(
             message="Failed to create community check.",
             data={"error": str(e)},
-            error_data={"traceback": frappe.get_traceback()},
         )
 
 

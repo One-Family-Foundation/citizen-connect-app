@@ -23,38 +23,18 @@ class RequestHelpManager:
                 
 
             else:
-                user = frappe.get_doc("User", frappe.session.user)
+                user_id = frappe.session.user
 
-                profile_name = frappe.db.get_value(
+                user_profile = frappe.db.get_value(
                     "User Profile",
-                    {"user": user.name},
-                    "name"
+                    {"user": user_id},
+                     "name"
                 )
 
-                if not profile_name:
+                if not user_profile:
                     return Result.bad_request("Profile not found")
 
-                profile = frappe.get_doc(
-                    "User Profile",
-                    profile_name
-                )
-
-                request_data["full_name"] = user.first_name
-                request_data["email_id"] = user.email
-
-                if profile.phone:
-                    request_data["mobile_num"] = profile.phone
-
                 request_help = RequestHelp(**request_data)
-
-                full_name = request_help.full_name
-                email = request_help.email_id
-                mobile_num = request_help.mobile_num
-                user_id = user.name
-
-                if not profile.phone:
-                    profile.phone = mobile_num
-                    profile.save(ignore_permissions=True)
 
             if request_type == "service":
                 if not request_help.service_name:
@@ -82,9 +62,7 @@ class RequestHelpManager:
 
             case.type = case_type
             case.user_id = user_id
-            case.user_name = full_name
-            case.email_id = email
-            case.mobile_no = mobile_num
+            case.user_profile = user_profile
             case.age = request_help.age
             case.gender = request_help.gender
             case.description = request_help.description

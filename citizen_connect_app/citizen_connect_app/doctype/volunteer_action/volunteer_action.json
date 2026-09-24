@@ -8,7 +8,6 @@
  "field_order": [
   "user",
   "category_l1",
-  "category_l2",
   "description",
   "media",
   "start_date",
@@ -31,14 +30,6 @@
    "fieldtype": "Link",
    "in_list_view": 1,
    "label": "Category L1",
-   "options": "Category",
-   "reqd": 1
-  },
-  {
-   "fieldname": "category_l2",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Category L2",
    "options": "Category",
    "reqd": 1
   },
@@ -87,7 +78,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-17 13:58:09.494379",
+ "modified": "2026-09-23 14:35:19.097486",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Volunteer Action",
