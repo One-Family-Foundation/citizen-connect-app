@@ -10,6 +10,8 @@ class RequestHelpManager:
     @staticmethod
     def create(request_data: dict, request_type: str, attachment=None) -> Result:
         try:
+            user_id = None
+            user_profile = None
             if frappe.session.user == "Guest":
                 request_help = RequestHelp(**request_data)
 
