@@ -42,24 +42,12 @@
    "type": "Link"
   },
   {
-   "child": 1,
-   "collapsible": 1,
-   "icon": "list",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Unclaimed Cases",
-   "link_to": "Case",
-   "link_type": "DocType",
-   "show_arrow": 0,
-   "type": "Link"
-  },
-  {
    "child": 0,
    "collapsible": 1,
-   "icon": "list",
+   "icon": "layout-list",
    "indent": 0,
    "keep_closed": 0,
-   "label": "Cases",
+   "label": "My Cases",
    "link_type": "DocType",
    "show_arrow": 0,
    "type": "Section Break"
@@ -130,7 +118,7 @@
    "type": "Link"
   }
  ],
- "modified": "2026-09-29 12:22:05.311314",
+ "modified": "2026-09-29 12:43:31.573831",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "NGO Admin",

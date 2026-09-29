@@ -141,7 +141,9 @@ after_migrate = "citizen_connect_app.utils.translations.install_custom_fields"
 permission_query_conditions = {
     "Case": "citizen_connect_app.services.permission_manager.case_query",
     "Organisation" :"citizen_connect_app.services.permission_manager.ngo_profile_query",
-    "Opportunity Form" : "citizen_connect_app.services.permission_manager.opportunity_form_query"
+    "Opportunity Form" : "citizen_connect_app.services.permission_manager.opportunity_form_query",
+    "Scheme" : "citizen_connect_app.services.permission_manager.scheme_list_query",
+    "Service" : "citizen_connect_app.services.permission_manager.service_list_query"
     
 }
 

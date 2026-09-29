@@ -5,5 +5,5 @@
 from frappe.model.document import Document
 
 
-class SchemeNGO(Document):
+class OrganisationChildTable(Document):
 	pass

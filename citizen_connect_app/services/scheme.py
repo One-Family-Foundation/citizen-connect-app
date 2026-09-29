@@ -65,7 +65,7 @@ class SchemeManager:
                 o.name AS ngo_id,
                 o.org_name AS ngo_name,
                 o.phone
-            FROM `tabScheme NGO` sn
+            FROM `tabOrganisation Child Table` sn
             INNER JOIN `tabOrganisation` o
                 ON o.name = sn.ngo
             WHERE sn.parent IN ({placeholders})

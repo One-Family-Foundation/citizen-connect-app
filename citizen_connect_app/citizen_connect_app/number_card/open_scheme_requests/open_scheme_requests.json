@@ -1,5 +1,6 @@
 {
  "aggregate_function_based_on": "",
+ "background_color": "#f5bf9f",
  "creation": "2026-08-27 16:45:42.687168",
  "currency": "INR",
  "docstatus": 0,
@@ -12,7 +13,7 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Open Scheme Requests",
- "modified": "2026-09-28 21:29:18.535933",
+ "modified": "2026-09-29 12:36:54.735963",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Open Scheme Requests",

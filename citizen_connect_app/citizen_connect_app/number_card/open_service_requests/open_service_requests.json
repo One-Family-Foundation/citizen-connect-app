@@ -1,5 +1,6 @@
 {
  "aggregate_function_based_on": "",
+ "background_color": "#aff0b9",
  "creation": "2026-09-28 19:57:52.123647",
  "currency": "INR",
  "docstatus": 0,
@@ -12,7 +13,7 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Open Service Requests",
- "modified": "2026-09-28 21:29:22.892839",
+ "modified": "2026-09-29 12:37:43.134273",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Open Service Requests",
