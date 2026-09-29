@@ -1,7 +1,7 @@
 {
  "aggregate_function_based_on": "",
- "background_color": "#CB2929",
- "color": "#ffffff",
+ "background_color": "#ffadad",
+ "color": "#242323",
  "creation": "2026-09-28 20:16:33.579030",
  "currency": "INR",
  "docstatus": 0,
@@ -14,7 +14,7 @@
  "is_public": 1,
  "is_standard": 1,
  "label": "Open Crisis Requests",
- "modified": "2026-09-28 21:29:13.691425",
+ "modified": "2026-09-29 12:10:56.553863",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Open Crisis Requests",

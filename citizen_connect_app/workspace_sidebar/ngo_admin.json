@@ -42,8 +42,21 @@
    "type": "Link"
   },
   {
+   "child": 1,
+   "collapsible": 1,
+   "icon": "list",
+   "indent": 0,
+   "keep_closed": 0,
+   "label": "Unclaimed Cases",
+   "link_to": "Case",
+   "link_type": "DocType",
+   "show_arrow": 0,
+   "type": "Link"
+  },
+  {
    "child": 0,
    "collapsible": 1,
+   "icon": "list",
    "indent": 0,
    "keep_closed": 0,
    "label": "Cases",
@@ -61,7 +74,6 @@
    "label": "Issues",
    "link_to": "Case",
    "link_type": "DocType",
-   "navigate_to_tab": "",
    "show_arrow": 0,
    "type": "Link"
   },
@@ -116,21 +128,9 @@
    "link_type": "DocType",
    "show_arrow": 0,
    "type": "Link"
-  },
-  {
-   "child": 0,
-   "collapsible": 1,
-   "icon": "angry",
-   "indent": 0,
-   "keep_closed": 0,
-   "label": "Workspace",
-   "link_to": "NGO Admin",
-   "link_type": "Workspace",
-   "show_arrow": 0,
-   "type": "Link"
   }
  ],
- "modified": "2026-09-28 21:45:09.152852",
+ "modified": "2026-09-29 12:22:05.311314",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "NGO Admin",

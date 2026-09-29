@@ -3,7 +3,7 @@ import json
 import frappe
 
 from samaaja.utils.custom_response import custom_response
-from citizen_connect_app.services.case_manager import create_comm_check
+from citizen_connect_app.services.case_manager import community_check
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
@@ -37,7 +37,7 @@ def create_community_check():
             f"RAW DESCRIPTION: {frappe.form_dict.get('description')}"
         )
 
-        return create_comm_check(
+        return community_check(
             community_check_data=data
         ).to_custom_response()
 

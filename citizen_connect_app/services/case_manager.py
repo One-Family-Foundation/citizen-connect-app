@@ -3,19 +3,28 @@ import frappe
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.commons import (update_user_category_statistics)
-from citizen_connect_app.services.community_check_manager import create
+from citizen_connect_app.services.community_check_manager import (create as create_community_check,)
+from citizen_connect_app.services.issue_manager import ( create as create_issue,)
+from citizen_connect_app.services.request_help import RequestHelpManager
+
 MIN_LIMIT = 1
 MAX_LIMIT = 100
 DEFAULT_LIMIT = 10
 DEFAULT_OFFSET = 0
 
 
-@statisticmethod
-def community_check(community_check_data: dict) -> Result:
-    return create(community_check_data)
-    
+def community_check(community_check_data:dict)->Result:
+    return create_community_check(community_check_data)
 
+def issue(issue_data:dict)->Result:
+    return create_issue(issue_data)
 
+def create_help_request(request_data, request_type, attachment=None)->Result:
+    return RequestHelpManager.create(
+        request_data=request_data,
+        request_type=request_type,
+        attachment=attachment,
+    )
 
 
 @staticmethod
