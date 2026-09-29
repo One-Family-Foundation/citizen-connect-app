@@ -18,9 +18,7 @@ class RequestHelpManager:
                 if not request_help.full_name or not request_help.email_id:
                     return Result.bad_request("fullname and email are mandatory")
 
-                full_name = request_help.full_name
-                email = request_help.email_id
-                mobile_num = request_help.mobile_num
+               
                 user_id = None
                 
 
@@ -65,6 +63,10 @@ class RequestHelpManager:
             case.type = case_type
             case.user_id = user_id
             case.user_profile = user_profile
+            if frappe.session.user == "Guest":
+                case.full_name = request_help.full_name
+                case.email_id = request_help.email_id
+                case.mobile_num = request_help.mobile_num
             case.age = request_help.age
             case.gender = request_help.gender
             case.description = request_help.description

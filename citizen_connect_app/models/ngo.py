@@ -9,7 +9,12 @@ class NGO(BaseModel):
     name: str
     phone: Optional[str] = None
     email: Optional[EmailStr] = None
-
+    @field_validator("email", mode="before")
+    @classmethod
+    def empty_email_to_none(cls, value):
+        if value == "":
+            return None
+        return value
 
 class CategoryChild(BaseModel):
     category: str

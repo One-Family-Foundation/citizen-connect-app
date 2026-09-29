@@ -86,11 +86,7 @@ def create(issue_data: dict) -> Result:
 
         doc = frappe.get_doc(doc_data).insert(ignore_permissions=True)
 
-        if user_id and issue.category and issue.category.l1:
-            update_user_category_statistics(
-                 user_id,
-                issue.category.l1
-            )
+        on_create(doc)
         
       
         response_data = {
@@ -141,3 +137,23 @@ def count_issue(user_id: str) -> Result:
         message="Issue count fetched successfully.",
         data=issue_count,
     )
+def on_create(doc ,method=None)->Result:
+    if doc.type != "Issue":
+        return
+
+    if doc.user_id:
+        update_user_category_statistics(
+            doc.user_id,
+            doc.category,
+            is_deleted=False
+        )
+def on_trash(doc, method=None):
+    if doc.type != "Issue":
+        return
+
+    if doc.user_id:
+        update_user_category_statistics(
+            doc.user_id,
+            doc.category,
+            is_deleted=True
+        )         

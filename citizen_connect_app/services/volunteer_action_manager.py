@@ -1,5 +1,6 @@
 import frappe
 
+from frappe import user
 from samaaja.utils.result import Result
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from citizen_connect_app.models.volunteer_action_model import (
@@ -93,12 +94,7 @@ def create_volunteer_action(volunteer_action_data: dict) -> Result:
         logger.info(
             f"Volunteer Action created with ID: {doc.name}"
         )
-        user_id = frappe.session.user
-        category_l1 = volunteer_action.category.l1
-        update_user_category_statistics(
-                   user_id,
-                   category_l1
-                )
+        on_create(doc)
         return Result.success(
             message="Volunteer action created successfully.",
             data=doc.as_dict()
@@ -216,3 +212,22 @@ def get_user_actions(
                 "error": str(e),
             },
         )
+
+def on_create(doc) -> Result:
+    user_id = doc.user
+    category_l1 = doc.category_l1
+
+    update_user_category_statistics(
+        user_id,
+        category_l1,
+        is_deleted=False
+    )
+def on_trash(doc) ->Result:
+    user_id = doc.user
+    category_l1 = doc.category_l1
+    
+    update_user_category_statistics(
+        user_id,
+        category_l1,
+        is_deleted=True
+    )

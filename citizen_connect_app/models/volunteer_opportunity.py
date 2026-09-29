@@ -64,7 +64,7 @@ class GuestOpportunityForm(BaseModel):
     opportunity_id: str
 
     full_name: Annotated[str, Field(min_length=3, max_length=120)]
-    email: EmailStr
+    email: EmailStr | None = None
     phone: Optional[Annotated[str, Field(min_length=6, max_length=15)]] = None
 
     age: int

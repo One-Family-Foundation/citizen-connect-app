@@ -157,6 +157,7 @@ permission_query_conditions = {
 # 	}
 # }
 
+
 # Scheduled Tasks
 # ---------------
 
@@ -287,5 +288,12 @@ doc_events = {
         "on_update": "citizen_connect_app.services.location.clear_locations_cache",
         "after_insert": "citizen_connect_app.services.location.clear_locations_cache",
         "on_trash": "citizen_connect_app.services.location.clear_locations_cache",
+    },
+    "Volunteer Action": {
+        "on_trash": "citizen_connect_app.services.volunteer_action_manager.on_trash",
+    },
+    "Case":{
+        "on_trash": "citizen_connect_app.services.community_check_manager.on_trash",
+        "on_trash": "citizen_connect_app.services.issue_manager.on_trash",
     },
 }

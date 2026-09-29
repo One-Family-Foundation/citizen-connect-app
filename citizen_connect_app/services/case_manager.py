@@ -1,15 +1,22 @@
 from psycopg2.extensions import Int
 import frappe
-
-
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
-
-
+from citizen_connect_app.utils.commons import (update_user_category_statistics)
+from citizen_connect_app.services.community_check_manager import create
 MIN_LIMIT = 1
 MAX_LIMIT = 100
 DEFAULT_LIMIT = 10
 DEFAULT_OFFSET = 0
+
+
+@statisticmethod
+def community_check(community_check_data: dict) -> Result:
+    return create(community_check_data)
+    
+
+
+
 
 @staticmethod
 def get_user_case_list(
@@ -181,3 +188,14 @@ def get_case_resolved_count(user_id:str)->Int:
             "type": ["in", ["Issue", "Community Check"]],
         }
     )
+
+def on_trash(doc) ->Result:
+    user_id = doc.user
+    category_l1 = doc.category_l1
+    
+    update_user_category_statistics(
+        user_id,
+        category_l1,
+        is_deleted=True
+    )
+ 

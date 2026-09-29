@@ -91,12 +91,9 @@ def create(community_check_data: dict) -> Result:
             "geo_l2": location.geo2,
             "media":saved_files
         }
-        frappe.get_doc(doc_data).insert(ignore_permissions=True)
-        if user_id:
-            update_user_category_statistics(
-                user_id,
-                "Infra & Housing"
-            )
+        doc = frappe.get_doc(doc_data)
+        doc.insert(ignore_permissions=True)
+        on_create(doc)
 
         return Result.success(
             message="Community check created successfully.",
@@ -110,5 +107,23 @@ def create(community_check_data: dict) -> Result:
             data={"error": str(e)},
         )
 
+def on_create(doc, method=None):
+    if doc.type != "Community Check":
+        return
 
-         
+    if doc.user_id:
+        update_user_category_statistics(
+            doc.user_id,
+            doc.category,
+            is_deleted=False
+        )
+def on_trash(doc, method=None):
+    if doc.type != "Community Check":
+        return
+
+    if doc.user_id:
+        update_user_category_statistics(
+            doc.user_id,
+            doc.category,
+            is_deleted=True
+        )         
