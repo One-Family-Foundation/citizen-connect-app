@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.profile.get?user_id=vijay@yopmail.com
+  url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.profile.get?user_id=itsvivekg10@gmail.com
   params:
     - name: user_id
-      value: vijay@yopmail.com
+      value: itsvivekg10@gmail.com
       type: query
   auth: inherit
 

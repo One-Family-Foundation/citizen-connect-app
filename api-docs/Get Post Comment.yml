@@ -1,7 +1,7 @@
 info:
   name: Get Post Comment
   type: http
-  seq: 34
+  seq: 33
 
 http:
   method: GET

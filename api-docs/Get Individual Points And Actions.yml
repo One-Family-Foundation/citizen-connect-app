@@ -1,7 +1,7 @@
 info:
   name: Get Individual Points And Actions
   type: http
-  seq: 29
+  seq: 28
 
 http:
   method: GET

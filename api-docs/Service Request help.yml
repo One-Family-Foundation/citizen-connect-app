@@ -7,20 +7,20 @@ http:
   method: POST
   url: https://admin.citizen-connect.org/api/method/citizen_connect_app.api.service_request.create
   headers:
-    - name: email
-      value: itsvivekg10@gmail.com
-    - name: mobile_num
-      value: +91    9876543210
-    - name: service_name
-      value: su2gdsb6rv
-    - name: age
-      value: "21"
-    - name: gender
-      value: Male
-    - name: description
-      value: I need help with this service
-    - name: full_name
-      value: vivek
+    - name: Content-Type
+      value: multipart/form-data
+  body:
+    type: multipart-form
+    data:
+      - name: age
+        type: text
+        value: "21"
+      - name: description
+        type: text
+        value: I need help with this service
+      - name: service_name
+        type: text
+        value: 926ssg5f3d
   auth: inherit
 
 settings:

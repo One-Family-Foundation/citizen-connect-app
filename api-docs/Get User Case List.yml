@@ -1,7 +1,7 @@
 info:
   name: Get User Case List
   type: http
-  seq: 28
+  seq: 27
 
 http:
   method: GET
