@@ -31,4 +31,6 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
+        env:
+         USER_SID: ${{ secrets.USER_SID }}
         run: npx playwright test
