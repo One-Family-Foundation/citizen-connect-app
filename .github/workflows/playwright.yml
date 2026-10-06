@@ -29,18 +29,5 @@ jobs:
       - name: Install Playwright
         run: npx playwright install --with-deps
 
-      - name: Check USER_SID
-        env:
-          USER_SID: ${{ secrets.USER_SID }}
-        run: |
-          if [ -z "$USER_SID" ]; then
-            echo "USER_SID is empty"
-            exit 1
-          else
-            echo "USER_SID is configured"
-          fi
-
       - name: Run Playwright tests
-        env:
-          USER_SID: ${{ secrets.USER_SID }}
         run: npx playwright test
