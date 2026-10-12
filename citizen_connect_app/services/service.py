@@ -45,29 +45,39 @@ class ServiceManager:
                 filters.append("s.service_country = %s")
                 values.append(country)
             if geo1:
+                geo1_id = frappe.db.get_value(
+                    "Geography L1",
+                    {"geo_l1": geo1},
+                    "name"
+                )
                 filters.append("""
-        EXISTS (
-            SELECT 1
-            FROM `tabChild Geo L1` cgl1
-            WHERE cgl1.parent = s.name
-              AND cgl1.parenttype = 'Service'
-              AND cgl1.parentfield = 'service_geo1'
-              AND cgl1.geo_l1 = %s
-        )
-    """)
-                values.append(geo1)
+                    EXISTS (
+                        SELECT 1
+                        FROM `tabChild Geo L1` cgl1
+                        WHERE cgl1.parent = s.name
+                          AND cgl1.parenttype = 'Service'
+                          AND cgl1.parentfield = 'service_geo1'
+                          AND cgl1.geo_l1 = %s
+                    )
+                """)
+                values.append(geo1_id or geo1)
             if geo2:
+                geo2_id = frappe.db.get_value(
+                    "Geography L2",
+                    {"geo_l2": geo2},
+                    "name"
+                )
                 filters.append("""
-        EXISTS (
-            SELECT 1
-            FROM `tabChild Geo L2` cgl2
-            WHERE cgl2.parent = s.name
-              AND cgl2.parenttype = 'Service'
-              AND cgl2.parentfield = 'service_geo2'
-              AND cgl2.geo_l2 = %s
-        )
-    """)
-                values.append(geo2)
+                    EXISTS (
+                        SELECT 1
+                        FROM `tabChild Geo L2` cgl2
+                        WHERE cgl2.parent = s.name
+                          AND cgl2.parenttype = 'Service'
+                          AND cgl2.parentfield = 'service_geo2'
+                          AND cgl2.geo_l2 = %s
+                        )
+                """)
+                values.append(geo2_id or geo2)
             if service_status:
                 filters.append("s.service_status = %s")
                 values.append(service_status)

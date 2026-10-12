@@ -224,6 +224,11 @@ class SchemeManager:
             values.append(country)
 
         if geo1:
+            geo1_id = frappe.db.get_value(
+                "Geography L1",
+                {"geo_l1": geo1},
+                "name"
+            )
             filters.append("""
                 EXISTS (
                     SELECT 1
@@ -234,9 +239,14 @@ class SchemeManager:
                       AND cgl1.geo_l1 = %s
                 )
             """)
-            values.append(geo1)
+            values.append(geo1_id or geo1)
 
         if geo2:
+            geo2_id = frappe.db.get_value(
+                 "Geography L2",
+                 {"geo_l2": geo2},
+                 "name"
+            )
             filters.append("""
                 EXISTS (
                     SELECT 1
@@ -247,7 +257,7 @@ class SchemeManager:
                       AND cgl2.geo_l2 = %s
                 )
             """)
-            values.append(geo2)
+            values.append(geo2_id or geo2)
 
         # Other filters
         if gender:
