@@ -1,7 +1,12 @@
 // Copyright (c) 2026, One Family Foundation and contributors
 // For license information, please see license.txt
-
+let GEO_L2_PARENT = {};
 frappe.ui.form.on("Scheme", {
+    before_load(frm) {
+        if (frm.is_new()) {
+            frm.set_value("country", "");
+        }
+    },
     refresh(frm) {
 
         // Show only L1 categories
@@ -36,34 +41,43 @@ frappe.ui.form.on("Scheme", {
 
         // Show only Geography L1 for selected Country
         frm.set_query("geo_l1", function () {
+            const country = frm.doc.country;
+
             return {
                 filters: {
-                    country_name: frm.doc.country
+                    country_name: country  || "__no_country_selected__"
                 }
             };
         });
 
         // Show only Geography L2 for selected Geography L1
-        frm.set_query("geo_l2", function () {
+        frm.set_query("geo_l2", () => {
+            const geo_l1 = (frm.doc.geo_l1 || [])
+                .map(r => r.geo_l1)
+                .filter(Boolean);
+
             return {
                 filters: {
-                    geo_l1: frm.doc.geo_l1
+                    geo_l1: ["in", geo_l1.length ? geo_l1 : [""]]
                 }
             };
         });
     },
-
     category_l1(frm) {
         frm.set_value("category_l2", "");
     },
 
     country(frm) {
-        frm.set_value("geo_l1", "");
-        frm.set_value("geo_l2", "");
+        frm.clear_table("geo_l1");
+        frm.clear_table("geo_l2");
+    
+        frm.refresh_field("geo_l1");
+        frm.refresh_field("geo_l2");
     },
 
     geo_l1(frm) {
-        frm.set_value("geo_l2", "");
+        frm.clear_table("geo_l2");
+      frm.refresh_field("geo_l2");
     }
 });
 function validate_length(value, label, min, max) {

@@ -10,7 +10,7 @@ from citizen_connect_app.services.post_manager import count_user_post
 from citizen_connect_app.services.opportunity_application import count_volunteer_actions
 from citizen_connect_app.services.case_manager import (get_user_case_count , get_case_resolved_count )
 from citizen_connect_app.utils.commons import create_media_url
-from citizen_connect_app.services.gamification_manager import (get_cached_user_rank)
+from citizen_connect_app.services.gamification_manager import (get_cached_user_rank ,get_individual_leaderboard)
 from citizen_connect_app.services.volunteer_action_manager import (get_user_actions)
 def update_profile(profile_data: dict) -> Result:
     try:
@@ -171,7 +171,14 @@ def get_profile(user_id: str, lang: str = "en") -> Result:
             "User Profile",
             profile_name
         )
-        rank = get_cached_user_rank(user.name) or 0
+        rank = get_cached_user_rank(user.name)
+        
+        if rank is None:
+            get_individual_leaderboard(lang=lang)
+
+            rank = get_cached_user_rank(user.name)
+        rank = rank or 0    
+
 
         profile_image = create_media_url(user.user_image) if user.user_image else None
 

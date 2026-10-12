@@ -107,15 +107,15 @@
   },
   {
    "fieldname": "service_geo1",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Geography L1",
-   "options": "Geography L1"
+   "options": "Child Geo L1"
   },
   {
    "fieldname": "service_geo2",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Geography L2",
-   "options": "Geography L2"
+   "options": "Child Geo L2"
   },
   {
    "fieldname": "eligibility_condition",
@@ -208,7 +208,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-28 13:09:53.506261",
+ "modified": "2026-10-09 14:02:54.679213",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Service",

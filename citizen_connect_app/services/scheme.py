@@ -1,3 +1,4 @@
+import json
 import frappe
 from citizen_connect_app.models.scheme import Scheme, SchemeSummary
 from citizen_connect_app.models.ngo import NGO
@@ -26,8 +27,21 @@ class SchemeManager:
         s.category_l1 AS category_l1_name,
         s.category_l2 AS category_l2_name,
         c.name AS country,
-        g1.geo_l1,
-        g2.geo_l2,
+        (
+           SELECT JSON_ARRAYAGG(cgl1.geo_l1)
+           FROM `tabChild Geo L1` cgl1
+           WHERE cgl1.parent = s.name
+            AND cgl1.parenttype = 'Scheme'
+            AND cgl1.parentfield = 'geo_l1'
+        ) AS geo_l1,
+        (
+           SELECT JSON_ARRAYAGG(cgl2.geo_l2)
+           FROM `tabChild Geo L2` cgl2
+           WHERE cgl2.parent = s.name
+            AND cgl2.parenttype = 'Scheme'
+            AND cgl2.parentfield = 'geo_l2'
+        ) AS geo_l2,
+
         s.gender,
         s.disable_relevant,
         s.income_limit,
@@ -44,10 +58,6 @@ class SchemeManager:
         FROM `tabScheme` s
         LEFT JOIN `tabCountry` c
             ON c.name = s.country
-        LEFT JOIN `tabGeography L1` g1
-            ON g1.name = s.geo_l1
-        LEFT JOIN `tabGeography L2` g2
-            ON g2.name = s.geo_l2
         LEFT JOIN `tabCurrency` cur
             ON cur.name = s.currency
     """
@@ -214,12 +224,40 @@ class SchemeManager:
             values.append(country)
 
         if geo1:
-            filters.append("g1.geo_l1 = %s")
-            values.append(geo1)
+            geo1_id = frappe.db.get_value(
+                "Geography L1",
+                {"geo_l1": geo1},
+                "name"
+            )
+            filters.append("""
+                EXISTS (
+                    SELECT 1
+                    FROM `tabChild Geo L1` cgl1
+                    WHERE cgl1.parent = s.name
+                      AND cgl1.parenttype = 'Scheme'
+                      AND cgl1.parentfield = 'geo_l1'
+                      AND cgl1.geo_l1 = %s
+                )
+            """)
+            values.append(geo1_id or geo1)
 
         if geo2:
-            filters.append("g2.geo_l2 = %s")
-            values.append(geo2)
+            geo2_id = frappe.db.get_value(
+                 "Geography L2",
+                 {"geo_l2": geo2},
+                 "name"
+            )
+            filters.append("""
+                EXISTS (
+                    SELECT 1
+                    FROM `tabChild Geo L2` cgl2
+                    WHERE cgl2.parent = s.name
+                      AND cgl2.parenttype = 'Scheme'
+                      AND cgl2.parentfield = 'geo_l2'
+                      AND cgl2.geo_l2 = %s
+                )
+            """)
+            values.append(geo2_id or geo2)
 
         # Other filters
         if gender:
@@ -252,8 +290,12 @@ class SchemeManager:
             description=row["description"],
             location={
                 "country": { "name": row["country"], "display_name": frappe._(row["country"],lang )},
-                "geo1": { "name": row["geo_l1"], "display_name": frappe._(row["geo_l1"],lang ) },
-                "geo2": { "name": row["geo_l2"], "display_name": frappe._(row["geo_l2"],lang ) }
+                "geo1": SchemeManager._get_location_list(
+                    row.get("geo_l1"), "Geography L1", "geo_l1"
+                ),
+                "geo2":  SchemeManager._get_location_list(
+                    row.get("geo_l2"), "Geography L2", "geo_l2"
+                ),
             },
             disabled_relevant=row["disable_relevant"],
             currency=row["currency"],
@@ -283,8 +325,12 @@ class SchemeManager:
             application_url=row["application_url"],
             location={
                 "country": { "name": row["country"], "display_name": frappe._(row["country"],lang ) },
-                "geo1": { "name": row["geo_l1"], "display_name": frappe._(row["geo_l1"],lang ) },
-                "geo2": { "name": row["geo_l2"], "display_name": frappe._(row["geo_l2"],lang ) }
+                "geo1": SchemeManager._get_location_list(
+                    row.get("geo_l1"), "Geography L1", "geo_l1"
+                ),
+                "geo2":  SchemeManager._get_location_list(
+                    row.get("geo_l2"), "Geography L2", "geo_l2"
+                ),
             },
             gender=row["gender"],
             disabled_relevant=row["disable_relevant"],
@@ -301,3 +347,23 @@ class SchemeManager:
                 "l2": { "name": row["category_l2_name"], "display_name": frappe._(row["category_l2_name"],lang ) },
             },
         )
+
+    @staticmethod
+    def _get_location_list(values, doctype, field):
+        if not values:
+            return []
+
+        if isinstance(values, str):
+            values = json.loads(values)
+
+        result = []
+
+        for name in values:
+            label = frappe.db.get_value(doctype, name, field)
+
+            result.append({
+                "name": name,
+                "display_name": label or name,
+            })
+
+        return result    
