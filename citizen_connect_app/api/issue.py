@@ -3,7 +3,7 @@ import json
 import frappe
 
 from samaaja.utils.custom_response import custom_response
-from citizen_connect_app.services.issue_manager import create
+from citizen_connect_app.services.case_manager import issue
 from citizen_connect_app.utils.error_logger import ErrorLogger
 
 
@@ -21,7 +21,7 @@ def create_issue():
             "files": [f for f in frappe.request.files.getlist("files") if f.filename]
         }
 
-        return create(issue_data=data).to_custom_response()
+        return issue(issue_data=data).to_custom_response()
 
     except Exception as e:
         ErrorLogger.log(e)

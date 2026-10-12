@@ -1,7 +1,7 @@
 info:
   name: Get Location
   type: http
-  seq: 26
+  seq: 25
 
 http:
   method: GET

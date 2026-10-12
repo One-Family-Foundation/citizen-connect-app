@@ -64,16 +64,16 @@
   },
   {
    "fieldname": "geo_l1",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Geo L1",
-   "options": "Geography L1",
+   "options": "Child Geo L1",
    "reqd": 1
   },
   {
    "fieldname": "geo_l2",
-   "fieldtype": "Link",
+   "fieldtype": "Table MultiSelect",
    "label": "Geo L2",
-   "options": "Geography L2"
+   "options": "Child Geo L2"
   },
   {
    "fieldname": "registered_address",
@@ -155,13 +155,13 @@
   {
    "fieldname": "ngo_admins_section",
    "fieldtype": "Section Break",
-   "label": "NGO Admins"
+   "label": "Organisation Admins"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-25 21:30:16.259892",
+ "modified": "2026-10-09 12:23:07.584336",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Organisation",

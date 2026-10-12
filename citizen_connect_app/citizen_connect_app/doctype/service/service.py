@@ -16,3 +16,34 @@ class Service(Document):
 
         if user.role_profile_name == "NGO Admin Role Profile" and self.service_status == "Approved":
             self.service_status = "Pending"
+
+
+@frappe.whitelist()
+def delete_service(service_name):
+    cases = frappe.get_all(
+        "Case",
+        filters={"service_id": service_name},
+        pluck="name"
+    )
+
+    # Delete all Cases linked to this Service
+    for case_name in cases:
+        frappe.delete_doc(
+            "Case",
+            case_name,
+            ignore_permissions=True
+        )
+
+    # Now delete the Service
+    frappe.delete_doc(
+        "Service",
+        service_name,
+        ignore_permissions=True
+    )
+
+    frappe.db.commit()
+
+    return {
+        "success": True,
+        "message": "Service and all linked Cases deleted successfully"
+    }

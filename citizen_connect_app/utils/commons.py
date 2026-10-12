@@ -59,7 +59,7 @@ def resolve_location(location:Location)->Result:
                 )
     return Result.success(message="Location resolved successfully.", data=Location(country=country, geo1=geo_l1, geo2=geo_l2),)
 
-def update_user_category_statistics(user_id, category):
+def update_user_category_statistics(user_id, category , is_deleted=False):
     if not user_id or not category:
         return
 
@@ -78,10 +78,20 @@ def update_user_category_statistics(user_id, category):
             stats_name,
         )
 
-        stats.count = (stats.count or 0) + 1
+        if is_deleted:
+            stats.count = max((stats.count or 0) - 1, 0)
+            if stats.count <= 0:
+                frappe.delete_doc(
+                    "User Category Statistics",
+                    stats.name,
+                    ignore_permissions=True,
+                )
+                return
+        else:
+           stats.count = (stats.count or 0) + 1
         stats.save(ignore_permissions=True)
 
-    else:
+    elif not is_deleted:
         frappe.get_doc({
             "doctype": "User Category Statistics",
             "user": user_id,

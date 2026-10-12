@@ -141,7 +141,9 @@ after_migrate = "citizen_connect_app.utils.translations.install_custom_fields"
 permission_query_conditions = {
     "Case": "citizen_connect_app.services.permission_manager.case_query",
     "Organisation" :"citizen_connect_app.services.permission_manager.ngo_profile_query",
-    "Opportunity Form" : "citizen_connect_app.services.permission_manager.opportunity_form_query"
+    "Opportunity Form" : "citizen_connect_app.services.permission_manager.opportunity_form_query",
+    "Scheme" : "citizen_connect_app.services.permission_manager.scheme_list_query",
+    "Service" : "citizen_connect_app.services.permission_manager.service_list_query"
     
 }
 
@@ -156,6 +158,7 @@ permission_query_conditions = {
 # 		"on_trash": "method"
 # 	}
 # }
+
 
 # Scheduled Tasks
 # ---------------
@@ -287,5 +290,12 @@ doc_events = {
         "on_update": "citizen_connect_app.services.location.clear_locations_cache",
         "after_insert": "citizen_connect_app.services.location.clear_locations_cache",
         "on_trash": "citizen_connect_app.services.location.clear_locations_cache",
+    },
+    "Volunteer Action": {
+        "on_trash": "citizen_connect_app.services.volunteer_action_manager.on_trash",
+    },
+    "Case":{
+        "on_trash": "citizen_connect_app.services.community_check_manager.on_trash",
+        "on_trash": "citizen_connect_app.services.issue_manager.on_trash",
     },
 }

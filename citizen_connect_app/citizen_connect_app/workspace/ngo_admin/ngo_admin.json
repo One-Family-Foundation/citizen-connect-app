@@ -9,22 +9,17 @@
  "for_user": "",
  "hide_custom": 0,
  "icon": "",
- "idx": 0,
+ "idx": 1,
  "indicator_color": "green",
  "is_hidden": 0,
  "label": "NGO Admin",
  "link_type": "DocType",
  "links": [],
- "modified": "2026-08-27 17:09:22.844418",
+ "modified": "2026-09-28 21:57:49.533982",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "NGO Admin",
- "number_cards": [
-  {
-   "label": "Open Cases",
-   "number_card_name": "Open Cases"
-  }
- ],
+ "number_cards": [],
  "owner": "Administrator",
  "parent_page": "",
  "public": 1,
