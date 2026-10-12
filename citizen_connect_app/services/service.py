@@ -1,3 +1,4 @@
+import json
 import frappe
 
 from citizen_connect_app.utils.error_logger import ErrorLogger
@@ -44,10 +45,28 @@ class ServiceManager:
                 filters.append("s.service_country = %s")
                 values.append(country)
             if geo1:
-                filters.append("geo1.geo_l1 = %s")
+                filters.append("""
+        EXISTS (
+            SELECT 1
+            FROM `tabChild Geo L1` cgl1
+            WHERE cgl1.parent = s.name
+              AND cgl1.parenttype = 'Service'
+              AND cgl1.parentfield = 'service_geo1'
+              AND cgl1.geo_l1 = %s
+        )
+    """)
                 values.append(geo1)
             if geo2:
-                filters.append("geo2.geo_l2 = %s")
+                filters.append("""
+        EXISTS (
+            SELECT 1
+            FROM `tabChild Geo L2` cgl2
+            WHERE cgl2.parent = s.name
+              AND cgl2.parenttype = 'Service'
+              AND cgl2.parentfield = 'service_geo2'
+              AND cgl2.geo_l2 = %s
+        )
+    """)
                 values.append(geo2)
             if service_status:
                 filters.append("s.service_status = %s")
@@ -69,8 +88,20 @@ class ServiceManager:
                         s.title,
                         s.description,
                         s.service_country,
-                        geo1.geo_l1 AS service_geo1,
-                        geo2.geo_l2 AS service_geo2,
+                        (
+                           SELECT JSON_ARRAYAGG(cgl1.geo_l1)
+                           FROM `tabChild Geo L1` cgl1
+                           WHERE cgl1.parent = s.name
+                           AND cgl1.parenttype = 'Service'
+                           AND cgl1.parentfield = 'service_geo1'
+                        ) AS service_geo1,
+                        (
+                           SELECT JSON_ARRAYAGG(cgl2.geo_l2)
+                           FROM `tabChild Geo L2` cgl2
+                           WHERE cgl2.parent = s.name
+                           AND cgl2.parenttype = 'Service'
+                           AND cgl2.parentfield = 'service_geo2'
+                        ) AS service_geo2,
                         s.cost_model,
                         s.cost_details,
                         s.availability_status,
@@ -91,11 +122,6 @@ class ServiceManager:
 
                     FROM `tabService` s
 
-                    LEFT JOIN `tabGeography L1` geo1
-                        ON geo1.name = s.service_geo1
-
-                    LEFT JOIN `tabGeography L2` geo2
-                        ON geo2.name = s.service_geo2
                     LEFT JOIN `tabOrganisation` org
                         ON org.name = s.ngo_org
                     
@@ -139,8 +165,20 @@ class ServiceManager:
                     s.title,
                     s.description,
                     s.service_country,
-                    geo1.geo_l1 AS service_geo1,
-                    geo2.geo_l2 AS service_geo2,
+                    (
+                           SELECT JSON_ARRAYAGG(cgl1.geo_l1)
+                           FROM `tabChild Geo L1` cgl1
+                           WHERE cgl1.parent = s.name
+                           AND cgl1.parenttype = 'Service'
+                           AND cgl1.parentfield = 'service_geo1'
+                        ) AS service_geo1,
+                        (
+                           SELECT JSON_ARRAYAGG(cgl2.geo_l2)
+                           FROM `tabChild Geo L2` cgl2
+                           WHERE cgl2.parent = s.name
+                           AND cgl2.parenttype = 'Service'
+                           AND cgl2.parentfield = 'service_geo2'
+                        ) AS service_geo2,
                     s.cost_model,
                     s.cost_details,
                     s.availability_status,
@@ -161,12 +199,6 @@ class ServiceManager:
                     
 
                 FROM `tabService` s
-
-                LEFT JOIN `tabGeography L1` geo1
-                    ON geo1.name = s.service_geo1
-
-                LEFT JOIN `tabGeography L2` geo2
-                    ON geo2.name = s.service_geo2
 
                 LEFT JOIN `tabOrganisation` org
                     ON org.name = s.ngo_org    
@@ -194,6 +226,27 @@ class ServiceManager:
             raise
     @staticmethod
     def _to_service(row, lang=None) -> dict:
+        geo1_values = row.get("service_geo1") or []
+        geo2_values = row.get("service_geo2") or []
+
+        if isinstance(geo1_values, str):
+            geo1_values = json.loads(geo1_values)
+        geo1_list = []
+        for name in geo1_values:
+            label = frappe.db.get_value("Geography L1", name, "geo_l1")
+            geo1_list.append({
+            "name": name,
+            "display_name": label or name,
+        })    
+        if isinstance(geo2_values, str):
+            geo2_values = json.loads(geo2_values)
+        geo2_list = []
+        for name in geo2_values:
+            label = frappe.db.get_value("Geography L2", name, "geo_l2")
+            geo2_list.append({
+            "name": name,
+            "display_name": label or name,
+        })    
         return {
             "id": row["id"],
             "title": row["title"],
@@ -203,14 +256,8 @@ class ServiceManager:
                     "name": row["service_country"],
                     "display_name": frappe._(row["service_country"], lang=lang),
                 },
-                "geo1": {
-                    "name": row["service_geo1"],
-                    "display_name": frappe._(row["service_geo1"], lang=lang),
-                },
-                "geo2": {
-                    "name": row["service_geo2"],
-                    "display_name": frappe._(row["service_geo2"], lang=lang),
-                },
+                "geo1": geo1_list,
+                "geo2": geo2_list,
             },
             "cost_model": row["cost_model"],
             "cost_details": row["cost_details"],

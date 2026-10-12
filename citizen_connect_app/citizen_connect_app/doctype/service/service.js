@@ -1,5 +1,10 @@
 
 frappe.ui.form.on("Service", {
+    before_load(frm) {
+        if (frm.is_new()) {
+            frm.set_value("service_country", "");
+        }
+    },
     refresh(frm) {
         frm.set_df_property("rating", "read_only", 1);
 
@@ -33,35 +38,27 @@ frappe.ui.form.on("Service", {
         });
 
         // Geography L1
+     
+        // Geography L1: filter by selected country
         frm.set_query("service_geo1", function () {
-            if (!frm.doc.service_country) {
-                return {
-                    filters: {
-                        name: ""
-                    }
-                };
-            }
+            const country = frm.doc.service_country;
 
             return {
                 filters: {
-                    country_name: frm.doc.service_country
+                    country_name: country || "__no_country_selected__"
                 }
             };
         });
 
-        // Geography L2
+        // Geography L2: filter by selected Geography L1 rows
         frm.set_query("service_geo2", function () {
-            if (!frm.doc.service_geo1) {
-                return {
-                    filters: {
-                        name: ""
-                    }
-                };
-            }
+            const geo_l1 = (frm.doc.service_geo1 || [])
+                .map(row => row.geo_l1)
+                .filter(Boolean);
 
             return {
                 filters: {
-                    geo_l1: frm.doc.service_geo1
+                    geo_l1: ["in", geo_l1.length ? geo_l1 : [""]]
                 }
             };
         });
@@ -76,12 +73,16 @@ frappe.ui.form.on("Service", {
     },
 
     service_country(frm) {
-        frm.set_value("service_geo1", "");
-        frm.set_value("service_geo2", "");
+        frm.clear_table("service_geo1");
+        frm.clear_table("service_geo2");
+
+        frm.refresh_field("service_geo1");
+        frm.refresh_field("service_geo2");
     },
 
     service_geo1(frm) {
-        frm.set_value("service_geo2", "");
+        frm.clear_table("service_geo2");
+        frm.refresh_field("service_geo2");
     },
 
     validate(frm) {

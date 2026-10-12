@@ -2,6 +2,11 @@ frappe.ui.form.on("Case", {
     refresh(frm) {
         update_case_summary(frm);
         update_complete_button(frm);
+        set_ngo_admin_filter(frm);
+    },
+    ngo(frm) {
+        frm.set_value("ngo_admin", "");
+        set_ngo_admin_filter(frm);
     },
 
     workflow_state(frm) {
@@ -13,6 +18,39 @@ frappe.ui.form.on("Case", {
         update_complete_button(frm);
     }
 });
+
+function set_ngo_admin_filter(frm) {
+    // Register the filter for the Organisation Admin field
+    frm.set_query("ngo_admin", function () {
+        return {
+            filters: {
+                name: ["in", frm._ngo_admin_users || [""]]
+            }
+        };
+    });
+
+    // No Organisation selected: show no admins
+    if (!frm.doc.ngo) {
+        frm._ngo_admin_users = [];
+        return;
+    }
+
+    // Fetch admins from the selected Organisation
+    frappe.db.get_doc("Organisation", frm.doc.ngo)
+        .then(doc => {
+            // Ignore stale results if the Organisation changed
+            if (frm.doc.ngo !== doc.name) {
+                return;
+            }
+
+            frm._ngo_admin_users = (doc.ngo_admin || [])
+                .map(row => row.user)
+                .filter(Boolean);
+
+            frm.refresh_field("ngo_admin");
+        });
+}
+
 
 function update_case_summary(frm) {
     const state = frm.doc.workflow_state;
