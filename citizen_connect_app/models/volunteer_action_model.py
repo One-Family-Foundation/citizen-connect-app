@@ -49,9 +49,6 @@ class VolunteerAction(BaseModel):
         if not self.category.l1:
             raise ValueError("category.l1 is required")
 
-        if not self.category.l2:
-            raise ValueError("category.l2 is required")
-
         return self
 
 class VolunteerActionResponse(BaseModel):

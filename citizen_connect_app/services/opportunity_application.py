@@ -30,32 +30,29 @@ class OpportunityApplicationManager:
             else:
                 data = LoggedInOpportunityForm(**data)
 
-                user = frappe.get_doc("User", frappe.session.user)
+                user = frappe.session.user
 
-                profile_name = frappe.db.get_value(
-                    "User Profile",
-                    {"user": user.name},
+                user_profile = frappe.db.get_value(
+                   "User Profile",
+                   {"user": user},
                     "name",
                 )
 
-                if not profile_name:
+
+                if not user_profile:
                     return Result.not_found("User profile not found.")
 
-                profile = frappe.get_doc("User Profile", profile_name)
+                profile = frappe.get_doc("User Profile", user_profile)
 
-                full_name = user.first_name
-                email = user.email
+                
 
-                if profile.phone:
-                    phone = profile.phone
-                else:
+                if not profile.phone:
                     if not data.phone:
                         return Result.bad_request(
                             "Phone number is required."
                         )
 
-                    phone = data.phone
-                    profile.phone = phone
+                    profile.phone = data.phone
                     profile.save(ignore_permissions=True)
 
             opportunity = frappe.db.get_value(
@@ -83,7 +80,7 @@ class OpportunityApplicationManager:
                     "Opportunity Form",
                     {
                         "opportunity_id": data.opportunity_id,
-                        "user": user.name,
+                        "user": user,
                     },
                 )
 
@@ -97,11 +94,14 @@ class OpportunityApplicationManager:
             application.opportunity_id = data.opportunity_id
 
             if frappe.session.user != "Guest":
-                application.user = user.name
+                application.user = user
+                application.user_profile = user_profile
+            else :
+                application.full_name = data.full_name
+                application.email = data.email
+                application.phone = data.phone    
 
-            application.full_name = full_name
-            application.email = email
-            application.phone = phone
+           
             application.age = data.age
             application.gender = data.gender
             application.description = data.description

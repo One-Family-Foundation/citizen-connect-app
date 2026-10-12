@@ -55,35 +55,25 @@ def create(issue_data: dict) -> Result:
 
         
         user_id = None
-        user_name = None
-        email_id = None
-        mobile_no = None
         if frappe.session.user != "Guest":
              user = frappe.get_doc("User", frappe.session.user)
              user_id = user.name
-             user_name = user.first_name
-             email_id = user.email
-             profile_name = frappe.db.get_value(
-                "User Profile",
-                {"user": user.name},
-                "name"
-             )
-             if profile_name:
-                profile = frappe.get_doc("User Profile", profile_name) 
-
-                mobile_no = profile.phone
-            
         else:
             user_id = issue.user_id
 
+        user_profile = None
+        if user_id:
+             user_profile = frappe.db.get_value(
+                 "User Profile",
+                 {"user": user_id},
+                  "name"
+                 )  
         doc_data = {  
                "doctype": "Case",
                "type": "Issue",
                "title":issue.title,
                 "user_id": user_id,
-                "user_name": user_name,
-                "email_id": email_id,
-                "mobile_no": mobile_no,
+                "user_profile":user_profile,
                 "category": issue.category.l1 if issue.category else None,
                 "urgency": issue.urgency,
                 "description": issue.description,

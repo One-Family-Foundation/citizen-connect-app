@@ -9,9 +9,8 @@ class RequestHelp(BaseModel):
 
     scheme_name: Optional[str] = None
 
-    full_name: str = Field(..., min_length=3, max_length=120)
-
-    email_id: EmailStr
+    full_name:  Optional[str] = Field(None,min_length=3,max_length=120)
+    email_id:  Optional[EmailStr] = None
 
     mobile_num:Optional[str] = Field(None, min_length=6, max_length=15)
 

@@ -123,8 +123,7 @@
   {
    "fieldname": "ngo_admin",
    "fieldtype": "Table",
-   "options": "User Child Table",
-   "reqd": 1
+   "options": "User Child Table"
   },
   {
    "fieldname": "category_l1",
@@ -162,7 +161,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-17 00:01:44.757553",
+ "modified": "2026-09-25 21:30:16.259892",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Organisation",

@@ -81,7 +81,6 @@ def create_volunteer_action(volunteer_action_data: dict) -> Result:
             "doctype": "Volunteer Action",
             "user": frappe.session.user,
             "category_l1": volunteer_action.category.l1,
-            "category_l2": volunteer_action.category.l2,
             "description": volunteer_action.description,
             "start_date": volunteer_action.start_date,
             "end_date": volunteer_action.end_date,
@@ -118,46 +117,6 @@ def create_volunteer_action(volunteer_action_data: dict) -> Result:
             }
         )
 
-# def get_user_actions(
-#     user_id: str,
-#     limit=DEFAULT_LIMIT,
-#     offset=DEFAULT_OFFSET,
-# ) -> Result:
-#     try:
-#         if not user_id:
-#             return Result.bad_request(
-#                 message="user_id is required."
-#             )
-
-#         limit = max(MIN_LIMIT, min(int(limit), MAX_LIMIT))
-#         offset = max(0, int(offset))
-
-#         actions = frappe.get_all(
-#             "Volunteer Action",
-#             filters={
-#                 "user": user_id,
-#             },
-#             fields=[
-#                 "description",
-#                 "creation",
-#             ],
-#             order_by="creation DESC",
-#             limit_page_length=limit,
-#             limit_start=offset,
-#         )
-
-#         return Result.success(
-#             message="User posts fetched successfully.",
-#             data=actions,
-#         )
-
-#     except Exception as e:
-#         ErrorLogger.log(e)
-#         return Result.failure(
-#             message="Failed to get user posts.",
-#             data={"error": str(e)},
-#             error_data={"traceback": frappe.get_traceback()},
-#         )
 def get_user_actions(
     user_id: str,
     limit=DEFAULT_LIMIT,

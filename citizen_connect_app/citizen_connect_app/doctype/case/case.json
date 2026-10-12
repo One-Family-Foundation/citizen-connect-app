@@ -27,6 +27,7 @@
   "geo_l2",
   "user_details_section",
   "user_id",
+  "user_profile",
   "column_break_cbtz",
   "user_name",
   "email_id",
@@ -92,11 +93,13 @@
    "fieldtype": "Column Break"
   },
   {
+   "fetch_from": "user_id.first_name",
    "fieldname": "user_name",
    "fieldtype": "Data",
    "label": "User Name"
   },
   {
+   "fetch_from": "user_profile.phone",
    "fieldname": "mobile_no",
    "fieldtype": "Phone",
    "label": "Mobile Number"
@@ -259,6 +262,7 @@
    "options": "\nMale\nFemale\nNon-binary\nPrefer not to say"
   },
   {
+   "fetch_from": "user_id.email",
    "fieldname": "email_id",
    "fieldtype": "Data",
    "label": "Email Id"
@@ -278,12 +282,19 @@
    "fieldname": "is_financial_support_need",
    "fieldtype": "Check",
    "label": "Financial Support Need"
+  },
+  {
+   "fieldname": "user_profile",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "User Profile",
+   "options": "User Profile"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-21 16:46:57.957045",
+ "modified": "2026-09-23 16:01:41.431207",
  "modified_by": "Administrator",
  "module": "Citizen Connect App",
  "name": "Case",
