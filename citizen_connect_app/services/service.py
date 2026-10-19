@@ -3,6 +3,7 @@ import frappe
 
 from citizen_connect_app.utils.error_logger import ErrorLogger
 from samaaja.utils.result import Result
+from citizen_connect_app.utils.translations import translate_or_get_from_cache
 
 
 class ServiceManager:
@@ -259,8 +260,8 @@ class ServiceManager:
         })    
         return {
             "id": row["id"],
-            "title": row["title"],
-            "description": row["description"],
+            "title": translate_or_get_from_cache(row["title"], lang),
+            "description": translate_or_get_from_cache(row["description"], lang),
             "location": {
                 "country": {
                     "name": row["service_country"],
@@ -269,20 +270,20 @@ class ServiceManager:
                 "geo1": geo1_list,
                 "geo2": geo2_list,
             },
-            "cost_model": row["cost_model"],
-            "cost_details": row["cost_details"],
-            "availability_status": row["availability_status"],
+            "cost_model": translate_or_get_from_cache(row["cost_model"], lang),
+            "cost_details": translate_or_get_from_cache(row["cost_details"], lang),
+            "availability_status": translate_or_get_from_cache(row["availability_status"], lang),
             "is_financial_support": row["is_financial_support"],
-            "service_channel": row["service_channel"],
-            "service_status": row["service_status"],
+            "service_channel": translate_or_get_from_cache(row["service_channel"], lang),
+            "service_status": translate_or_get_from_cache(row["service_status"], lang),
             "creation": row["creation"],
             "modified": row["modified"],
-            "eligibility_condition": row["eligibility_condition"],
+            "eligibility_condition": translate_or_get_from_cache(row["eligibility_condition"], lang),
             "rating": row["rating"],
-            "ngo_name": row["ngo_name"],
+            "ngo_name": translate_or_get_from_cache(row["ngo_name"], lang),
             "mobile_number": row["contact_number"],
-            "email_id":row["email"],
-            "whatsapp_mobile_number":row["whatsapp_number"],
+            "email_id": row["email"],
+            "whatsapp_mobile_number": row["whatsapp_number"],
             "service_category": {
                 "l1": {"name":row["l1_name"],"display_name": frappe._(row["l1_name"], lang=lang)},
                 "l2": {"name": row["l2_name"],"display_name": frappe._(row["l2_name"], lang=lang)},

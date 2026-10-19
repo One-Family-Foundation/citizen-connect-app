@@ -64,9 +64,9 @@ class RequestHelpManager:
             case.user_id = user_id
             case.user_profile = user_profile
             if frappe.session.user == "Guest":
-                case.full_name = request_help.full_name
+                case.user_name = request_help.full_name
                 case.email_id = request_help.email_id
-                case.mobile_num = request_help.mobile_num
+                case.mobile_no = request_help.mobile_num
             case.age = request_help.age
             case.gender = request_help.gender
             case.description = request_help.description

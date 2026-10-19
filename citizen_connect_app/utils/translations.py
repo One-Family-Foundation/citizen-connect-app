@@ -141,6 +141,24 @@ def translate_batch(texts: list[str], target_lang: str) -> list[str]:
         frappe.log_error(frappe.get_traceback(), "master_translation: MT batch failed")
         return ["" for _ in texts]
 
+def translate_or_get_from_cache(text: str, target_lang: str) -> str:
+    if not text or not target_lang or target_lang == SOURCE_LANG or text.strip() == "":
+        return text
+
+    CACHE_KEY = f"CACHE_KEY:{target_lang}:{text}"
+
+    translated = frappe.cache().get_value(CACHE_KEY)
+    if translated is not None:
+        return translated
+
+    result = _mt_libretranslate([text], target_lang)
+
+    if result and result[0]:
+        translated = result[0]
+        frappe.cache().set_value(CACHE_KEY, translated)
+        return translated
+    else:
+        return text
 
 def _mt_libretranslate(texts: list[str], target_lang: str) -> list[str]:
     import requests

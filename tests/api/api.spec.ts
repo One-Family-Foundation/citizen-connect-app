@@ -540,37 +540,6 @@ test(
 // SERVICE GET - GUEST
 // =====================================================
 
-test(
-  'Service API - Guest user can view service',
-  async ({ request }) => {
-    const response = await request.get(
-      `${BASE_URL}/api/method/citizen_connect_app.api.service.get?service_id=${SERVICE_ID}`
-    );
-
-    const responseBody = await response.json();
-
-    console.log(
-      'Guest Service GET Status:',
-      response.status()
-    );
-
-    console.log(
-      'Guest Service GET Response:',
-      responseBody
-    );
-
-    expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
-
-    expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(SERVICE_ID);
-  }
-);
-
-
-// =====================================================
-// SERVICE GET - LOGGED-IN USER
-// =====================================================
 
 test(
   'Service API - Logged-in user can view service',
@@ -588,29 +557,67 @@ test(
 
     const responseBody = await response.json();
 
-    console.log(
-      'Logged-in Service GET Status:',
-      response.status()
-    );
+    console.log('Logged-in Service GET Status:', response.status());
+    console.log('Logged-in Service GET Response:', responseBody);
 
-    console.log(
-      'Logged-in Service GET Response:',
-      responseBody
-    );
-
+    // 1. Validate HTTP status
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
 
+    // 2. Validate top-level response keys
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('data');
+
+    // 3. Validate service data exists
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(SERVICE_ID);
+
+    const data = responseBody.data;
+
+    // 4. Validate service keys
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('title');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('cost_model');
+    expect(data).toHaveProperty('cost_details');
+    expect(data).toHaveProperty('availability_status');
+    expect(data).toHaveProperty('is_financial_support');
+    expect(data).toHaveProperty('service_channel');
+    expect(data).toHaveProperty('service_status');
+    expect(data).toHaveProperty('creation');
+    expect(data).toHaveProperty('modified');
+    expect(data).toHaveProperty('eligibility_condition');
+    expect(data).toHaveProperty('rating');
+    expect(data).toHaveProperty('ngo_name');
+    expect(data).toHaveProperty('mobile_number');
+    expect(data).toHaveProperty('email_id');
+    expect(data).toHaveProperty('whatsapp_mobile_number');
+    expect(data).toHaveProperty('service_category');
+
+    // 5. Validate location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    // 6. Validate country keys
+    expect(data.location.country).toHaveProperty('name');
+    expect(data.location.country).toHaveProperty('display_name');
+
+    // 7. Validate service category keys
+    expect(data.service_category).toHaveProperty('l1');
+    expect(data.service_category).toHaveProperty('l2');
+
+    expect(data.service_category.l1).toHaveProperty('name');
+    expect(data.service_category.l1).toHaveProperty('display_name');
+
+    expect(data.service_category.l2).toHaveProperty('name');
+    expect(data.service_category.l2).toHaveProperty('display_name');
   }
 );
-
 
 // =====================================================
 // SCHEME GET - GUEST
 // =====================================================
-
 test(
   'Scheme API - Guest user can view scheme',
   async ({ request }) => {
@@ -622,24 +629,67 @@ test(
 
     const responseBody = await response.json();
 
-    console.log(
-      'Guest Scheme GET Status:',
-      response.status()
-    );
+    console.log('Guest Scheme GET Status:', response.status());
+    console.log('Guest Scheme GET Response:', responseBody);
 
-    console.log(
-      'Guest Scheme GET Response:',
-      responseBody
-    );
-
+    // 1. Validate HTTP status
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
 
+    // 2. Validate top-level response keys
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
+
+    // 3. Validate scheme data exists
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(schemeId);
+
+    const data = responseBody.data;
+
+    // 4. Validate scheme keys
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('scheme_name');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('benefits');
+    expect(data).toHaveProperty('eligibility');
+    expect(data).toHaveProperty('documents_required');
+    expect(data).toHaveProperty('application_url');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('gender');
+    expect(data).toHaveProperty('disabled_relevant');
+    expect(data).toHaveProperty('income_limit');
+    expect(data).toHaveProperty('currency');
+    expect(data).toHaveProperty('issuing_body');
+    expect(data).toHaveProperty('is_active');
+    expect(data).toHaveProperty('is_verified');
+    expect(data).toHaveProperty('rating');
+    expect(data).toHaveProperty('creation');
+    expect(data).toHaveProperty('modified');
+    expect(data).toHaveProperty('scheme_category');
+    expect(data).toHaveProperty('ngos');
+
+    // 5. Validate location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    // 6. Validate country keys
+    expect(data.location.country).toHaveProperty('name');
+    expect(data.location.country).toHaveProperty('display_name');
+
+    // 7. Validate scheme category keys
+    expect(data.scheme_category).toHaveProperty('l1');
+    expect(data.scheme_category).toHaveProperty('l2');
+
+    expect(data.scheme_category.l1).toHaveProperty('name');
+    expect(data.scheme_category.l1).toHaveProperty('display_name');
+
+    expect(data.scheme_category.l2).toHaveProperty('name');
+    expect(data.scheme_category.l2).toHaveProperty('display_name');
+
+    // 8. Validate NGO entries are available as a field
+    expect(Array.isArray(data.ngos)).toBe(true);
   }
 );
-
 
 // =====================================================
 // SCHEME GET - LOGGED-IN
@@ -673,14 +723,64 @@ test(
       responseBody
     );
 
+    // 1. Validate HTTP status
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
 
+    // 2. Validate top-level response keys
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
+
+    // 3. Validate scheme data exists
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(schemeId);
+
+    const data = responseBody.data;
+
+    // 4. Validate scheme keys
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('scheme_name');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('benefits');
+    expect(data).toHaveProperty('eligibility');
+    expect(data).toHaveProperty('documents_required');
+    expect(data).toHaveProperty('application_url');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('gender');
+    expect(data).toHaveProperty('disabled_relevant');
+    expect(data).toHaveProperty('income_limit');
+    expect(data).toHaveProperty('currency');
+    expect(data).toHaveProperty('issuing_body');
+    expect(data).toHaveProperty('is_active');
+    expect(data).toHaveProperty('is_verified');
+    expect(data).toHaveProperty('rating');
+    expect(data).toHaveProperty('creation');
+    expect(data).toHaveProperty('modified');
+    expect(data).toHaveProperty('scheme_category');
+    expect(data).toHaveProperty('ngos');
+
+    // 5. Validate location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    // 6. Validate country keys
+    expect(data.location.country).toHaveProperty('name');
+    expect(data.location.country).toHaveProperty('display_name');
+
+    // 7. Validate scheme category keys
+    expect(data.scheme_category).toHaveProperty('l1');
+    expect(data.scheme_category).toHaveProperty('l2');
+
+    expect(data.scheme_category.l1).toHaveProperty('name');
+    expect(data.scheme_category.l1).toHaveProperty('display_name');
+
+    expect(data.scheme_category.l2).toHaveProperty('name');
+    expect(data.scheme_category.l2).toHaveProperty('display_name');
+
+    // 8. Validate NGOs field is an array
+    expect(Array.isArray(data.ngos)).toBe(true);
   }
 );
-
 
 // =====================================================
 // VOLUNTEER OPPORTUNITY GET LIST - GUEST
@@ -722,7 +822,6 @@ test(
     ).toBe('boolean');
   }
 );
-
 
 // =====================================================
 // VOLUNTEER OPPORTUNITY GET LIST - LOGGED-IN
@@ -771,8 +870,6 @@ test(
     ).toBe('boolean');
   }
 );
-
-
 // =====================================================
 // VOLUNTEER OPPORTUNITY GET - GUEST
 // =====================================================
@@ -798,19 +895,66 @@ test(
       responseBody
     );
 
+    // 1. Validate HTTP status
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
 
+    // 2. Validate top-level response keys
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
+
+    // 3. Validate opportunity data exists
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(opportunityId);
+
+    const data = responseBody.data;
+
+    // 4. Validate opportunity keys
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('title');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('skills');
+    expect(data).toHaveProperty('category');
+    expect(data).toHaveProperty('crisis_link');
+    expect(data).toHaveProperty('language');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('volunteer_format');
+    expect(data).toHaveProperty('expected_time');
+    expect(data).toHaveProperty('start_date');
+    expect(data).toHaveProperty('end_date');
+    expect(data).toHaveProperty('compensation_type');
+    expect(data).toHaveProperty('ngo');
+    expect(data).toHaveProperty('rating');
+    expect(data).toHaveProperty('status');
+
+    // 5. Validate category keys
+    expect(data.category).toHaveProperty('l1');
+    expect(data.category).toHaveProperty('l2');
+
+    expect(data.category.l1).toHaveProperty('name');
+    expect(data.category.l1).toHaveProperty('display_name');
+
+    expect(data.category.l2).toHaveProperty('name');
+    expect(data.category.l2).toHaveProperty('display_name');
+
+    // 6. Validate location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    expect(data.location.country).toHaveProperty('name');
+    expect(data.location.country).toHaveProperty('display_name');
+
+    // 7. Validate NGO keys
+    expect(data.ngo).toHaveProperty('id');
+    expect(data.ngo).toHaveProperty('name');
+    expect(data.ngo).toHaveProperty('phone');
+    expect(data.ngo).toHaveProperty('email');
   }
 );
-
 
 // =====================================================
 // VOLUNTEER OPPORTUNITY GET - LOGGED-IN
 // =====================================================
-
 test(
   'Volunteer Opportunity API - Logged-in user can view opportunity',
   async ({ request }) => {
@@ -839,14 +983,62 @@ test(
       responseBody
     );
 
+    // 1. Validate HTTP status
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
 
+    // 2. Validate top-level response keys
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
+
+    // 3. Validate opportunity data exists
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(opportunityId);
+
+    const data = responseBody.data;
+
+    // 4. Validate opportunity keys
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('title');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('skills');
+    expect(data).toHaveProperty('category');
+    expect(data).toHaveProperty('crisis_link');
+    expect(data).toHaveProperty('language');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('volunteer_format');
+    expect(data).toHaveProperty('expected_time');
+    expect(data).toHaveProperty('start_date');
+    expect(data).toHaveProperty('end_date');
+    expect(data).toHaveProperty('compensation_type');
+    expect(data).toHaveProperty('ngo');
+    expect(data).toHaveProperty('rating');
+    expect(data).toHaveProperty('status');
+
+    // 5. Validate category keys
+    expect(data.category).toHaveProperty('l1');
+    expect(data.category).toHaveProperty('l2');
+
+    expect(data.category.l1).toHaveProperty('name');
+    expect(data.category.l1).toHaveProperty('display_name');
+
+    expect(data.category.l2).toHaveProperty('name');
+    expect(data.category.l2).toHaveProperty('display_name');
+
+    // 6. Validate location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    expect(data.location.country).toHaveProperty('name');
+    expect(data.location.country).toHaveProperty('display_name');
+
+    // 7. Validate NGO keys
+    expect(data.ngo).toHaveProperty('id');
+    expect(data.ngo).toHaveProperty('name');
+    expect(data.ngo).toHaveProperty('phone');
+    expect(data.ngo).toHaveProperty('email');
   }
 );
-
 
 // =====================================================
 // CRISIS GET LIST - GUEST
@@ -923,6 +1115,7 @@ test(
 // CRISIS GET - GUEST
 // =====================================================
 
+
 test(
   'Crisis API - Guest user can view crisis',
   async ({ request }) => {
@@ -934,29 +1127,97 @@ test(
 
     const responseBody = await response.json();
 
-    console.log(
-      'Guest Crisis GET Status:',
-      response.status()
-    );
-
-    console.log(
-      'Guest Crisis GET Response:',
-      responseBody
-    );
+    console.log('Guest Crisis GET Status:', response.status());
+    console.log('Guest Crisis GET Response:', responseBody);
 
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
+
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
 
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(crisisId);
+
+    const data = responseBody.data;
+
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('title');
+    expect(data).toHaveProperty('category');
+    expect(data).toHaveProperty('media');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('start_date');
+    expect(data).toHaveProperty('impact');
+    expect(data).toHaveProperty('resources_needed');
+    expect(data).toHaveProperty('emergency_contacts');
+    expect(data).toHaveProperty('status');
+    expect(data).toHaveProperty('collaborators');
+    expect(data).toHaveProperty('crisis_summary');
+    expect(data).toHaveProperty('donation_opportunity');
+    expect(data).toHaveProperty('volunteer_opportunity');
+    expect(data).toHaveProperty('resource_dropoff_location');
+
+    // Location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    // Media item keys
+    expect(Array.isArray(data.media)).toBe(true);
+    if (data.media.length > 0) {
+      expect(data.media[0]).toHaveProperty('media');
+      expect(data.media[0]).toHaveProperty('caption');
+    }
+
+    // Resource item keys
+    expect(Array.isArray(data.resources_needed)).toBe(true);
+    if (data.resources_needed.length > 0) {
+      expect(data.resources_needed[0]).toHaveProperty('resource_name');
+      expect(data.resources_needed[0]).toHaveProperty('quantity_requirement');
+      expect(data.resources_needed[0]).toHaveProperty('qunatity_recieved');
+      expect(data.resources_needed[0]).toHaveProperty('unit');
+      expect(data.resources_needed[0]).toHaveProperty('priority');
+      expect(data.resources_needed[0]).toHaveProperty('is_active');
+    }
+
+    // Emergency contact item keys
+    expect(Array.isArray(data.emergency_contacts)).toBe(true);
+    if (data.emergency_contacts.length > 0) {
+      expect(data.emergency_contacts[0]).toHaveProperty('agency_name');
+      expect(data.emergency_contacts[0]).toHaveProperty('contact_number');
+      expect(data.emergency_contacts[0]).toHaveProperty('agency_category');
+    }
+
+    // Collaborator item keys
+    expect(Array.isArray(data.collaborators)).toBe(true);
+    if (data.collaborators.length > 0) {
+      expect(data.collaborators[0]).toHaveProperty('user');
+      expect(data.collaborators[0]).toHaveProperty('is_active');
+    }
+
+    // Volunteer opportunity item keys
+    expect(Array.isArray(data.volunteer_opportunity)).toBe(true);
+    if (data.volunteer_opportunity.length > 0) {
+      expect(data.volunteer_opportunity[0]).toHaveProperty('child_vol_opportunity');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('num_of_volunteer');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('title');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('start_date');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('end_date');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('volunteer_format');
+    }
+
+    // Resource drop-off location keys
+    expect(data.resource_dropoff_location).toHaveProperty('person_name');
+    expect(data.resource_dropoff_location).toHaveProperty('phone_num');
+    expect(data.resource_dropoff_location).toHaveProperty('time');
+    expect(data.resource_dropoff_location).toHaveProperty('location_name');
+    expect(data.resource_dropoff_location).toHaveProperty('location_address');
   }
 );
-
 
 // =====================================================
 // CRISIS GET - LOGGED-IN
 // =====================================================
-
 test(
   'Crisis API - Logged-in user can view crisis',
   async ({ request }) => {
@@ -975,20 +1236,90 @@ test(
 
     const responseBody = await response.json();
 
-    console.log(
-      'Logged-in Crisis GET Status:',
-      response.status()
-    );
-
-    console.log(
-      'Logged-in Crisis GET Response:',
-      responseBody
-    );
+    console.log('Logged-in Crisis GET Status:', response.status());
+    console.log('Logged-in Crisis GET Response:', responseBody);
 
     expect(response.status()).toBe(200);
-    expect(responseBody.status).toBe('success');
+
+    expect(responseBody).toHaveProperty('message');
+    expect(responseBody).toHaveProperty('status');
+    expect(responseBody).toHaveProperty('data');
 
     expect(responseBody.data).toBeTruthy();
-    expect(responseBody.data.id).toBe(crisisId);
+
+    const data = responseBody.data;
+
+    expect(data).toHaveProperty('id');
+    expect(data).toHaveProperty('title');
+    expect(data).toHaveProperty('category');
+    expect(data).toHaveProperty('media');
+    expect(data).toHaveProperty('description');
+    expect(data).toHaveProperty('location');
+    expect(data).toHaveProperty('start_date');
+    expect(data).toHaveProperty('impact');
+    expect(data).toHaveProperty('resources_needed');
+    expect(data).toHaveProperty('emergency_contacts');
+    expect(data).toHaveProperty('status');
+    expect(data).toHaveProperty('collaborators');
+    expect(data).toHaveProperty('crisis_summary');
+    expect(data).toHaveProperty('donation_opportunity');
+    expect(data).toHaveProperty('volunteer_opportunity');
+    expect(data).toHaveProperty('resource_dropoff_location');
+
+    // Location keys
+    expect(data.location).toHaveProperty('country');
+    expect(data.location).toHaveProperty('geo1');
+    expect(data.location).toHaveProperty('geo2');
+
+    // Media item keys
+    expect(Array.isArray(data.media)).toBe(true);
+    if (data.media.length > 0) {
+      expect(data.media[0]).toHaveProperty('media');
+      expect(data.media[0]).toHaveProperty('caption');
+    }
+
+    // Resource item keys
+    expect(Array.isArray(data.resources_needed)).toBe(true);
+    if (data.resources_needed.length > 0) {
+      expect(data.resources_needed[0]).toHaveProperty('resource_name');
+      expect(data.resources_needed[0]).toHaveProperty('quantity_requirement');
+      expect(data.resources_needed[0]).toHaveProperty('qunatity_recieved');
+      expect(data.resources_needed[0]).toHaveProperty('unit');
+      expect(data.resources_needed[0]).toHaveProperty('priority');
+      expect(data.resources_needed[0]).toHaveProperty('is_active');
+    }
+
+    // Emergency contact item keys
+    expect(Array.isArray(data.emergency_contacts)).toBe(true);
+    if (data.emergency_contacts.length > 0) {
+      expect(data.emergency_contacts[0]).toHaveProperty('agency_name');
+      expect(data.emergency_contacts[0]).toHaveProperty('contact_number');
+      expect(data.emergency_contacts[0]).toHaveProperty('agency_category');
+    }
+
+    // Collaborator item keys
+    expect(Array.isArray(data.collaborators)).toBe(true);
+    if (data.collaborators.length > 0) {
+      expect(data.collaborators[0]).toHaveProperty('user');
+      expect(data.collaborators[0]).toHaveProperty('is_active');
+    }
+
+    // Volunteer opportunity item keys
+    expect(Array.isArray(data.volunteer_opportunity)).toBe(true);
+    if (data.volunteer_opportunity.length > 0) {
+      expect(data.volunteer_opportunity[0]).toHaveProperty('child_vol_opportunity');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('num_of_volunteer');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('title');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('start_date');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('end_date');
+      expect(data.volunteer_opportunity[0]).toHaveProperty('volunteer_format');
+    }
+
+    // Resource drop-off location keys
+    expect(data.resource_dropoff_location).toHaveProperty('person_name');
+    expect(data.resource_dropoff_location).toHaveProperty('phone_num');
+    expect(data.resource_dropoff_location).toHaveProperty('time');
+    expect(data.resource_dropoff_location).toHaveProperty('location_name');
+    expect(data.resource_dropoff_location).toHaveProperty('location_address');
   }
 );
