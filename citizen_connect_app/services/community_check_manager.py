@@ -97,7 +97,7 @@ def create(community_check_data: dict) -> Result:
 
         return Result.success(
             message="Community check created successfully.",
-        
+             data={"name": doc.name},
         )
 
     except Exception as e:

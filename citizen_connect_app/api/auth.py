@@ -87,16 +87,20 @@ def register(full_name, email, mobile_no=None, location=None):
 
 
 @frappe.whitelist(allow_guest=True)
-def get_google_auth_url():
-    """
-    Generate Google OAuth authorization URL.
-    """
-    provider = "google"
+def get_google_auth_url(redirect_url=None):
+    """Generate Google OAuth authorization URL."""
+    if not redirect_url:
+        frappe.throw("redirect_url is required")
+
+    # Only allow the app's Google callback.
+    expected = "https://citizen-connect.org/api/auth/google/callback"
+    if not redirect_url.startswith(expected + "?"):
+        frappe.throw("Invalid redirect_url")
 
     try:
         auth_url = get_oauth2_authorize_url(
-            provider,
-            redirect_to="/homepage"
+            "google",
+            redirect_to=redirect_url,
         )
 
         return Result.success(
